@@ -456,22 +456,22 @@ public class ActivityEntityProjector implements EntityProjector<Activity>{
 	}
 
     /*
-     * Assign a Case
+     * Assign a Case_
      * 
      * @param	parentId	UUID
      * @param	assignment 	Case_ 
      * @return	Activity
      */
-    public Activity assignCase( UUID parentId, Case_ assignment ) {
-	    LOGGER.info("assigning Case as " + assignment.toString() );
+    public Activity assignCase_( UUID parentId, Case_ assignment ) {
+	    LOGGER.info("assigning Case_ as " + assignment.toString() );
 
 	    Activity parentEntity = repository.findById( parentId ).get();
 	    assignment = registry.project( Case_.class, assignment.getCase_Id());
 
 	    // ------------------------------------------
-		// assign the Case to the parent entity
+		// assign the Case_ to the parent entity
 		// ------------------------------------------ 
-	    parentEntity.setCase( assignment );
+	    parentEntity.setCase_( assignment );
 
 	    // ------------------------------------------
     	// save the parent entity
@@ -483,20 +483,20 @@ public class ActivityEntityProjector implements EntityProjector<Activity>{
     
 
 	/*
-	 * Unassign the Case
+	 * Unassign the Case_
 	 * 
 	 * @param	parentId		UUID
 	 * @return	Activity
 	 */
-	public Activity unAssignCase( UUID parentId ) {
+	public Activity unAssignCase_( UUID parentId ) {
 		Activity parentEntity = repository.findById(parentId).get();
 
-		LOGGER.info("unAssigning Case on " + parentEntity.toString() );
+		LOGGER.info("unAssigning Case_ on " + parentEntity.toString() );
 		
 	    // ------------------------------------------
-		// null out the Case on the parent entithy
+		// null out the Case_ on the parent entithy
 		// ------------------------------------------     
-	    parentEntity.setCase(null);
+	    parentEntity.setCase_(null);
 
 	    // ------------------------------------------
 		// save the parent entity

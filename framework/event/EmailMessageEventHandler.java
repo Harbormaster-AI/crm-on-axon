@@ -90,7 +90,7 @@ public class EmailMessageEventHandler {
      */
     @EventHandler
     public void handle( CreateEmailMessageEvent event) {
-        entityManager.persist(new EmailMessage(event.getEmailMessageId(), event.getSubject(), event.getBody(), event.getSentAt(), event.getMessageId(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getCase(), event.getOpportunity(), event.getCampaign(), event.getDirection(), event.getStatus()));
+        entityManager.persist(new EmailMessage(event.getEmailMessageId(), event.getSubject(), event.getBody(), event.getSentAt(), event.getMessageId(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getCase_(), event.getOpportunity(), event.getCampaign(), event.getDirection(), event.getStatus()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class EmailMessageEventHandler {
      */
     @EventHandler
     public EmailMessage handle( UpdateEmailMessageEvent event) {
-    	entityManager.merge(new EmailMessage(event.getEmailMessageId(), event.getSubject(), event.getBody(), event.getSentAt(), event.getMessageId(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getCase(), event.getOpportunity(), event.getCampaign(), event.getDirection(), event.getStatus()));
+    	entityManager.merge(new EmailMessage(event.getEmailMessageId(), event.getSubject(), event.getBody(), event.getSentAt(), event.getMessageId(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getCase_(), event.getOpportunity(), event.getCampaign(), event.getDirection(), event.getStatus()));
     }
     
     /*

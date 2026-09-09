@@ -72,8 +72,8 @@ import com.harbormaster.exception.*;
  *       <li>UnAssignLeadFromActivityCommand</li>
   *       <li>AssignOpportunityToActivityCommand</li>
  *       <li>UnAssignOpportunityFromActivityCommand</li>
-  *       <li>AssignCaseToActivityCommand</li>
- *       <li>UnAssignCaseFromActivityCommand</li>
+  *       <li>AssignCase_ToActivityCommand</li>
+ *       <li>UnAssignCase_FromActivityCommand</li>
   *       <li>AssignCampaignToActivityCommand</li>
  *       <li>UnAssignCampaignFromActivityCommand</li>
    * <p>
@@ -311,32 +311,32 @@ public class ActivityValidator {
 		throw new ValidationException( "Activity", "validating identity on UnAssignOpportunityFromActivityCommand" );
 	}
 	/**
-	 * handles assign Case validation for a Activity
+	 * handles assign Case_ validation for a Activity
 	 *
-	 * @param	command AssignCaseToActivityCommand
+	 * @param	command AssignCase_ToActivityCommand
 	 */
-	public void validate( AssignCaseToActivityCommand command ) throws ValidationException {
+	public void validate( AssignCase_ToActivityCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "Activity", "validating AssignCaseToActivityCommand" );
+			throw new ValidationException( "Activity", "validating AssignCase_ToActivityCommand" );
 
 		if ( command.getActivityId() == null )
-		throw new ValidationException( "Activity", "validating identifier on AssignCaseToActivityCommand" );
+		throw new ValidationException( "Activity", "validating identifier on AssignCase_ToActivityCommand" );
 
 		if ( command.getAssignment() == null )
 			throw new ValidationException( "Activity", "validating assignment" );
 	}
 
 	/**
-	 * handles unassign Case validation for a Activity
+	 * handles unassign Case_ validation for a Activity
 	 *
-	 * @param	command UnAssignCaseFromActivityCommand
+	 * @param	command UnAssignCase_FromActivityCommand
 	 */
-	public void validate( UnAssignCaseFromActivityCommand command ) throws ValidationException {
+	public void validate( UnAssignCase_FromActivityCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "Activity", "validating UnAssignCaseFromActivityCommand" );
+			throw new ValidationException( "Activity", "validating UnAssignCase_FromActivityCommand" );
 
 		if ( command.getActivityId() == null )
-		throw new ValidationException( "Activity", "validating identity on UnAssignCaseFromActivityCommand" );
+		throw new ValidationException( "Activity", "validating identity on UnAssignCase_FromActivityCommand" );
 	}
 	/**
 	 * handles assign Campaign validation for a Activity

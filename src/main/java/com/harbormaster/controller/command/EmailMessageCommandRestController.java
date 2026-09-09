@@ -293,30 +293,30 @@ public class EmailMessageCommandRestController extends BaseSpringRestController 
 	}
 	
     /**
-     * save Case on EmailMessage
-     * @param		command AssignCaseToEmailMessageCommand
+     * save Case_ on EmailMessage
+     * @param		command AssignCase_ToEmailMessageCommand
      */     
-	@PutMapping("/assignCase")
-	public void assignCase( @RequestBody AssignCaseToEmailMessageCommand command ) {
+	@PutMapping("/assignCase_")
+	public void assignCase_( @RequestBody AssignCase_ToEmailMessageCommand command ) {
 		try {
-			service.assignCase( command );   
+			service.assignCase_( command );   
 		}
         catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
+        	LOGGER.log( Level.WARNING, "Failed to assign Case_", exc );
         }
 	}
 
     /**
-     * unassign Case on EmailMessage
-     * @param		 command UnAssignCaseFromEmailMessageCommand
+     * unassign Case_ on EmailMessage
+     * @param		 command UnAssignCase_FromEmailMessageCommand
      */     
-	@PutMapping("/unAssignCase")
-	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromEmailMessageCommand command ) {
+	@PutMapping("/unAssignCase_")
+	public void unAssignCase_( @RequestBody(required=true)  UnAssignCase_FromEmailMessageCommand command ) {
 		try {
-			service.unAssignCase( command );   
+			service.unAssignCase_( command );   
 		}
 		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
+			LOGGER.log( Level.WARNING, "Failed to unassign Case_", exc );
 		}
 	}
 	

@@ -141,7 +141,7 @@ public class NoteProjector extends NoteEntityProjector {
             entity.setAccount( event.getAccount() );
             entity.setContact( event.getContact() );
             entity.setOpportunity( event.getOpportunity() );
-            entity.setCase( event.getCase() );
+            entity.setCase_( event.getCase_() );
             entity.setLead( event.getLead() );
  
     	// ------------------------------------------
@@ -415,16 +415,16 @@ public class NoteProjector extends NoteEntityProjector {
 	}
 
     /*
-     * @param	event AssignCaseToNoteEvent
+     * @param	event AssignCase_ToNoteEvent
      */
-    @EventHandler( payloadType=AssignCaseToNoteEvent.class)
-    public void handle( AssignCaseToNoteEvent event) {
-	    LOGGER.info("handling AssignCaseToNoteEvent - " + event );
+    @EventHandler( payloadType=AssignCase_ToNoteEvent.class)
+    public void handle( AssignCase_ToNoteEvent event) {
+	    LOGGER.info("handling AssignCase_ToNoteEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to assignTo
 	    // ------------------------------------------
-	    Note entity = assignCase( event.getNoteId(), event.getAssignment() );
+	    Note entity = assignCase_( event.getNoteId(), event.getAssignment() );
 
 	    // ------------------------------------------
     	// emit to subscribers that find one
@@ -439,16 +439,16 @@ public class NoteProjector extends NoteEntityProjector {
     
 
 	/*
-	 * @param	event UnAssignCaseFromNoteEvent
+	 * @param	event UnAssignCase_FromNoteEvent
 	 */
-	@EventHandler( payloadType=UnAssignCaseFromNoteEvent.class)
-	public void handle( UnAssignCaseFromNoteEvent event) {
-	    LOGGER.info("handling UnAssignCaseFromNoteEvent - " + event );
+	@EventHandler( payloadType=UnAssignCase_FromNoteEvent.class)
+	public void handle( UnAssignCase_FromNoteEvent event) {
+	    LOGGER.info("handling UnAssignCase_FromNoteEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to unAssignFrom
 	    // ------------------------------------------
-	    Note entity = unAssignCase( event.getNoteId() );
+	    Note entity = unAssignCase_( event.getNoteId() );
 
 		// ------------------------------------------
 		// emit to subscribers that find one

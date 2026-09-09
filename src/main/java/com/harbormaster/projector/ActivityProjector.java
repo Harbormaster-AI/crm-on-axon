@@ -147,7 +147,7 @@ public class ActivityProjector extends ActivityEntityProjector {
             entity.setContact( event.getContact() );
             entity.setLead( event.getLead() );
             entity.setOpportunity( event.getOpportunity() );
-            entity.setCase( event.getCase() );
+            entity.setCase_( event.getCase_() );
             entity.setCampaign( event.getCampaign() );
             entity.setActivityType( event.getActivityType() );
             entity.setStatus( event.getStatus() );
@@ -471,16 +471,16 @@ public class ActivityProjector extends ActivityEntityProjector {
 	}
 
     /*
-     * @param	event AssignCaseToActivityEvent
+     * @param	event AssignCase_ToActivityEvent
      */
-    @EventHandler( payloadType=AssignCaseToActivityEvent.class)
-    public void handle( AssignCaseToActivityEvent event) {
-	    LOGGER.info("handling AssignCaseToActivityEvent - " + event );
+    @EventHandler( payloadType=AssignCase_ToActivityEvent.class)
+    public void handle( AssignCase_ToActivityEvent event) {
+	    LOGGER.info("handling AssignCase_ToActivityEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to assignTo
 	    // ------------------------------------------
-	    Activity entity = assignCase( event.getActivityId(), event.getAssignment() );
+	    Activity entity = assignCase_( event.getActivityId(), event.getAssignment() );
 
 	    // ------------------------------------------
     	// emit to subscribers that find one
@@ -495,16 +495,16 @@ public class ActivityProjector extends ActivityEntityProjector {
     
 
 	/*
-	 * @param	event UnAssignCaseFromActivityEvent
+	 * @param	event UnAssignCase_FromActivityEvent
 	 */
-	@EventHandler( payloadType=UnAssignCaseFromActivityEvent.class)
-	public void handle( UnAssignCaseFromActivityEvent event) {
-	    LOGGER.info("handling UnAssignCaseFromActivityEvent - " + event );
+	@EventHandler( payloadType=UnAssignCase_FromActivityEvent.class)
+	public void handle( UnAssignCase_FromActivityEvent event) {
+	    LOGGER.info("handling UnAssignCase_FromActivityEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to unAssignFrom
 	    // ------------------------------------------
-	    Activity entity = unAssignCase( event.getActivityId() );
+	    Activity entity = unAssignCase_( event.getActivityId() );
 
 		// ------------------------------------------
 		// emit to subscribers that find one

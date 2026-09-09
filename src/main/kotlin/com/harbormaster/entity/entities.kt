@@ -519,7 +519,7 @@ class Activity(
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "contact") var contact: Contact? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "lead") var lead: Lead? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "opportunity") var opportunity: Opportunity? = null,
-    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case") var case: Case_? = null,
+    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case_") var case_: Case_? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "campaign") var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var activityType: ActivityType? = null,
     @Enumerated(EnumType.STRING) var status: ActivityStatus? = null,
@@ -584,7 +584,7 @@ class Note(
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "account") var account: Account? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "contact") var contact: Contact? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "opportunity") var opportunity: Opportunity? = null,
-    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case") var case: Case_? = null,
+    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case_") var case_: Case_? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "lead") var lead: Lead? = null
 ) 
 
@@ -600,7 +600,7 @@ class EmailMessage(
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "account") var account: Account? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "contact") var contact: Contact? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "lead") var lead: Lead? = null,
-    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case") var case: Case_? = null,
+    @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "case_") var case_: Case_? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "opportunity") var opportunity: Opportunity? = null,
     @OneToOne(fetch = FetchType.EAGER) @JoinColumn(name = "campaign") var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var direction: EmailDirection? = null,

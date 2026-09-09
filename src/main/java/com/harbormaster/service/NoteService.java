@@ -607,11 +607,11 @@ extends BaseService {
 	}
 	
     /**
-     * assign Case on Note
-     * @param		command AssignCaseToNoteCommand	
+     * assign Case_ on Note
+     * @param		command AssignCase_ToNoteCommand	
      * @exception	ProcessingException
      */     
-	public void assignCase( AssignCaseToNoteCommand command ) throws ProcessingException {
+	public void assignCase_( AssignCase_ToNoteCommand command ) throws ProcessingException {
 
 		// --------------------------------------------
 		// load the parent
@@ -643,11 +643,11 @@ extends BaseService {
 	}
 
     /**
-     * unAssign Case on Note
-     * @param		command UnAssignCaseFromNoteCommand
+     * unAssign Case_ on Note
+     * @param		command UnAssignCase_FromNoteCommand
      * @exception	ProcessingException
      */     
-	public void unAssignCase( UnAssignCaseFromNoteCommand command ) throws ProcessingException {
+	public void unAssignCase_( UnAssignCase_FromNoteCommand command ) throws ProcessingException {
 
 		try {
 			// --------------------------------------
@@ -661,7 +661,7 @@ extends BaseService {
 			commandGateway.sendAndWait( command );
 		}
 		catch( Exception exc ) {
-			final String msg = "Failed to unassign Case on Note";
+			final String msg = "Failed to unassign Case_ on Note";
 			LOGGER.log( Level.WARNING, msg, exc );
 			throw new ProcessingException( msg, exc );
 		}

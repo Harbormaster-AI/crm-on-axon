@@ -90,7 +90,7 @@ public class ActivityEventHandler {
      */
     @EventHandler
     public void handle( CreateActivityEvent event) {
-        entityManager.persist(new Activity(event.getActivityId(), event.getSubject(), event.getDueDate(), event.getStartAt(), event.getEndAt(), event.getLocation(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getOpportunity(), event.getCase(), event.getCampaign(), event.getActivityType(), event.getStatus(), event.getPriority()));
+        entityManager.persist(new Activity(event.getActivityId(), event.getSubject(), event.getDueDate(), event.getStartAt(), event.getEndAt(), event.getLocation(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getOpportunity(), event.getCase_(), event.getCampaign(), event.getActivityType(), event.getStatus(), event.getPriority()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class ActivityEventHandler {
      */
     @EventHandler
     public Activity handle( UpdateActivityEvent event) {
-    	entityManager.merge(new Activity(event.getActivityId(), event.getSubject(), event.getDueDate(), event.getStartAt(), event.getEndAt(), event.getLocation(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getOpportunity(), event.getCase(), event.getCampaign(), event.getActivityType(), event.getStatus(), event.getPriority()));
+    	entityManager.merge(new Activity(event.getActivityId(), event.getSubject(), event.getDueDate(), event.getStartAt(), event.getEndAt(), event.getLocation(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getLead(), event.getOpportunity(), event.getCase_(), event.getCampaign(), event.getActivityType(), event.getStatus(), event.getPriority()));
     }
     
     /*

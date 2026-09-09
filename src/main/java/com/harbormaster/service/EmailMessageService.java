@@ -607,11 +607,11 @@ extends BaseService {
 	}
 	
     /**
-     * assign Case on EmailMessage
-     * @param		command AssignCaseToEmailMessageCommand	
+     * assign Case_ on EmailMessage
+     * @param		command AssignCase_ToEmailMessageCommand	
      * @exception	ProcessingException
      */     
-	public void assignCase( AssignCaseToEmailMessageCommand command ) throws ProcessingException {
+	public void assignCase_( AssignCase_ToEmailMessageCommand command ) throws ProcessingException {
 
 		// --------------------------------------------
 		// load the parent
@@ -643,11 +643,11 @@ extends BaseService {
 	}
 
     /**
-     * unAssign Case on EmailMessage
-     * @param		command UnAssignCaseFromEmailMessageCommand
+     * unAssign Case_ on EmailMessage
+     * @param		command UnAssignCase_FromEmailMessageCommand
      * @exception	ProcessingException
      */     
-	public void unAssignCase( UnAssignCaseFromEmailMessageCommand command ) throws ProcessingException {
+	public void unAssignCase_( UnAssignCase_FromEmailMessageCommand command ) throws ProcessingException {
 
 		try {
 			// --------------------------------------
@@ -661,7 +661,7 @@ extends BaseService {
 			commandGateway.sendAndWait( command );
 		}
 		catch( Exception exc ) {
-			final String msg = "Failed to unassign Case on EmailMessage";
+			final String msg = "Failed to unassign Case_ on EmailMessage";
 			LOGGER.log( Level.WARNING, msg, exc );
 			throw new ProcessingException( msg, exc );
 		}

@@ -70,8 +70,8 @@ import com.harbormaster.exception.*;
  *       <li>UnAssignContactFromEmailMessageCommand</li>
   *       <li>AssignLeadToEmailMessageCommand</li>
  *       <li>UnAssignLeadFromEmailMessageCommand</li>
-  *       <li>AssignCaseToEmailMessageCommand</li>
- *       <li>UnAssignCaseFromEmailMessageCommand</li>
+  *       <li>AssignCase_ToEmailMessageCommand</li>
+ *       <li>UnAssignCase_FromEmailMessageCommand</li>
   *       <li>AssignOpportunityToEmailMessageCommand</li>
  *       <li>UnAssignOpportunityFromEmailMessageCommand</li>
   *       <li>AssignCampaignToEmailMessageCommand</li>
@@ -279,32 +279,32 @@ public class EmailMessageValidator {
 		throw new ValidationException( "EmailMessage", "validating identity on UnAssignLeadFromEmailMessageCommand" );
 	}
 	/**
-	 * handles assign Case validation for a EmailMessage
+	 * handles assign Case_ validation for a EmailMessage
 	 *
-	 * @param	command AssignCaseToEmailMessageCommand
+	 * @param	command AssignCase_ToEmailMessageCommand
 	 */
-	public void validate( AssignCaseToEmailMessageCommand command ) throws ValidationException {
+	public void validate( AssignCase_ToEmailMessageCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "EmailMessage", "validating AssignCaseToEmailMessageCommand" );
+			throw new ValidationException( "EmailMessage", "validating AssignCase_ToEmailMessageCommand" );
 
 		if ( command.getEmailMessageId() == null )
-		throw new ValidationException( "EmailMessage", "validating identifier on AssignCaseToEmailMessageCommand" );
+		throw new ValidationException( "EmailMessage", "validating identifier on AssignCase_ToEmailMessageCommand" );
 
 		if ( command.getAssignment() == null )
 			throw new ValidationException( "EmailMessage", "validating assignment" );
 	}
 
 	/**
-	 * handles unassign Case validation for a EmailMessage
+	 * handles unassign Case_ validation for a EmailMessage
 	 *
-	 * @param	command UnAssignCaseFromEmailMessageCommand
+	 * @param	command UnAssignCase_FromEmailMessageCommand
 	 */
-	public void validate( UnAssignCaseFromEmailMessageCommand command ) throws ValidationException {
+	public void validate( UnAssignCase_FromEmailMessageCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "EmailMessage", "validating UnAssignCaseFromEmailMessageCommand" );
+			throw new ValidationException( "EmailMessage", "validating UnAssignCase_FromEmailMessageCommand" );
 
 		if ( command.getEmailMessageId() == null )
-		throw new ValidationException( "EmailMessage", "validating identity on UnAssignCaseFromEmailMessageCommand" );
+		throw new ValidationException( "EmailMessage", "validating identity on UnAssignCase_FromEmailMessageCommand" );
 	}
 	/**
 	 * handles assign Opportunity validation for a EmailMessage

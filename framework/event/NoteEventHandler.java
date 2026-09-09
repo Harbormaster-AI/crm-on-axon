@@ -90,7 +90,7 @@ public class NoteEventHandler {
      */
     @EventHandler
     public void handle( CreateNoteEvent event) {
-        entityManager.persist(new Note(event.getNoteId(), event.getTitle(), event.getContent(), event.getCreatedAt(), event.getUpdatedAt(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getOpportunity(), event.getCase(), event.getLead()));
+        entityManager.persist(new Note(event.getNoteId(), event.getTitle(), event.getContent(), event.getCreatedAt(), event.getUpdatedAt(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getOpportunity(), event.getCase_(), event.getLead()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class NoteEventHandler {
      */
     @EventHandler
     public Note handle( UpdateNoteEvent event) {
-    	entityManager.merge(new Note(event.getNoteId(), event.getTitle(), event.getContent(), event.getCreatedAt(), event.getUpdatedAt(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getOpportunity(), event.getCase(), event.getLead()));
+    	entityManager.merge(new Note(event.getNoteId(), event.getTitle(), event.getContent(), event.getCreatedAt(), event.getUpdatedAt(), event.getOrganization(), event.getOwner(), event.getAccount(), event.getContact(), event.getOpportunity(), event.getCase_(), event.getLead()));
     }
     
     /*

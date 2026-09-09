@@ -70,8 +70,8 @@ import com.harbormaster.exception.*;
  *       <li>UnAssignContactFromNoteCommand</li>
   *       <li>AssignOpportunityToNoteCommand</li>
  *       <li>UnAssignOpportunityFromNoteCommand</li>
-  *       <li>AssignCaseToNoteCommand</li>
- *       <li>UnAssignCaseFromNoteCommand</li>
+  *       <li>AssignCase_ToNoteCommand</li>
+ *       <li>UnAssignCase_FromNoteCommand</li>
   *       <li>AssignLeadToNoteCommand</li>
  *       <li>UnAssignLeadFromNoteCommand</li>
    * <p>
@@ -277,32 +277,32 @@ public class NoteValidator {
 		throw new ValidationException( "Note", "validating identity on UnAssignOpportunityFromNoteCommand" );
 	}
 	/**
-	 * handles assign Case validation for a Note
+	 * handles assign Case_ validation for a Note
 	 *
-	 * @param	command AssignCaseToNoteCommand
+	 * @param	command AssignCase_ToNoteCommand
 	 */
-	public void validate( AssignCaseToNoteCommand command ) throws ValidationException {
+	public void validate( AssignCase_ToNoteCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "Note", "validating AssignCaseToNoteCommand" );
+			throw new ValidationException( "Note", "validating AssignCase_ToNoteCommand" );
 
 		if ( command.getNoteId() == null )
-		throw new ValidationException( "Note", "validating identifier on AssignCaseToNoteCommand" );
+		throw new ValidationException( "Note", "validating identifier on AssignCase_ToNoteCommand" );
 
 		if ( command.getAssignment() == null )
 			throw new ValidationException( "Note", "validating assignment" );
 	}
 
 	/**
-	 * handles unassign Case validation for a Note
+	 * handles unassign Case_ validation for a Note
 	 *
-	 * @param	command UnAssignCaseFromNoteCommand
+	 * @param	command UnAssignCase_FromNoteCommand
 	 */
-	public void validate( UnAssignCaseFromNoteCommand command ) throws ValidationException {
+	public void validate( UnAssignCase_FromNoteCommand command ) throws ValidationException {
 		if ( command == null )
-			throw new ValidationException( "Note", "validating UnAssignCaseFromNoteCommand" );
+			throw new ValidationException( "Note", "validating UnAssignCase_FromNoteCommand" );
 
 		if ( command.getNoteId() == null )
-		throw new ValidationException( "Note", "validating identity on UnAssignCaseFromNoteCommand" );
+		throw new ValidationException( "Note", "validating identity on UnAssignCase_FromNoteCommand" );
 	}
 	/**
 	 * handles assign Lead validation for a Note

@@ -143,7 +143,7 @@ public class EmailMessageProjector extends EmailMessageEntityProjector {
             entity.setAccount( event.getAccount() );
             entity.setContact( event.getContact() );
             entity.setLead( event.getLead() );
-            entity.setCase( event.getCase() );
+            entity.setCase_( event.getCase_() );
             entity.setOpportunity( event.getOpportunity() );
             entity.setCampaign( event.getCampaign() );
             entity.setDirection( event.getDirection() );
@@ -420,16 +420,16 @@ public class EmailMessageProjector extends EmailMessageEntityProjector {
 	}
 
     /*
-     * @param	event AssignCaseToEmailMessageEvent
+     * @param	event AssignCase_ToEmailMessageEvent
      */
-    @EventHandler( payloadType=AssignCaseToEmailMessageEvent.class)
-    public void handle( AssignCaseToEmailMessageEvent event) {
-	    LOGGER.info("handling AssignCaseToEmailMessageEvent - " + event );
+    @EventHandler( payloadType=AssignCase_ToEmailMessageEvent.class)
+    public void handle( AssignCase_ToEmailMessageEvent event) {
+	    LOGGER.info("handling AssignCase_ToEmailMessageEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to assignTo
 	    // ------------------------------------------
-	    EmailMessage entity = assignCase( event.getEmailMessageId(), event.getAssignment() );
+	    EmailMessage entity = assignCase_( event.getEmailMessageId(), event.getAssignment() );
 
 	    // ------------------------------------------
     	// emit to subscribers that find one
@@ -444,16 +444,16 @@ public class EmailMessageProjector extends EmailMessageEntityProjector {
     
 
 	/*
-	 * @param	event UnAssignCaseFromEmailMessageEvent
+	 * @param	event UnAssignCase_FromEmailMessageEvent
 	 */
-	@EventHandler( payloadType=UnAssignCaseFromEmailMessageEvent.class)
-	public void handle( UnAssignCaseFromEmailMessageEvent event) {
-	    LOGGER.info("handling UnAssignCaseFromEmailMessageEvent - " + event );
+	@EventHandler( payloadType=UnAssignCase_FromEmailMessageEvent.class)
+	public void handle( UnAssignCase_FromEmailMessageEvent event) {
+	    LOGGER.info("handling UnAssignCase_FromEmailMessageEvent - " + event );
 
 	    // ------------------------------------------
 	    // delegate to unAssignFrom
 	    // ------------------------------------------
-	    EmailMessage entity = unAssignCase( event.getEmailMessageId() );
+	    EmailMessage entity = unAssignCase_( event.getEmailMessageId() );
 
 		// ------------------------------------------
 		// emit to subscribers that find one

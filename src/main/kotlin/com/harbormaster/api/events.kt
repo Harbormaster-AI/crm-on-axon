@@ -1375,7 +1375,7 @@ data class UpdateActivityEvent(
     var contact: Contact? = null,
     var lead: Lead? = null,
     var opportunity: Opportunity? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var activityType: ActivityType? = null,
     @Enumerated(EnumType.STRING) var status: ActivityStatus? = null,
@@ -1399,8 +1399,8 @@ data class AssignLeadToActivityEvent(@Id val activityId: UUID, val assignment: L
 data class UnAssignLeadFromActivityEvent(@Id val activityId: UUID? = null )
 data class AssignOpportunityToActivityEvent(@Id val activityId: UUID, val assignment: Opportunity )
 data class UnAssignOpportunityFromActivityEvent(@Id val activityId: UUID? = null )
-data class AssignCaseToActivityEvent(@Id val activityId: UUID, val assignment: Case_ )
-data class UnAssignCaseFromActivityEvent(@Id val activityId: UUID? = null )
+data class AssignCase_ToActivityEvent(@Id val activityId: UUID, val assignment: Case_ )
+data class UnAssignCase_FromActivityEvent(@Id val activityId: UUID? = null )
 data class AssignCampaignToActivityEvent(@Id val activityId: UUID, val assignment: Campaign )
 data class UnAssignCampaignFromActivityEvent(@Id val activityId: UUID? = null )
 
@@ -1563,7 +1563,7 @@ data class UpdateNoteEvent(
     var account: Account? = null,
     var contact: Contact? = null,
     var opportunity: Opportunity? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var lead: Lead? = null
 )
 
@@ -1582,8 +1582,8 @@ data class AssignContactToNoteEvent(@Id val noteId: UUID, val assignment: Contac
 data class UnAssignContactFromNoteEvent(@Id val noteId: UUID? = null )
 data class AssignOpportunityToNoteEvent(@Id val noteId: UUID, val assignment: Opportunity )
 data class UnAssignOpportunityFromNoteEvent(@Id val noteId: UUID? = null )
-data class AssignCaseToNoteEvent(@Id val noteId: UUID, val assignment: Case_ )
-data class UnAssignCaseFromNoteEvent(@Id val noteId: UUID? = null )
+data class AssignCase_ToNoteEvent(@Id val noteId: UUID, val assignment: Case_ )
+data class UnAssignCase_FromNoteEvent(@Id val noteId: UUID? = null )
 data class AssignLeadToNoteEvent(@Id val noteId: UUID, val assignment: Lead )
 data class UnAssignLeadFromNoteEvent(@Id val noteId: UUID? = null )
 
@@ -1617,7 +1617,7 @@ data class UpdateEmailMessageEvent(
     var account: Account? = null,
     var contact: Contact? = null,
     var lead: Lead? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var opportunity: Opportunity? = null,
     var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var direction: EmailDirection? = null,
@@ -1639,8 +1639,8 @@ data class AssignContactToEmailMessageEvent(@Id val emailMessageId: UUID, val as
 data class UnAssignContactFromEmailMessageEvent(@Id val emailMessageId: UUID? = null )
 data class AssignLeadToEmailMessageEvent(@Id val emailMessageId: UUID, val assignment: Lead )
 data class UnAssignLeadFromEmailMessageEvent(@Id val emailMessageId: UUID? = null )
-data class AssignCaseToEmailMessageEvent(@Id val emailMessageId: UUID, val assignment: Case_ )
-data class UnAssignCaseFromEmailMessageEvent(@Id val emailMessageId: UUID? = null )
+data class AssignCase_ToEmailMessageEvent(@Id val emailMessageId: UUID, val assignment: Case_ )
+data class UnAssignCase_FromEmailMessageEvent(@Id val emailMessageId: UUID? = null )
 data class AssignOpportunityToEmailMessageEvent(@Id val emailMessageId: UUID, val assignment: Opportunity )
 data class UnAssignOpportunityFromEmailMessageEvent(@Id val emailMessageId: UUID? = null )
 data class AssignCampaignToEmailMessageEvent(@Id val emailMessageId: UUID, val assignment: Campaign )

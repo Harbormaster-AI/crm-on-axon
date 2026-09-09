@@ -63,8 +63,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignContactFromEmailMessageCommand</li>
  *       <li>AssignLeadToEmailMessageCommand</li>
  *       <li>UnAssignLeadFromEmailMessageCommand</li>
- *       <li>AssignCaseToEmailMessageCommand</li>
- *       <li>UnAssignCaseFromEmailMessageCommand</li>
+ *       <li>AssignCase_ToEmailMessageCommand</li>
+ *       <li>UnAssignCase_FromEmailMessageCommand</li>
  *       <li>AssignOpportunityToEmailMessageCommand</li>
  *       <li>UnAssignOpportunityFromEmailMessageCommand</li>
  *       <li>AssignCampaignToEmailMessageCommand</li>
@@ -88,8 +88,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignContactFromEmailMessageEvent</li>
   *       <li>AssignLeadToEmailMessageEvent</li>
  *       <li>UnAssignLeadFromEmailMessageEvent</li>
-  *       <li>AssignCaseToEmailMessageEvent</li>
- *       <li>UnAssignCaseFromEmailMessageEvent</li>
+  *       <li>AssignCase_ToEmailMessageEvent</li>
+ *       <li>UnAssignCase_FromEmailMessageEvent</li>
   *       <li>AssignOpportunityToEmailMessageEvent</li>
  *       <li>UnAssignOpportunityFromEmailMessageEvent</li>
   *       <li>AssignCampaignToEmailMessageEvent</li>
@@ -121,7 +121,7 @@ public class EmailMessageAggregate {
     @CommandHandler
     public void handle(UpdateEmailMessageCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateEmailMessageCommand" );
-    	UpdateEmailMessageEvent event = new UpdateEmailMessageEvent(command.getEmailMessageId(), command.getSubject(), command.getBody(), command.getSentAt(), command.getMessageId(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getLead(), command.getCase(), command.getOpportunity(), command.getCampaign(), command.getDirection(), command.getStatus());        
+    	UpdateEmailMessageEvent event = new UpdateEmailMessageEvent(command.getEmailMessageId(), command.getSubject(), command.getBody(), command.getSentAt(), command.getMessageId(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getLead(), command.getCase_(), command.getOpportunity(), command.getCampaign(), command.getDirection(), command.getStatus());        
     	
         apply(event);
     }
@@ -233,23 +233,23 @@ public class EmailMessageAggregate {
     	apply(new UnAssignLeadFromEmailMessageEvent(command.getEmailMessageId()));
     }
     @CommandHandler
-    public void handle(AssignCaseToEmailMessageCommand command) throws Exception {
-    	LOGGER.info( "Handling command AssignCaseToEmailMessageCommand" );
+    public void handle(AssignCase_ToEmailMessageCommand command) throws Exception {
+    	LOGGER.info( "Handling command AssignCase_ToEmailMessageCommand" );
     	
-    	if (  case != null && case.getCase_Id() == command.getAssignment().getCase_Id() )
-    		throw new ProcessingException( "Case already assigned with id " + command.getAssignment().getCase_Id() );  
+    	if (  case_ != null && case_.getCase_Id() == command.getAssignment().getCase_Id() )
+    		throw new ProcessingException( "Case_ already assigned with id " + command.getAssignment().getCase_Id() );  
     		
-        apply(new AssignCaseToEmailMessageEvent(command.getEmailMessageId(), command.getAssignment()));
+        apply(new AssignCase_ToEmailMessageEvent(command.getEmailMessageId(), command.getAssignment()));
     }
 
     @CommandHandler
-    public void handle(UnAssignCaseFromEmailMessageCommand command) throws Exception {
-    	LOGGER.info( "Handlign command UnAssignCaseFromEmailMessageCommand" );
+    public void handle(UnAssignCase_FromEmailMessageCommand command) throws Exception {
+    	LOGGER.info( "Handlign command UnAssignCase_FromEmailMessageCommand" );
 
-    	if (  case == null )
-    		throw new ProcessingException( "Case already has nothing assigned." );  
+    	if (  case_ == null )
+    		throw new ProcessingException( "Case_ already has nothing assigned." );  
 
-    	apply(new UnAssignCaseFromEmailMessageEvent(command.getEmailMessageId()));
+    	apply(new UnAssignCase_FromEmailMessageEvent(command.getEmailMessageId()));
     }
     @CommandHandler
     public void handle(AssignOpportunityToEmailMessageCommand command) throws Exception {
@@ -319,7 +319,7 @@ public class EmailMessageAggregate {
         this.account = event.getAccount();
         this.contact = event.getContact();
         this.lead = event.getLead();
-        this.case = event.getCase();
+        this.case_ = event.getCase_();
         this.opportunity = event.getOpportunity();
         this.campaign = event.getCampaign();
         this.direction = event.getDirection();
@@ -391,15 +391,15 @@ public class EmailMessageAggregate {
 	}
 	// single associations
     @EventSourcingHandler
-    void on(AssignCaseToEmailMessageEvent event ) {	
-    	LOGGER.info( "Event sourcing AssignCaseToEmailMessageEvent" );
-    	this.case = event.getAssignment();
+    void on(AssignCase_ToEmailMessageEvent event ) {	
+    	LOGGER.info( "Event sourcing AssignCase_ToEmailMessageEvent" );
+    	this.case_ = event.getAssignment();
     }
 
 	@EventSourcingHandler
-	void on(UnAssignCaseFromEmailMessageEvent event ) {	
-		LOGGER.info( "Event sourcing UnAssignCaseFromEmailMessageEvent" );
-		this.case = null;
+	void on(UnAssignCase_FromEmailMessageEvent event ) {	
+		LOGGER.info( "Event sourcing UnAssignCase_FromEmailMessageEvent" );
+		this.case_ = null;
 	}
 	// single associations
     @EventSourcingHandler
@@ -445,7 +445,7 @@ public class EmailMessageAggregate {
     private Account account = null;
     private Contact contact = null;
     private Lead lead = null;
-    private Case_ case = null;
+    private Case_ case_ = null;
     private Opportunity opportunity = null;
     private Campaign campaign = null;
 

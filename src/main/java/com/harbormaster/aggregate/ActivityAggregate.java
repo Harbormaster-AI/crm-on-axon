@@ -65,8 +65,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignLeadFromActivityCommand</li>
  *       <li>AssignOpportunityToActivityCommand</li>
  *       <li>UnAssignOpportunityFromActivityCommand</li>
- *       <li>AssignCaseToActivityCommand</li>
- *       <li>UnAssignCaseFromActivityCommand</li>
+ *       <li>AssignCase_ToActivityCommand</li>
+ *       <li>UnAssignCase_FromActivityCommand</li>
  *       <li>AssignCampaignToActivityCommand</li>
  *       <li>UnAssignCampaignFromActivityCommand</li>
  *  </ul>
@@ -90,8 +90,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignLeadFromActivityEvent</li>
   *       <li>AssignOpportunityToActivityEvent</li>
  *       <li>UnAssignOpportunityFromActivityEvent</li>
-  *       <li>AssignCaseToActivityEvent</li>
- *       <li>UnAssignCaseFromActivityEvent</li>
+  *       <li>AssignCase_ToActivityEvent</li>
+ *       <li>UnAssignCase_FromActivityEvent</li>
   *       <li>AssignCampaignToActivityEvent</li>
  *       <li>UnAssignCampaignFromActivityEvent</li>
    *        </ul>
@@ -121,7 +121,7 @@ public class ActivityAggregate {
     @CommandHandler
     public void handle(UpdateActivityCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateActivityCommand" );
-    	UpdateActivityEvent event = new UpdateActivityEvent(command.getActivityId(), command.getSubject(), command.getDueDate(), command.getStartAt(), command.getEndAt(), command.getLocation(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getLead(), command.getOpportunity(), command.getCase(), command.getCampaign(), command.getActivityType(), command.getStatus(), command.getPriority());        
+    	UpdateActivityEvent event = new UpdateActivityEvent(command.getActivityId(), command.getSubject(), command.getDueDate(), command.getStartAt(), command.getEndAt(), command.getLocation(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getLead(), command.getOpportunity(), command.getCase_(), command.getCampaign(), command.getActivityType(), command.getStatus(), command.getPriority());        
     	
         apply(event);
     }
@@ -252,23 +252,23 @@ public class ActivityAggregate {
     	apply(new UnAssignOpportunityFromActivityEvent(command.getActivityId()));
     }
     @CommandHandler
-    public void handle(AssignCaseToActivityCommand command) throws Exception {
-    	LOGGER.info( "Handling command AssignCaseToActivityCommand" );
+    public void handle(AssignCase_ToActivityCommand command) throws Exception {
+    	LOGGER.info( "Handling command AssignCase_ToActivityCommand" );
     	
-    	if (  case != null && case.getCase_Id() == command.getAssignment().getCase_Id() )
-    		throw new ProcessingException( "Case already assigned with id " + command.getAssignment().getCase_Id() );  
+    	if (  case_ != null && case_.getCase_Id() == command.getAssignment().getCase_Id() )
+    		throw new ProcessingException( "Case_ already assigned with id " + command.getAssignment().getCase_Id() );  
     		
-        apply(new AssignCaseToActivityEvent(command.getActivityId(), command.getAssignment()));
+        apply(new AssignCase_ToActivityEvent(command.getActivityId(), command.getAssignment()));
     }
 
     @CommandHandler
-    public void handle(UnAssignCaseFromActivityCommand command) throws Exception {
-    	LOGGER.info( "Handlign command UnAssignCaseFromActivityCommand" );
+    public void handle(UnAssignCase_FromActivityCommand command) throws Exception {
+    	LOGGER.info( "Handlign command UnAssignCase_FromActivityCommand" );
 
-    	if (  case == null )
-    		throw new ProcessingException( "Case already has nothing assigned." );  
+    	if (  case_ == null )
+    		throw new ProcessingException( "Case_ already has nothing assigned." );  
 
-    	apply(new UnAssignCaseFromActivityEvent(command.getActivityId()));
+    	apply(new UnAssignCase_FromActivityEvent(command.getActivityId()));
     }
     @CommandHandler
     public void handle(AssignCampaignToActivityCommand command) throws Exception {
@@ -323,7 +323,7 @@ public class ActivityAggregate {
         this.contact = event.getContact();
         this.lead = event.getLead();
         this.opportunity = event.getOpportunity();
-        this.case = event.getCase();
+        this.case_ = event.getCase_();
         this.campaign = event.getCampaign();
         this.activityType = event.getActivityType();
         this.status = event.getStatus();
@@ -407,15 +407,15 @@ public class ActivityAggregate {
 	}
 	// single associations
     @EventSourcingHandler
-    void on(AssignCaseToActivityEvent event ) {	
-    	LOGGER.info( "Event sourcing AssignCaseToActivityEvent" );
-    	this.case = event.getAssignment();
+    void on(AssignCase_ToActivityEvent event ) {	
+    	LOGGER.info( "Event sourcing AssignCase_ToActivityEvent" );
+    	this.case_ = event.getAssignment();
     }
 
 	@EventSourcingHandler
-	void on(UnAssignCaseFromActivityEvent event ) {	
-		LOGGER.info( "Event sourcing UnAssignCaseFromActivityEvent" );
-		this.case = null;
+	void on(UnAssignCase_FromActivityEvent event ) {	
+		LOGGER.info( "Event sourcing UnAssignCase_FromActivityEvent" );
+		this.case_ = null;
 	}
 	// single associations
     @EventSourcingHandler
@@ -452,7 +452,7 @@ public class ActivityAggregate {
     private Contact contact = null;
     private Lead lead = null;
     private Opportunity opportunity = null;
-    private Case_ case = null;
+    private Case_ case_ = null;
     private Campaign campaign = null;
 
     private static final Logger LOGGER 	= Logger.getLogger(ActivityAggregate.class.getName());

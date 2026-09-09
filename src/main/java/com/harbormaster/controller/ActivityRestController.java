@@ -362,30 +362,30 @@ public class ActivityRestController extends BaseSpringRestController {
 	}
 	
     /**
-     * save Case on Activity
-     * @param		command AssignCaseToActivityCommand
+     * save Case_ on Activity
+     * @param		command AssignCase_ToActivityCommand
      */     
-	@PutMapping("/assignCase")
-	public void assignCase( @RequestBody AssignCaseToActivityCommand command ) {
+	@PutMapping("/assignCase_")
+	public void assignCase_( @RequestBody AssignCase_ToActivityCommand command ) {
 		try {
-			service.assignCase( command );   
+			service.assignCase_( command );   
 		}
         catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
+        	LOGGER.log( Level.WARNING, "Failed to assign Case_", exc );
         }
 	}
 
     /**
-     * unassign Case on Activity
-     * @param		 command UnAssignCaseFromActivityCommand
+     * unassign Case_ on Activity
+     * @param		 command UnAssignCase_FromActivityCommand
      */     
-	@PutMapping("/unAssignCase")
-	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromActivityCommand command ) {
+	@PutMapping("/unAssignCase_")
+	public void unAssignCase_( @RequestBody(required=true)  UnAssignCase_FromActivityCommand command ) {
 		try {
-			service.unAssignCase( command );   
+			service.unAssignCase_( command );   
 		}
 		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
+			LOGGER.log( Level.WARNING, "Failed to unassign Case_", exc );
 		}
 	}
 	

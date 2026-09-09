@@ -668,11 +668,11 @@ extends BaseService {
 	}
 	
     /**
-     * assign Case on Activity
-     * @param		command AssignCaseToActivityCommand	
+     * assign Case_ on Activity
+     * @param		command AssignCase_ToActivityCommand	
      * @exception	ProcessingException
      */     
-	public void assignCase( AssignCaseToActivityCommand command ) throws ProcessingException {
+	public void assignCase_( AssignCase_ToActivityCommand command ) throws ProcessingException {
 
 		// --------------------------------------------
 		// load the parent
@@ -704,11 +704,11 @@ extends BaseService {
 	}
 
     /**
-     * unAssign Case on Activity
-     * @param		command UnAssignCaseFromActivityCommand
+     * unAssign Case_ on Activity
+     * @param		command UnAssignCase_FromActivityCommand
      * @exception	ProcessingException
      */     
-	public void unAssignCase( UnAssignCaseFromActivityCommand command ) throws ProcessingException {
+	public void unAssignCase_( UnAssignCase_FromActivityCommand command ) throws ProcessingException {
 
 		try {
 			// --------------------------------------
@@ -722,7 +722,7 @@ extends BaseService {
 			commandGateway.sendAndWait( command );
 		}
 		catch( Exception exc ) {
-			final String msg = "Failed to unassign Case on Activity";
+			final String msg = "Failed to unassign Case_ on Activity";
 			LOGGER.log( Level.WARNING, msg, exc );
 			throw new ProcessingException( msg, exc );
 		}

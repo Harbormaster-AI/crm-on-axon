@@ -334,30 +334,30 @@ public class NoteRestController extends BaseSpringRestController {
 	}
 	
     /**
-     * save Case on Note
-     * @param		command AssignCaseToNoteCommand
+     * save Case_ on Note
+     * @param		command AssignCase_ToNoteCommand
      */     
-	@PutMapping("/assignCase")
-	public void assignCase( @RequestBody AssignCaseToNoteCommand command ) {
+	@PutMapping("/assignCase_")
+	public void assignCase_( @RequestBody AssignCase_ToNoteCommand command ) {
 		try {
-			service.assignCase( command );   
+			service.assignCase_( command );   
 		}
         catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
+        	LOGGER.log( Level.WARNING, "Failed to assign Case_", exc );
         }
 	}
 
     /**
-     * unassign Case on Note
-     * @param		 command UnAssignCaseFromNoteCommand
+     * unassign Case_ on Note
+     * @param		 command UnAssignCase_FromNoteCommand
      */     
-	@PutMapping("/unAssignCase")
-	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromNoteCommand command ) {
+	@PutMapping("/unAssignCase_")
+	public void unAssignCase_( @RequestBody(required=true)  UnAssignCase_FromNoteCommand command ) {
 		try {
-			service.unAssignCase( command );   
+			service.unAssignCase_( command );   
 		}
 		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
+			LOGGER.log( Level.WARNING, "Failed to unassign Case_", exc );
 		}
 	}
 	

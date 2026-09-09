@@ -2129,7 +2129,7 @@ data class UpdateActivityCommand(
     var contact: Contact? = null,
     var lead: Lead? = null,
     var opportunity: Opportunity? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var activityType: ActivityType? = null,
     @Enumerated(EnumType.STRING) var status: ActivityStatus? = null,
@@ -2198,12 +2198,12 @@ data class UnAssignOpportunityFromActivityCommand(@TargetAggregateIdentifier  va
 //-----------------------------------------------------------
 // Command for assigning a Case_ to a Activity
 //-----------------------------------------------------------
-data class AssignCaseToActivityCommand(@TargetAggregateIdentifier  val activityId: UUID, val assignment: Case_ )
+data class AssignCase_ToActivityCommand(@TargetAggregateIdentifier  val activityId: UUID, val assignment: Case_ )
 
 //-----------------------------------------------------------
 // Command for unassigning a Case_ to a Activity
 //-----------------------------------------------------------
-data class UnAssignCaseFromActivityCommand(@TargetAggregateIdentifier  val activityId: UUID )
+data class UnAssignCase_FromActivityCommand(@TargetAggregateIdentifier  val activityId: UUID )
 //-----------------------------------------------------------
 // Command for assigning a Campaign to a Activity
 //-----------------------------------------------------------
@@ -2450,7 +2450,7 @@ data class UpdateNoteCommand(
     var account: Account? = null,
     var contact: Contact? = null,
     var opportunity: Opportunity? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var lead: Lead? = null
 )
 //-----------------------------------------------------------
@@ -2507,12 +2507,12 @@ data class UnAssignOpportunityFromNoteCommand(@TargetAggregateIdentifier  val no
 //-----------------------------------------------------------
 // Command for assigning a Case_ to a Note
 //-----------------------------------------------------------
-data class AssignCaseToNoteCommand(@TargetAggregateIdentifier  val noteId: UUID, val assignment: Case_ )
+data class AssignCase_ToNoteCommand(@TargetAggregateIdentifier  val noteId: UUID, val assignment: Case_ )
 
 //-----------------------------------------------------------
 // Command for unassigning a Case_ to a Note
 //-----------------------------------------------------------
-data class UnAssignCaseFromNoteCommand(@TargetAggregateIdentifier  val noteId: UUID )
+data class UnAssignCase_FromNoteCommand(@TargetAggregateIdentifier  val noteId: UUID )
 //-----------------------------------------------------------
 // Command for assigning a Lead to a Note
 //-----------------------------------------------------------
@@ -2551,7 +2551,7 @@ data class UpdateEmailMessageCommand(
     var account: Account? = null,
     var contact: Contact? = null,
     var lead: Lead? = null,
-    var case: Case_? = null,
+    var case_: Case_? = null,
     var opportunity: Opportunity? = null,
     var campaign: Campaign? = null,
     @Enumerated(EnumType.STRING) var direction: EmailDirection? = null,
@@ -2611,12 +2611,12 @@ data class UnAssignLeadFromEmailMessageCommand(@TargetAggregateIdentifier  val e
 //-----------------------------------------------------------
 // Command for assigning a Case_ to a EmailMessage
 //-----------------------------------------------------------
-data class AssignCaseToEmailMessageCommand(@TargetAggregateIdentifier  val emailMessageId: UUID, val assignment: Case_ )
+data class AssignCase_ToEmailMessageCommand(@TargetAggregateIdentifier  val emailMessageId: UUID, val assignment: Case_ )
 
 //-----------------------------------------------------------
 // Command for unassigning a Case_ to a EmailMessage
 //-----------------------------------------------------------
-data class UnAssignCaseFromEmailMessageCommand(@TargetAggregateIdentifier  val emailMessageId: UUID )
+data class UnAssignCase_FromEmailMessageCommand(@TargetAggregateIdentifier  val emailMessageId: UUID )
 //-----------------------------------------------------------
 // Command for assigning a Opportunity to a EmailMessage
 //-----------------------------------------------------------

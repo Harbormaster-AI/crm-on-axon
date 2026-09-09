@@ -63,8 +63,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignContactFromNoteCommand</li>
  *       <li>AssignOpportunityToNoteCommand</li>
  *       <li>UnAssignOpportunityFromNoteCommand</li>
- *       <li>AssignCaseToNoteCommand</li>
- *       <li>UnAssignCaseFromNoteCommand</li>
+ *       <li>AssignCase_ToNoteCommand</li>
+ *       <li>UnAssignCase_FromNoteCommand</li>
  *       <li>AssignLeadToNoteCommand</li>
  *       <li>UnAssignLeadFromNoteCommand</li>
  *  </ul>
@@ -86,8 +86,8 @@ import org.springframework.context.annotation.Profile;
  *       <li>UnAssignContactFromNoteEvent</li>
   *       <li>AssignOpportunityToNoteEvent</li>
  *       <li>UnAssignOpportunityFromNoteEvent</li>
-  *       <li>AssignCaseToNoteEvent</li>
- *       <li>UnAssignCaseFromNoteEvent</li>
+  *       <li>AssignCase_ToNoteEvent</li>
+ *       <li>UnAssignCase_FromNoteEvent</li>
   *       <li>AssignLeadToNoteEvent</li>
  *       <li>UnAssignLeadFromNoteEvent</li>
    *        </ul>
@@ -117,7 +117,7 @@ public class NoteAggregate {
     @CommandHandler
     public void handle(UpdateNoteCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateNoteCommand" );
-    	UpdateNoteEvent event = new UpdateNoteEvent(command.getNoteId(), command.getTitle(), command.getContent(), command.getCreatedAt(), command.getUpdatedAt(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getOpportunity(), command.getCase(), command.getLead());        
+    	UpdateNoteEvent event = new UpdateNoteEvent(command.getNoteId(), command.getTitle(), command.getContent(), command.getCreatedAt(), command.getUpdatedAt(), command.getOrganization(), command.getOwner(), command.getAccount(), command.getContact(), command.getOpportunity(), command.getCase_(), command.getLead());        
     	
         apply(event);
     }
@@ -229,23 +229,23 @@ public class NoteAggregate {
     	apply(new UnAssignOpportunityFromNoteEvent(command.getNoteId()));
     }
     @CommandHandler
-    public void handle(AssignCaseToNoteCommand command) throws Exception {
-    	LOGGER.info( "Handling command AssignCaseToNoteCommand" );
+    public void handle(AssignCase_ToNoteCommand command) throws Exception {
+    	LOGGER.info( "Handling command AssignCase_ToNoteCommand" );
     	
-    	if (  case != null && case.getCase_Id() == command.getAssignment().getCase_Id() )
-    		throw new ProcessingException( "Case already assigned with id " + command.getAssignment().getCase_Id() );  
+    	if (  case_ != null && case_.getCase_Id() == command.getAssignment().getCase_Id() )
+    		throw new ProcessingException( "Case_ already assigned with id " + command.getAssignment().getCase_Id() );  
     		
-        apply(new AssignCaseToNoteEvent(command.getNoteId(), command.getAssignment()));
+        apply(new AssignCase_ToNoteEvent(command.getNoteId(), command.getAssignment()));
     }
 
     @CommandHandler
-    public void handle(UnAssignCaseFromNoteCommand command) throws Exception {
-    	LOGGER.info( "Handlign command UnAssignCaseFromNoteCommand" );
+    public void handle(UnAssignCase_FromNoteCommand command) throws Exception {
+    	LOGGER.info( "Handlign command UnAssignCase_FromNoteCommand" );
 
-    	if (  case == null )
-    		throw new ProcessingException( "Case already has nothing assigned." );  
+    	if (  case_ == null )
+    		throw new ProcessingException( "Case_ already has nothing assigned." );  
 
-    	apply(new UnAssignCaseFromNoteEvent(command.getNoteId()));
+    	apply(new UnAssignCase_FromNoteEvent(command.getNoteId()));
     }
     @CommandHandler
     public void handle(AssignLeadToNoteCommand command) throws Exception {
@@ -294,7 +294,7 @@ public class NoteAggregate {
         this.account = event.getAccount();
         this.contact = event.getContact();
         this.opportunity = event.getOpportunity();
-        this.case = event.getCase();
+        this.case_ = event.getCase_();
         this.lead = event.getLead();
     }   
 
@@ -363,15 +363,15 @@ public class NoteAggregate {
 	}
 	// single associations
     @EventSourcingHandler
-    void on(AssignCaseToNoteEvent event ) {	
-    	LOGGER.info( "Event sourcing AssignCaseToNoteEvent" );
-    	this.case = event.getAssignment();
+    void on(AssignCase_ToNoteEvent event ) {	
+    	LOGGER.info( "Event sourcing AssignCase_ToNoteEvent" );
+    	this.case_ = event.getAssignment();
     }
 
 	@EventSourcingHandler
-	void on(UnAssignCaseFromNoteEvent event ) {	
-		LOGGER.info( "Event sourcing UnAssignCaseFromNoteEvent" );
-		this.case = null;
+	void on(UnAssignCase_FromNoteEvent event ) {	
+		LOGGER.info( "Event sourcing UnAssignCase_FromNoteEvent" );
+		this.case_ = null;
 	}
 	// single associations
     @EventSourcingHandler
@@ -403,7 +403,7 @@ public class NoteAggregate {
     private Account account = null;
     private Contact contact = null;
     private Opportunity opportunity = null;
-    private Case_ case = null;
+    private Case_ case_ = null;
     private Lead lead = null;
 
     private static final Logger LOGGER 	= Logger.getLogger(NoteAggregate.class.getName());
