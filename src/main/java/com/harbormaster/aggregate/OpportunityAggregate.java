@@ -125,11 +125,11 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateOpportunityEvent</li>
  *      <li>DeleteOpportunityEvent</li>
    *       <li>AssignOrganizationToOpportunityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromOpportunityEvent</li>
   *       <li>AssignAccountToOpportunityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromOpportunityEvent</li>
   *       <li>AssignOwnerToOpportunityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromOpportunityEvent</li>
    *       <li>AssignContactsToOpportunityEvent</li>
  *       <li>RemoveContactsFromOpportunityEvent</li>
   *       <li>AssignLineItemsToOpportunityEvent</li>
@@ -596,7 +596,7 @@ public class OpportunityAggregate {
     
     private String name;
     private Money amount;
-    private Date closeDate;
+    private  Date closeDate;
     private java.math.BigDecimal probability;
     private String description;
     private OpportunityStage stage;

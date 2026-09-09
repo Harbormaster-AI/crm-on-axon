@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/ContactQuery")
 public class ContactQueryRestController extends BaseSpringRestController {
 	
+	public ContactQueryRestController( ContactService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Contact using a UUID
      * @param		UUID contactId
@@ -95,7 +99,7 @@ public class ContactQueryRestController extends BaseSpringRestController {
     	Contact entity = null;
 
     	try {  
-    		entity = ContactService.getContactInstance().getContact( new ContactFetchOneSummary( contactId ) );
+    		entity = service.getContact( new ContactFetchOneSummary( contactId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Contact using Id " + contactId );
@@ -115,7 +119,7 @@ public class ContactQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Contact
-            contactList = ContactService.getContactInstance().getAllContact();
+            contactList = service.getAllContact();
             
             if ( contactList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Contacts" );
@@ -135,6 +139,7 @@ public class ContactQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Contact contact = null;
+    protected ContactService service = null;
     private static final Logger LOGGER = Logger.getLogger(ContactQueryRestController.class.getName());
     
 }

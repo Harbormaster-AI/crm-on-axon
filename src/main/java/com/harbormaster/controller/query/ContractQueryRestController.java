@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/ContractQuery")
 public class ContractQueryRestController extends BaseSpringRestController {
 	
+	public ContractQueryRestController( ContractService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Contract using a UUID
      * @param		UUID contractId
@@ -95,7 +99,7 @@ public class ContractQueryRestController extends BaseSpringRestController {
     	Contract entity = null;
 
     	try {  
-    		entity = ContractService.getContractInstance().getContract( new ContractFetchOneSummary( contractId ) );
+    		entity = service.getContract( new ContractFetchOneSummary( contractId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Contract using Id " + contractId );
@@ -115,7 +119,7 @@ public class ContractQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Contract
-            contractList = ContractService.getContractInstance().getAllContract();
+            contractList = service.getAllContract();
             
             if ( contractList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Contracts" );
@@ -135,6 +139,7 @@ public class ContractQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Contract contract = null;
+    protected ContractService service = null;
     private static final Logger LOGGER = Logger.getLogger(ContractQueryRestController.class.getName());
     
 }

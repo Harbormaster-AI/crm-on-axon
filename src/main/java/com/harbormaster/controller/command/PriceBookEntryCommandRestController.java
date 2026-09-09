@@ -100,7 +100,6 @@ public class PriceBookEntryCommandRestController extends BaseSpringRestControlle
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreatePriceBookEntryCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createPriceBookEntry( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class PriceBookEntryCommandRestController extends BaseSpringRestControlle
 		DeletePriceBookEntryCommand command = new DeletePriceBookEntryCommand( priceBookEntryId );
 
     	try {
-        	PriceBookEntryService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted PriceBookEntry with key " + command.getPriceBookEntryId() );
         }
         catch( Throwable exc ) {

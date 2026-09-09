@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/OpportunityLineItemQuery")
 public class OpportunityLineItemQueryRestController extends BaseSpringRestController {
 	
+	public OpportunityLineItemQueryRestController( OpportunityLineItemService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a OpportunityLineItem using a UUID
      * @param		UUID opportunityLineItemId
@@ -95,7 +99,7 @@ public class OpportunityLineItemQueryRestController extends BaseSpringRestContro
     	OpportunityLineItem entity = null;
 
     	try {  
-    		entity = OpportunityLineItemService.getOpportunityLineItemInstance().getOpportunityLineItem( new OpportunityLineItemFetchOneSummary( opportunityLineItemId ) );
+    		entity = service.getOpportunityLineItem( new OpportunityLineItemFetchOneSummary( opportunityLineItemId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load OpportunityLineItem using Id " + opportunityLineItemId );
@@ -115,7 +119,7 @@ public class OpportunityLineItemQueryRestController extends BaseSpringRestContro
         
     	try {
             // load the OpportunityLineItem
-            opportunityLineItemList = OpportunityLineItemService.getOpportunityLineItemInstance().getAllOpportunityLineItem();
+            opportunityLineItemList = service.getAllOpportunityLineItem();
             
             if ( opportunityLineItemList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all OpportunityLineItems" );
@@ -135,6 +139,7 @@ public class OpportunityLineItemQueryRestController extends BaseSpringRestContro
 // Attributes
 //************************************************************************
     protected OpportunityLineItem opportunityLineItem = null;
+    protected OpportunityLineItemService service = null;
     private static final Logger LOGGER = Logger.getLogger(OpportunityLineItemQueryRestController.class.getName());
     
 }

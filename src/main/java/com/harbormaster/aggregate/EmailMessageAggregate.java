@@ -79,21 +79,21 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateEmailMessageEvent</li>
  *      <li>DeleteEmailMessageEvent</li>
    *       <li>AssignOrganizationToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromEmailMessageEvent</li>
   *       <li>AssignOwnerToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromEmailMessageEvent</li>
   *       <li>AssignAccountToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromEmailMessageEvent</li>
   *       <li>AssignContactToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContactFromEmailMessageEvent</li>
   *       <li>AssignLeadToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignLeadFromEmailMessageEvent</li>
   *       <li>AssignCaseToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCaseFromEmailMessageEvent</li>
   *       <li>AssignOpportunityToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromEmailMessageEvent</li>
   *       <li>AssignCampaignToEmailMessageEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCampaignFromEmailMessageEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -436,7 +436,7 @@ public class EmailMessageAggregate {
     
     private String subject;
     private String body;
-    private DateTime sentAt;
+    private  Date sentAt;
     private String messageId;
     private EmailDirection direction;
     private EmailStatus status;

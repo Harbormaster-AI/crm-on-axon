@@ -84,19 +84,19 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateOrderEvent</li>
  *      <li>DeleteOrderEvent</li>
    *       <li>AssignOrganizationToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromOrderEvent</li>
   *       <li>AssignAccountToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromOrderEvent</li>
   *       <li>AssignOpportunityToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromOrderEvent</li>
   *       <li>AssignQuoteToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignQuoteFromOrderEvent</li>
   *       <li>AssignOwnerToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromOrderEvent</li>
   *       <li>AssignContractToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContractFromOrderEvent</li>
   *       <li>AssignPriceBookToOrderEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignPriceBookFromOrderEvent</li>
    *       <li>AssignItemsToOrderEvent</li>
  *       <li>RemoveItemsFromOrderEvent</li>
   *        </ul>
@@ -441,7 +441,7 @@ public class OrderAggregate {
     private UUID orderId;
     
     private String orderNumber;
-    private Date orderDate;
+    private  Date orderDate;
     private Money totalAmount;
     private Money taxAmount;
     private Money shippingAmount;

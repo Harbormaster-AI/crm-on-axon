@@ -67,9 +67,9 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdatePriceBookEntryEvent</li>
  *      <li>DeletePriceBookEntryEvent</li>
    *       <li>AssignPriceBookToPriceBookEntryEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignPriceBookFromPriceBookEntryEvent</li>
   *       <li>AssignProductToPriceBookEntryEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignProductFromPriceBookEntryEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -215,9 +215,9 @@ public class PriceBookEntryAggregate {
     private UUID priceBookEntryId;
     
     private Money unitPrice;
-    private Date effectiveDate;
-    private Date expirationDate;
-    private Boolean asActive;
+    private  Date effectiveDate;
+    private  Date expirationDate;
+    private boolean asActive;
     private PriceBook priceBook = null;
     private Product product = null;
 

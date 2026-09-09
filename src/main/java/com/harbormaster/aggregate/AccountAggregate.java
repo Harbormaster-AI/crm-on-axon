@@ -148,13 +148,13 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateAccountEvent</li>
  *      <li>DeleteAccountEvent</li>
    *       <li>AssignOrganizationToAccountEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromAccountEvent</li>
   *       <li>AssignParentAccountToAccountEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignParentAccountFromAccountEvent</li>
   *       <li>AssignOwnerToAccountEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromAccountEvent</li>
   *       <li>AssignTerritoryToAccountEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignTerritoryFromAccountEvent</li>
    *       <li>AssignChildAccountsToAccountEvent</li>
  *       <li>RemoveChildAccountsFromAccountEvent</li>
   *       <li>AssignContactsToAccountEvent</li>
@@ -767,7 +767,7 @@ public class AccountAggregate {
     private Address shippingAddress;
     private URL website;
     private PhoneNumber phone;
-    private Boolean asActive;
+    private boolean asActive;
     private AccountType accountType;
     private AccountLifecycleStage lifecycleStage;
     private Organization organization = null;

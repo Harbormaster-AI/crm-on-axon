@@ -100,7 +100,6 @@ public class Case_CommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateCase_Command command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createCase_( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class Case_CommandRestController extends BaseSpringRestController {
 		DeleteCase_Command command = new DeleteCase_Command( case_Id );
 
     	try {
-        	Case_Service delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Case_ with key " + command.getCase_Id() );
         }
         catch( Throwable exc ) {

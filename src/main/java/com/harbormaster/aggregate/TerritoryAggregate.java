@@ -79,7 +79,7 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateTerritoryEvent</li>
  *      <li>DeleteTerritoryEvent</li>
    *       <li>AssignOrganizationToTerritoryEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromTerritoryEvent</li>
    *       <li>AssignAccountsToTerritoryEvent</li>
  *       <li>RemoveAccountsFromTerritoryEvent</li>
   *       <li>AssignUsersToTerritoryEvent</li>

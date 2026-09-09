@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/TerritoryQuery")
 public class TerritoryQueryRestController extends BaseSpringRestController {
 	
+	public TerritoryQueryRestController( TerritoryService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Territory using a UUID
      * @param		UUID territoryId
@@ -95,7 +99,7 @@ public class TerritoryQueryRestController extends BaseSpringRestController {
     	Territory entity = null;
 
     	try {  
-    		entity = TerritoryService.getTerritoryInstance().getTerritory( new TerritoryFetchOneSummary( territoryId ) );
+    		entity = service.getTerritory( new TerritoryFetchOneSummary( territoryId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Territory using Id " + territoryId );
@@ -115,7 +119,7 @@ public class TerritoryQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Territory
-            territoryList = TerritoryService.getTerritoryInstance().getAllTerritory();
+            territoryList = service.getAllTerritory();
             
             if ( territoryList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Territorys" );
@@ -135,6 +139,7 @@ public class TerritoryQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Territory territory = null;
+    protected TerritoryService service = null;
     private static final Logger LOGGER = Logger.getLogger(TerritoryQueryRestController.class.getName());
     
 }

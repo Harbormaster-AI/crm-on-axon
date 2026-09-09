@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/PriceBook")
 public class PriceBookRestController extends BaseSpringRestController {
 
+	public PriceBookRestController( PriceBookService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a PriceBook.  if not key provided, calls create, otherwise calls save
      * @param		PriceBook	priceBook
@@ -94,7 +98,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = PriceBookService.getPriceBookInstance().createPriceBook( command );
+			completableFuture = service.createPriceBook( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdatePriceBookCommand
 			// -----------------------------------------------
-			completableFuture = PriceBookService.getPriceBookInstance().updatePriceBook(command);;
+			completableFuture = service.updatePriceBook(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "PriceBookController:update() - successfully update PriceBook - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class PriceBookRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeletePriceBookCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	PriceBookService delegate = PriceBookService.getPriceBookInstance();
+        	PriceBookService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted PriceBook with key " + command.getPriceBookId() );
@@ -155,7 +159,7 @@ public class PriceBookRestController extends BaseSpringRestController {
     	PriceBook entity = null;
 
     	try {  
-    		entity = PriceBookService.getPriceBookInstance().getPriceBook( new PriceBookFetchOneSummary( uuid ) );   
+    		entity = service.getPriceBook( new PriceBookFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load PriceBook using Id " + uuid );
@@ -175,7 +179,7 @@ public class PriceBookRestController extends BaseSpringRestController {
         
     	try {
             // load the PriceBook
-            priceBookList = PriceBookService.getPriceBookInstance().getAllPriceBook();
+            priceBookList = service.getAllPriceBook();
             
             if ( priceBookList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all PriceBooks" );
@@ -196,7 +200,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToPriceBookCommand command ) {
 		try {
-			PriceBookService.getPriceBookInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromPriceBookCommand command ) {
 		try {
-			PriceBookService.getPriceBookInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -225,7 +229,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	@PutMapping("/addToEntries")
 	public void addToEntries( @RequestBody(required=true) AssignEntriesToPriceBookCommand command ) {
 		try {
-			PriceBookService.getPriceBookInstance().addToEntries( command );   
+			service.addToEntries( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Entries", exc );
@@ -240,7 +244,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	public void removeFromEntries( 	@RequestBody(required=true) RemoveEntriesFromPriceBookCommand command )
 	{		
 		try {
-			PriceBookService.getPriceBookInstance().removeFromEntries( command );
+			service.removeFromEntries( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Entries", exc );
@@ -254,7 +258,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	@PutMapping("/addToQuotes")
 	public void addToQuotes( @RequestBody(required=true) AssignQuotesToPriceBookCommand command ) {
 		try {
-			PriceBookService.getPriceBookInstance().addToQuotes( command );   
+			service.addToQuotes( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Quotes", exc );
@@ -269,7 +273,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	public void removeFromQuotes( 	@RequestBody(required=true) RemoveQuotesFromPriceBookCommand command )
 	{		
 		try {
-			PriceBookService.getPriceBookInstance().removeFromQuotes( command );
+			service.removeFromQuotes( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Quotes", exc );
@@ -283,7 +287,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	@PutMapping("/addToOrders")
 	public void addToOrders( @RequestBody(required=true) AssignOrdersToPriceBookCommand command ) {
 		try {
-			PriceBookService.getPriceBookInstance().addToOrders( command );   
+			service.addToOrders( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Orders", exc );
@@ -298,7 +302,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 	public void removeFromOrders( 	@RequestBody(required=true) RemoveOrdersFromPriceBookCommand command )
 	{		
 		try {
-			PriceBookService.getPriceBookInstance().removeFromOrders( command );
+			service.removeFromOrders( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Orders", exc );
@@ -312,6 +316,7 @@ public class PriceBookRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected PriceBook priceBook = null;
-    private static final Logger LOGGER = Logger.getLogger(PriceBookRestController.class.getName());
+	protected PriceBookService service = null;
+	private static final Logger LOGGER = Logger.getLogger(PriceBookRestController.class.getName());
     
 }

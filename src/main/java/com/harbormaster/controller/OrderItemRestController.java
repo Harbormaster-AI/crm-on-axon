@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/OrderItem")
 public class OrderItemRestController extends BaseSpringRestController {
 
+	public OrderItemRestController( OrderItemService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a OrderItem.  if not key provided, calls create, otherwise calls save
      * @param		OrderItem	orderItem
@@ -94,7 +98,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = OrderItemService.getOrderItemInstance().createOrderItem( command );
+			completableFuture = service.createOrderItem( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateOrderItemCommand
 			// -----------------------------------------------
-			completableFuture = OrderItemService.getOrderItemInstance().updateOrderItem(command);;
+			completableFuture = service.updateOrderItem(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "OrderItemController:update() - successfully update OrderItem - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class OrderItemRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteOrderItemCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	OrderItemService delegate = OrderItemService.getOrderItemInstance();
+        	OrderItemService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted OrderItem with key " + command.getOrderItemId() );
@@ -155,7 +159,7 @@ public class OrderItemRestController extends BaseSpringRestController {
     	OrderItem entity = null;
 
     	try {  
-    		entity = OrderItemService.getOrderItemInstance().getOrderItem( new OrderItemFetchOneSummary( uuid ) );   
+    		entity = service.getOrderItem( new OrderItemFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load OrderItem using Id " + uuid );
@@ -175,7 +179,7 @@ public class OrderItemRestController extends BaseSpringRestController {
         
     	try {
             // load the OrderItem
-            orderItemList = OrderItemService.getOrderItemInstance().getAllOrderItem();
+            orderItemList = service.getAllOrderItem();
             
             if ( orderItemList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all OrderItems" );
@@ -196,7 +200,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrder")
 	public void assignOrder( @RequestBody AssignOrderToOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().assignOrder( command );   
+			service.assignOrder( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Order", exc );
@@ -210,7 +214,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrder")
 	public void unAssignOrder( @RequestBody(required=true)  UnAssignOrderFromOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().unAssignOrder( command );   
+			service.unAssignOrder( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Order", exc );
@@ -224,7 +228,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignProduct")
 	public void assignProduct( @RequestBody AssignProductToOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().assignProduct( command );   
+			service.assignProduct( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Product", exc );
@@ -238,7 +242,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignProduct")
 	public void unAssignProduct( @RequestBody(required=true)  UnAssignProductFromOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().unAssignProduct( command );   
+			service.unAssignProduct( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Product", exc );
@@ -252,7 +256,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignPriceBookEntry")
 	public void assignPriceBookEntry( @RequestBody AssignPriceBookEntryToOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().assignPriceBookEntry( command );   
+			service.assignPriceBookEntry( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign PriceBookEntry", exc );
@@ -266,7 +270,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignPriceBookEntry")
 	public void unAssignPriceBookEntry( @RequestBody(required=true)  UnAssignPriceBookEntryFromOrderItemCommand command ) {
 		try {
-			OrderItemService.getOrderItemInstance().unAssignPriceBookEntry( command );   
+			service.unAssignPriceBookEntry( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign PriceBookEntry", exc );
@@ -281,6 +285,7 @@ public class OrderItemRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected OrderItem orderItem = null;
-    private static final Logger LOGGER = Logger.getLogger(OrderItemRestController.class.getName());
+	protected OrderItemService service = null;
+	private static final Logger LOGGER = Logger.getLogger(OrderItemRestController.class.getName());
     
 }

@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Lead")
 public class LeadRestController extends BaseSpringRestController {
 
+	public LeadRestController( LeadService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Lead.  if not key provided, calls create, otherwise calls save
      * @param		Lead	lead
@@ -94,7 +98,7 @@ public class LeadRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = LeadService.getLeadInstance().createLead( command );
+			completableFuture = service.createLead( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class LeadRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateLeadCommand
 			// -----------------------------------------------
-			completableFuture = LeadService.getLeadInstance().updateLead(command);;
+			completableFuture = service.updateLead(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "LeadController:update() - successfully update Lead - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class LeadRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteLeadCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	LeadService delegate = LeadService.getLeadInstance();
+        	LeadService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Lead with key " + command.getLeadId() );
@@ -155,7 +159,7 @@ public class LeadRestController extends BaseSpringRestController {
     	Lead entity = null;
 
     	try {  
-    		entity = LeadService.getLeadInstance().getLead( new LeadFetchOneSummary( uuid ) );   
+    		entity = service.getLead( new LeadFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Lead using Id " + uuid );
@@ -175,7 +179,7 @@ public class LeadRestController extends BaseSpringRestController {
         
     	try {
             // load the Lead
-            leadList = LeadService.getLeadInstance().getAllLead();
+            leadList = service.getAllLead();
             
             if ( leadList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Leads" );
@@ -196,7 +200,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -238,7 +242,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -252,7 +256,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/assignConvertedAccount")
 	public void assignConvertedAccount( @RequestBody AssignConvertedAccountToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().assignConvertedAccount( command );   
+			service.assignConvertedAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign ConvertedAccount", exc );
@@ -266,7 +270,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignConvertedAccount")
 	public void unAssignConvertedAccount( @RequestBody(required=true)  UnAssignConvertedAccountFromLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().unAssignConvertedAccount( command );   
+			service.unAssignConvertedAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign ConvertedAccount", exc );
@@ -280,7 +284,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/assignConvertedContact")
 	public void assignConvertedContact( @RequestBody AssignConvertedContactToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().assignConvertedContact( command );   
+			service.assignConvertedContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign ConvertedContact", exc );
@@ -294,7 +298,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignConvertedContact")
 	public void unAssignConvertedContact( @RequestBody(required=true)  UnAssignConvertedContactFromLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().unAssignConvertedContact( command );   
+			service.unAssignConvertedContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign ConvertedContact", exc );
@@ -308,7 +312,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/assignConvertedOpportunity")
 	public void assignConvertedOpportunity( @RequestBody AssignConvertedOpportunityToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().assignConvertedOpportunity( command );   
+			service.assignConvertedOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign ConvertedOpportunity", exc );
@@ -322,7 +326,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignConvertedOpportunity")
 	public void unAssignConvertedOpportunity( @RequestBody(required=true)  UnAssignConvertedOpportunityFromLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().unAssignConvertedOpportunity( command );   
+			service.unAssignConvertedOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign ConvertedOpportunity", exc );
@@ -337,7 +341,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/addToActivities")
 	public void addToActivities( @RequestBody(required=true) AssignActivitiesToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().addToActivities( command );   
+			service.addToActivities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Activities", exc );
@@ -352,7 +356,7 @@ public class LeadRestController extends BaseSpringRestController {
 	public void removeFromActivities( 	@RequestBody(required=true) RemoveActivitiesFromLeadCommand command )
 	{		
 		try {
-			LeadService.getLeadInstance().removeFromActivities( command );
+			service.removeFromActivities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Activities", exc );
@@ -366,7 +370,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/addToCampaigns")
 	public void addToCampaigns( @RequestBody(required=true) AssignCampaignsToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().addToCampaigns( command );   
+			service.addToCampaigns( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Campaigns", exc );
@@ -381,7 +385,7 @@ public class LeadRestController extends BaseSpringRestController {
 	public void removeFromCampaigns( 	@RequestBody(required=true) RemoveCampaignsFromLeadCommand command )
 	{		
 		try {
-			LeadService.getLeadInstance().removeFromCampaigns( command );
+			service.removeFromCampaigns( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Campaigns", exc );
@@ -395,7 +399,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/addToNotes")
 	public void addToNotes( @RequestBody(required=true) AssignNotesToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().addToNotes( command );   
+			service.addToNotes( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Notes", exc );
@@ -410,7 +414,7 @@ public class LeadRestController extends BaseSpringRestController {
 	public void removeFromNotes( 	@RequestBody(required=true) RemoveNotesFromLeadCommand command )
 	{		
 		try {
-			LeadService.getLeadInstance().removeFromNotes( command );
+			service.removeFromNotes( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Notes", exc );
@@ -424,7 +428,7 @@ public class LeadRestController extends BaseSpringRestController {
 	@PutMapping("/addToEmailMessages")
 	public void addToEmailMessages( @RequestBody(required=true) AssignEmailMessagesToLeadCommand command ) {
 		try {
-			LeadService.getLeadInstance().addToEmailMessages( command );   
+			service.addToEmailMessages( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set EmailMessages", exc );
@@ -439,7 +443,7 @@ public class LeadRestController extends BaseSpringRestController {
 	public void removeFromEmailMessages( 	@RequestBody(required=true) RemoveEmailMessagesFromLeadCommand command )
 	{		
 		try {
-			LeadService.getLeadInstance().removeFromEmailMessages( command );
+			service.removeFromEmailMessages( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set EmailMessages", exc );
@@ -453,6 +457,7 @@ public class LeadRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Lead lead = null;
-    private static final Logger LOGGER = Logger.getLogger(LeadRestController.class.getName());
+	protected LeadService service = null;
+	private static final Logger LOGGER = Logger.getLogger(LeadRestController.class.getName());
     
 }

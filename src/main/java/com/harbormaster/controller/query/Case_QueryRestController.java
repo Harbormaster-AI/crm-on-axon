@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/Case_Query")
 public class Case_QueryRestController extends BaseSpringRestController {
 	
+	public Case_QueryRestController( Case_Service service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Case_ using a UUID
      * @param		UUID case_Id
@@ -95,7 +99,7 @@ public class Case_QueryRestController extends BaseSpringRestController {
     	Case_ entity = null;
 
     	try {  
-    		entity = Case_Service.getCase_Instance().getCase_( new Case_FetchOneSummary( case_Id ) );
+    		entity = service.getCase_( new Case_FetchOneSummary( case_Id ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Case_ using Id " + case_Id );
@@ -115,7 +119,7 @@ public class Case_QueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Case_
-            case_List = Case_Service.getCase_Instance().getAllCase_();
+            case_List = service.getAllCase_();
             
             if ( case_List != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Case_s" );
@@ -135,6 +139,7 @@ public class Case_QueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Case_ case_ = null;
+    protected Case_Service service = null;
     private static final Logger LOGGER = Logger.getLogger(Case_QueryRestController.class.getName());
     
 }

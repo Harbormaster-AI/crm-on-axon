@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/TeamQuery")
 public class TeamQueryRestController extends BaseSpringRestController {
 	
+	public TeamQueryRestController( TeamService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Team using a UUID
      * @param		UUID teamId
@@ -95,7 +99,7 @@ public class TeamQueryRestController extends BaseSpringRestController {
     	Team entity = null;
 
     	try {  
-    		entity = TeamService.getTeamInstance().getTeam( new TeamFetchOneSummary( teamId ) );
+    		entity = service.getTeam( new TeamFetchOneSummary( teamId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Team using Id " + teamId );
@@ -115,7 +119,7 @@ public class TeamQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Team
-            teamList = TeamService.getTeamInstance().getAllTeam();
+            teamList = service.getAllTeam();
             
             if ( teamList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Teams" );
@@ -135,6 +139,7 @@ public class TeamQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Team team = null;
+    protected TeamService service = null;
     private static final Logger LOGGER = Logger.getLogger(TeamQueryRestController.class.getName());
     
 }

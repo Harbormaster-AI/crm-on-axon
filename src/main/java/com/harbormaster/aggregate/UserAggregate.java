@@ -135,7 +135,7 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateUserEvent</li>
  *      <li>DeleteUserEvent</li>
    *       <li>AssignOrganizationToUserEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromUserEvent</li>
    *       <li>AssignTeamsToUserEvent</li>
  *       <li>RemoveTeamsFromUserEvent</li>
   *       <li>AssignActivitiesToUserEvent</li>

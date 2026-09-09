@@ -83,11 +83,11 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateContractEvent</li>
  *      <li>DeleteContractEvent</li>
    *       <li>AssignOrganizationToContractEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromContractEvent</li>
   *       <li>AssignAccountToContractEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromContractEvent</li>
   *       <li>AssignOwnerToContractEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromContractEvent</li>
    *       <li>AssignOrdersToContractEvent</li>
  *       <li>RemoveOrdersFromContractEvent</li>
   *       <li>AssignCasesToContractEvent</li>
@@ -339,10 +339,10 @@ public class ContractAggregate {
     private UUID contractId;
     
     private String contractNumber;
-    private Date startDate;
-    private Date endDate;
-    private Integer renewalTermMonths;
-    private Boolean autoRenew;
+    private  Date startDate;
+    private  Date endDate;
+    private int renewalTermMonths;
+    private boolean autoRenew;
     private ContractStatus status;
     private Organization organization = null;
     private Account account = null;

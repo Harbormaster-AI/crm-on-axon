@@ -86,7 +86,7 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdatePriceBookEvent</li>
  *      <li>DeletePriceBookEvent</li>
    *       <li>AssignOrganizationToPriceBookEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromPriceBookEvent</li>
    *       <li>AssignEntriesToPriceBookEvent</li>
  *       <li>RemoveEntriesFromPriceBookEvent</li>
   *       <li>AssignQuotesToPriceBookEvent</li>
@@ -303,7 +303,7 @@ public class PriceBookAggregate {
     private UUID priceBookId;
     
     private String name;
-    private Boolean asActive;
+    private boolean asActive;
     private String description;
     private Organization organization = null;
     private Set<PriceBookEntry> entries = new HashSet<>();

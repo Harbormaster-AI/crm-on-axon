@@ -93,7 +93,7 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateProductEvent</li>
  *      <li>DeleteProductEvent</li>
    *       <li>AssignOrganizationToProductEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromProductEvent</li>
    *       <li>AssignPriceBookEntriesToProductEvent</li>
  *       <li>RemovePriceBookEntriesFromProductEvent</li>
   *       <li>AssignOpportunityLineItemsToProductEvent</li>
@@ -354,7 +354,7 @@ public class ProductAggregate {
     
     private String sku;
     private String name;
-    private Boolean asActive;
+    private boolean asActive;
     private Money standardPrice;
     private String description;
     private ProductType productType;

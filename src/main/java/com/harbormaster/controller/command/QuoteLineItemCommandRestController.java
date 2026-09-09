@@ -100,7 +100,6 @@ public class QuoteLineItemCommandRestController extends BaseSpringRestController
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateQuoteLineItemCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createQuoteLineItem( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class QuoteLineItemCommandRestController extends BaseSpringRestController
 		DeleteQuoteLineItemCommand command = new DeleteQuoteLineItemCommand( quoteLineItemId );
 
     	try {
-        	QuoteLineItemService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted QuoteLineItem with key " + command.getQuoteLineItemId() );
         }
         catch( Throwable exc ) {

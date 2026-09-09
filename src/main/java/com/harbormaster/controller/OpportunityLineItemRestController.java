@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/OpportunityLineItem")
 public class OpportunityLineItemRestController extends BaseSpringRestController {
 
+	public OpportunityLineItemRestController( OpportunityLineItemService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a OpportunityLineItem.  if not key provided, calls create, otherwise calls save
      * @param		OpportunityLineItem	opportunityLineItem
@@ -94,7 +98,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = OpportunityLineItemService.getOpportunityLineItemInstance().createOpportunityLineItem( command );
+			completableFuture = service.createOpportunityLineItem( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 			// -----------------------------------------------
 			// delegate the UpdateOpportunityLineItemCommand
 			// -----------------------------------------------
-			completableFuture = OpportunityLineItemService.getOpportunityLineItemInstance().updateOpportunityLineItem(command);;
+			completableFuture = service.updateOpportunityLineItem(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "OpportunityLineItemController:update() - successfully update OpportunityLineItem - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteOpportunityLineItemCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	OpportunityLineItemService delegate = OpportunityLineItemService.getOpportunityLineItemInstance();
+        	OpportunityLineItemService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted OpportunityLineItem with key " + command.getOpportunityLineItemId() );
@@ -155,7 +159,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
     	OpportunityLineItem entity = null;
 
     	try {  
-    		entity = OpportunityLineItemService.getOpportunityLineItemInstance().getOpportunityLineItem( new OpportunityLineItemFetchOneSummary( uuid ) );   
+    		entity = service.getOpportunityLineItem( new OpportunityLineItemFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load OpportunityLineItem using Id " + uuid );
@@ -175,7 +179,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
         
     	try {
             // load the OpportunityLineItem
-            opportunityLineItemList = OpportunityLineItemService.getOpportunityLineItemInstance().getAllOpportunityLineItem();
+            opportunityLineItemList = service.getAllOpportunityLineItem();
             
             if ( opportunityLineItemList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all OpportunityLineItems" );
@@ -196,7 +200,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -210,7 +214,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -224,7 +228,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/assignProduct")
 	public void assignProduct( @RequestBody AssignProductToOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().assignProduct( command );   
+			service.assignProduct( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Product", exc );
@@ -238,7 +242,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/unAssignProduct")
 	public void unAssignProduct( @RequestBody(required=true)  UnAssignProductFromOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().unAssignProduct( command );   
+			service.unAssignProduct( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Product", exc );
@@ -252,7 +256,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/assignPriceBookEntry")
 	public void assignPriceBookEntry( @RequestBody AssignPriceBookEntryToOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().assignPriceBookEntry( command );   
+			service.assignPriceBookEntry( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign PriceBookEntry", exc );
@@ -266,7 +270,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 	@PutMapping("/unAssignPriceBookEntry")
 	public void unAssignPriceBookEntry( @RequestBody(required=true)  UnAssignPriceBookEntryFromOpportunityLineItemCommand command ) {
 		try {
-			OpportunityLineItemService.getOpportunityLineItemInstance().unAssignPriceBookEntry( command );   
+			service.unAssignPriceBookEntry( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign PriceBookEntry", exc );
@@ -281,6 +285,7 @@ public class OpportunityLineItemRestController extends BaseSpringRestController 
 // Attributes
 //************************************************************************
     protected OpportunityLineItem opportunityLineItem = null;
-    private static final Logger LOGGER = Logger.getLogger(OpportunityLineItemRestController.class.getName());
+	protected OpportunityLineItemService service = null;
+	private static final Logger LOGGER = Logger.getLogger(OpportunityLineItemRestController.class.getName());
     
 }

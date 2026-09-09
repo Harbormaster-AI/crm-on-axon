@@ -100,7 +100,6 @@ public class OpportunityStageHistoryCommandRestController extends BaseSpringRest
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateOpportunityStageHistoryCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createOpportunityStageHistory( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class OpportunityStageHistoryCommandRestController extends BaseSpringRest
 		DeleteOpportunityStageHistoryCommand command = new DeleteOpportunityStageHistoryCommand( opportunityStageHistoryId );
 
     	try {
-        	OpportunityStageHistoryService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted OpportunityStageHistory with key " + command.getOpportunityStageHistoryId() );
         }
         catch( Throwable exc ) {

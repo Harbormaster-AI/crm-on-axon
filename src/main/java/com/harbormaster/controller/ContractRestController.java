@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Contract")
 public class ContractRestController extends BaseSpringRestController {
 
+	public ContractRestController( ContractService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Contract.  if not key provided, calls create, otherwise calls save
      * @param		Contract	contract
@@ -94,7 +98,7 @@ public class ContractRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = ContractService.getContractInstance().createContract( command );
+			completableFuture = service.createContract( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class ContractRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateContractCommand
 			// -----------------------------------------------
-			completableFuture = ContractService.getContractInstance().updateContract(command);;
+			completableFuture = service.updateContract(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "ContractController:update() - successfully update Contract - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class ContractRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteContractCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	ContractService delegate = ContractService.getContractInstance();
+        	ContractService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Contract with key " + command.getContractId() );
@@ -155,7 +159,7 @@ public class ContractRestController extends BaseSpringRestController {
     	Contract entity = null;
 
     	try {  
-    		entity = ContractService.getContractInstance().getContract( new ContractFetchOneSummary( uuid ) );   
+    		entity = service.getContract( new ContractFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Contract using Id " + uuid );
@@ -175,7 +179,7 @@ public class ContractRestController extends BaseSpringRestController {
         
     	try {
             // load the Contract
-            contractList = ContractService.getContractInstance().getAllContract();
+            contractList = service.getAllContract();
             
             if ( contractList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Contracts" );
@@ -196,7 +200,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToContractCommand command ) {
 		try {
-			ContractService.getContractInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromContractCommand command ) {
 		try {
-			ContractService.getContractInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToContractCommand command ) {
 		try {
-			ContractService.getContractInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -238,7 +242,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromContractCommand command ) {
 		try {
-			ContractService.getContractInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -252,7 +256,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToContractCommand command ) {
 		try {
-			ContractService.getContractInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -266,7 +270,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromContractCommand command ) {
 		try {
-			ContractService.getContractInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -281,7 +285,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/addToOrders")
 	public void addToOrders( @RequestBody(required=true) AssignOrdersToContractCommand command ) {
 		try {
-			ContractService.getContractInstance().addToOrders( command );   
+			service.addToOrders( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Orders", exc );
@@ -296,7 +300,7 @@ public class ContractRestController extends BaseSpringRestController {
 	public void removeFromOrders( 	@RequestBody(required=true) RemoveOrdersFromContractCommand command )
 	{		
 		try {
-			ContractService.getContractInstance().removeFromOrders( command );
+			service.removeFromOrders( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Orders", exc );
@@ -310,7 +314,7 @@ public class ContractRestController extends BaseSpringRestController {
 	@PutMapping("/addToCases")
 	public void addToCases( @RequestBody(required=true) AssignCasesToContractCommand command ) {
 		try {
-			ContractService.getContractInstance().addToCases( command );   
+			service.addToCases( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Cases", exc );
@@ -325,7 +329,7 @@ public class ContractRestController extends BaseSpringRestController {
 	public void removeFromCases( 	@RequestBody(required=true) RemoveCasesFromContractCommand command )
 	{		
 		try {
-			ContractService.getContractInstance().removeFromCases( command );
+			service.removeFromCases( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Cases", exc );
@@ -339,6 +343,7 @@ public class ContractRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Contract contract = null;
-    private static final Logger LOGGER = Logger.getLogger(ContractRestController.class.getName());
+	protected ContractService service = null;
+	private static final Logger LOGGER = Logger.getLogger(ContractRestController.class.getName());
     
 }

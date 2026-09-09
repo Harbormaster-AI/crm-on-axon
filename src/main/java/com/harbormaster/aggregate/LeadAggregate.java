@@ -101,15 +101,15 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateLeadEvent</li>
  *      <li>DeleteLeadEvent</li>
    *       <li>AssignOrganizationToLeadEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromLeadEvent</li>
   *       <li>AssignOwnerToLeadEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromLeadEvent</li>
   *       <li>AssignConvertedAccountToLeadEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignConvertedAccountFromLeadEvent</li>
   *       <li>AssignConvertedContactToLeadEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignConvertedContactFromLeadEvent</li>
   *       <li>AssignConvertedOpportunityToLeadEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignConvertedOpportunityFromLeadEvent</li>
    *       <li>AssignActivitiesToLeadEvent</li>
  *       <li>RemoveActivitiesFromLeadEvent</li>
   *       <li>AssignCampaignsToLeadEvent</li>
@@ -505,7 +505,7 @@ public class LeadAggregate {
     private String company;
     private EmailAddress email;
     private PhoneNumber phone;
-    private Boolean converted;
+    private boolean converted;
     private LeadStatus status;
     private LeadSource source;
     private LeadRating rating;

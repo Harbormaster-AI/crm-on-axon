@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/QuoteQuery")
 public class QuoteQueryRestController extends BaseSpringRestController {
 	
+	public QuoteQueryRestController( QuoteService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Quote using a UUID
      * @param		UUID quoteId
@@ -95,7 +99,7 @@ public class QuoteQueryRestController extends BaseSpringRestController {
     	Quote entity = null;
 
     	try {  
-    		entity = QuoteService.getQuoteInstance().getQuote( new QuoteFetchOneSummary( quoteId ) );
+    		entity = service.getQuote( new QuoteFetchOneSummary( quoteId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Quote using Id " + quoteId );
@@ -115,7 +119,7 @@ public class QuoteQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Quote
-            quoteList = QuoteService.getQuoteInstance().getAllQuote();
+            quoteList = service.getAllQuote();
             
             if ( quoteList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Quotes" );
@@ -135,6 +139,7 @@ public class QuoteQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Quote quote = null;
+    protected QuoteService service = null;
     private static final Logger LOGGER = Logger.getLogger(QuoteQueryRestController.class.getName());
     
 }

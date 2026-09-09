@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/UserQuery")
 public class UserQueryRestController extends BaseSpringRestController {
 	
+	public UserQueryRestController( UserService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a User using a UUID
      * @param		UUID userId
@@ -95,7 +99,7 @@ public class UserQueryRestController extends BaseSpringRestController {
     	User entity = null;
 
     	try {  
-    		entity = UserService.getUserInstance().getUser( new UserFetchOneSummary( userId ) );
+    		entity = service.getUser( new UserFetchOneSummary( userId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load User using Id " + userId );
@@ -115,7 +119,7 @@ public class UserQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the User
-            userList = UserService.getUserInstance().getAllUser();
+            userList = service.getAllUser();
             
             if ( userList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Users" );
@@ -135,6 +139,7 @@ public class UserQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected User user = null;
+    protected UserService service = null;
     private static final Logger LOGGER = Logger.getLogger(UserQueryRestController.class.getName());
     
 }

@@ -69,11 +69,11 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateCampaignMemberEvent</li>
  *      <li>DeleteCampaignMemberEvent</li>
    *       <li>AssignCampaignToCampaignMemberEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCampaignFromCampaignMemberEvent</li>
   *       <li>AssignLeadToCampaignMemberEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignLeadFromCampaignMemberEvent</li>
   *       <li>AssignContactToCampaignMemberEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContactFromCampaignMemberEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -248,7 +248,7 @@ public class CampaignMemberAggregate {
     @AggregateIdentifier
     private UUID campaignMemberId;
     
-    private Boolean responded;
+    private boolean responded;
     private CampaignMemberStatus status;
     private CampaignMemberType memberType;
     private Campaign campaign = null;

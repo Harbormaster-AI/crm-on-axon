@@ -100,7 +100,6 @@ public class LeadCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateLeadCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createLead( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class LeadCommandRestController extends BaseSpringRestController {
 		DeleteLeadCommand command = new DeleteLeadCommand( leadId );
 
     	try {
-        	LeadService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Lead with key " + command.getLeadId() );
         }
         catch( Throwable exc ) {

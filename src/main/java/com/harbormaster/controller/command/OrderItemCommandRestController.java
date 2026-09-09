@@ -100,7 +100,6 @@ public class OrderItemCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateOrderItemCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createOrderItem( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class OrderItemCommandRestController extends BaseSpringRestController {
 		DeleteOrderItemCommand command = new DeleteOrderItemCommand( orderItemId );
 
     	try {
-        	OrderItemService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted OrderItem with key " + command.getOrderItemId() );
         }
         catch( Throwable exc ) {

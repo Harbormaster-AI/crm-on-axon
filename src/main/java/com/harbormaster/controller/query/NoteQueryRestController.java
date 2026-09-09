@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/NoteQuery")
 public class NoteQueryRestController extends BaseSpringRestController {
 	
+	public NoteQueryRestController( NoteService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Note using a UUID
      * @param		UUID noteId
@@ -95,7 +99,7 @@ public class NoteQueryRestController extends BaseSpringRestController {
     	Note entity = null;
 
     	try {  
-    		entity = NoteService.getNoteInstance().getNote( new NoteFetchOneSummary( noteId ) );
+    		entity = service.getNote( new NoteFetchOneSummary( noteId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Note using Id " + noteId );
@@ -115,7 +119,7 @@ public class NoteQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Note
-            noteList = NoteService.getNoteInstance().getAllNote();
+            noteList = service.getAllNote();
             
             if ( noteList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Notes" );
@@ -135,6 +139,7 @@ public class NoteQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Note note = null;
+    protected NoteService service = null;
     private static final Logger LOGGER = Logger.getLogger(NoteQueryRestController.class.getName());
     
 }

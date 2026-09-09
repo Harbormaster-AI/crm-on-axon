@@ -100,7 +100,6 @@ public class ActivityCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateActivityCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createActivity( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class ActivityCommandRestController extends BaseSpringRestController {
 		DeleteActivityCommand command = new DeleteActivityCommand( activityId );
 
     	try {
-        	ActivityService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Activity with key " + command.getActivityId() );
         }
         catch( Throwable exc ) {

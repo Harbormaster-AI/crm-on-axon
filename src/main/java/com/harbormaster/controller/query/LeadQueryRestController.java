@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/LeadQuery")
 public class LeadQueryRestController extends BaseSpringRestController {
 	
+	public LeadQueryRestController( LeadService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Lead using a UUID
      * @param		UUID leadId
@@ -95,7 +99,7 @@ public class LeadQueryRestController extends BaseSpringRestController {
     	Lead entity = null;
 
     	try {  
-    		entity = LeadService.getLeadInstance().getLead( new LeadFetchOneSummary( leadId ) );
+    		entity = service.getLead( new LeadFetchOneSummary( leadId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Lead using Id " + leadId );
@@ -115,7 +119,7 @@ public class LeadQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Lead
-            leadList = LeadService.getLeadInstance().getAllLead();
+            leadList = service.getAllLead();
             
             if ( leadList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Leads" );
@@ -135,6 +139,7 @@ public class LeadQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Lead lead = null;
+    protected LeadService service = null;
     private static final Logger LOGGER = Logger.getLogger(LeadQueryRestController.class.getName());
     
 }

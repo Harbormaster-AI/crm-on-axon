@@ -82,17 +82,17 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateQuoteEvent</li>
  *      <li>DeleteQuoteEvent</li>
    *       <li>AssignOrganizationToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromQuoteEvent</li>
   *       <li>AssignAccountToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromQuoteEvent</li>
   *       <li>AssignOpportunityToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromQuoteEvent</li>
   *       <li>AssignOwnerToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromQuoteEvent</li>
   *       <li>AssignPriceBookToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignPriceBookFromQuoteEvent</li>
   *       <li>AssignOrderToQuoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrderFromQuoteEvent</li>
    *       <li>AssignLineItemsToQuoteEvent</li>
  *       <li>RemoveLineItemsFromQuoteEvent</li>
   *        </ul>
@@ -114,7 +114,7 @@ public class QuoteAggregate {
     @CommandHandler
     public QuoteAggregate(CreateQuoteCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateQuoteCommand" );
-    	CreateQuoteEvent event = new CreateQuoteEvent(command.getQuoteId(), command.getQuoteNumber(), command.getValidityStart(), command.getValidityEnd(), command.getTotalAmount(), command.getDiscountPercent(), command.getTaxAmount(), command.getShippingAmount(), command.getStatus());
+    	CreateQuoteEvent event = new CreateQuoteEvent(command.getQuoteId(), command.quoteNumber(), command.validityStart(), command.validityEnd(), command.totalAmount(), command.discountPercent(), command.taxAmount(), command.shippingAmount(), command.Status());
     	
         apply(event);
     }
@@ -122,7 +122,7 @@ public class QuoteAggregate {
     @CommandHandler
     public void handle(UpdateQuoteCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateQuoteCommand" );
-    	UpdateQuoteEvent event = new UpdateQuoteEvent(command.getQuoteId(), command.getQuoteNumber(), command.getValidityStart(), command.getValidityEnd(), command.getTotalAmount(), command.getDiscountPercent(), command.getTaxAmount(), command.getShippingAmount(), command.getOrganization(), command.getAccount(), command.getOpportunity(), command.getOwner(), command.getLineItems(), command.getPriceBook(), command.getOrder(), command.getStatus());        
+    	UpdateQuoteEvent event = new UpdateQuoteEvent(command.getQuoteId(), command.quoteNumber(), command.validityStart(), command.validityEnd(), command.totalAmount(), command.discountPercent(), command.taxAmount(), command.shippingAmount(), command.Organization(), command.Account(), command.Opportunity(), command.Owner(), command.LineItems(), command.PriceBook(), command.Order(), command.Status());        
     	
         apply(event);
     }
@@ -409,8 +409,8 @@ public class QuoteAggregate {
     private UUID quoteId;
     
     private String quoteNumber;
-    private Date validityStart;
-    private Date validityEnd;
+    private  Date validityStart;
+    private  Date validityEnd;
     private Money totalAmount;
     private java.math.BigDecimal discountPercent;
     private Money taxAmount;

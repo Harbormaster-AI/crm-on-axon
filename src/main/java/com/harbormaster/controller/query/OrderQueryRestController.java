@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/OrderQuery")
 public class OrderQueryRestController extends BaseSpringRestController {
 	
+	public OrderQueryRestController( OrderService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Order using a UUID
      * @param		UUID orderId
@@ -95,7 +99,7 @@ public class OrderQueryRestController extends BaseSpringRestController {
     	Order entity = null;
 
     	try {  
-    		entity = OrderService.getOrderInstance().getOrder( new OrderFetchOneSummary( orderId ) );
+    		entity = service.getOrder( new OrderFetchOneSummary( orderId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Order using Id " + orderId );
@@ -115,7 +119,7 @@ public class OrderQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Order
-            orderList = OrderService.getOrderInstance().getAllOrder();
+            orderList = service.getAllOrder();
             
             if ( orderList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Orders" );
@@ -135,6 +139,7 @@ public class OrderQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Order order = null;
+    protected OrderService service = null;
     private static final Logger LOGGER = Logger.getLogger(OrderQueryRestController.class.getName());
     
 }

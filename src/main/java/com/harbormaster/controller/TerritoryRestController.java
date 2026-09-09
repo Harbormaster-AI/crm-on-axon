@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Territory")
 public class TerritoryRestController extends BaseSpringRestController {
 
+	public TerritoryRestController( TerritoryService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Territory.  if not key provided, calls create, otherwise calls save
      * @param		Territory	territory
@@ -94,7 +98,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = TerritoryService.getTerritoryInstance().createTerritory( command );
+			completableFuture = service.createTerritory( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateTerritoryCommand
 			// -----------------------------------------------
-			completableFuture = TerritoryService.getTerritoryInstance().updateTerritory(command);;
+			completableFuture = service.updateTerritory(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "TerritoryController:update() - successfully update Territory - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class TerritoryRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteTerritoryCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	TerritoryService delegate = TerritoryService.getTerritoryInstance();
+        	TerritoryService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Territory with key " + command.getTerritoryId() );
@@ -155,7 +159,7 @@ public class TerritoryRestController extends BaseSpringRestController {
     	Territory entity = null;
 
     	try {  
-    		entity = TerritoryService.getTerritoryInstance().getTerritory( new TerritoryFetchOneSummary( uuid ) );   
+    		entity = service.getTerritory( new TerritoryFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Territory using Id " + uuid );
@@ -175,7 +179,7 @@ public class TerritoryRestController extends BaseSpringRestController {
         
     	try {
             // load the Territory
-            territoryList = TerritoryService.getTerritoryInstance().getAllTerritory();
+            territoryList = service.getAllTerritory();
             
             if ( territoryList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Territorys" );
@@ -196,7 +200,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToTerritoryCommand command ) {
 		try {
-			TerritoryService.getTerritoryInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromTerritoryCommand command ) {
 		try {
-			TerritoryService.getTerritoryInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -225,7 +229,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	@PutMapping("/addToAccounts")
 	public void addToAccounts( @RequestBody(required=true) AssignAccountsToTerritoryCommand command ) {
 		try {
-			TerritoryService.getTerritoryInstance().addToAccounts( command );   
+			service.addToAccounts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Accounts", exc );
@@ -240,7 +244,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	public void removeFromAccounts( 	@RequestBody(required=true) RemoveAccountsFromTerritoryCommand command )
 	{		
 		try {
-			TerritoryService.getTerritoryInstance().removeFromAccounts( command );
+			service.removeFromAccounts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Accounts", exc );
@@ -254,7 +258,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	@PutMapping("/addToUsers")
 	public void addToUsers( @RequestBody(required=true) AssignUsersToTerritoryCommand command ) {
 		try {
-			TerritoryService.getTerritoryInstance().addToUsers( command );   
+			service.addToUsers( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Users", exc );
@@ -269,7 +273,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 	public void removeFromUsers( 	@RequestBody(required=true) RemoveUsersFromTerritoryCommand command )
 	{		
 		try {
-			TerritoryService.getTerritoryInstance().removeFromUsers( command );
+			service.removeFromUsers( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Users", exc );
@@ -283,6 +287,7 @@ public class TerritoryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Territory territory = null;
-    private static final Logger LOGGER = Logger.getLogger(TerritoryRestController.class.getName());
+	protected TerritoryService service = null;
+	private static final Logger LOGGER = Logger.getLogger(TerritoryRestController.class.getName());
     
 }

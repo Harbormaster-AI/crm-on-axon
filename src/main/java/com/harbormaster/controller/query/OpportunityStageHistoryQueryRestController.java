@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/OpportunityStageHistoryQuery")
 public class OpportunityStageHistoryQueryRestController extends BaseSpringRestController {
 	
+	public OpportunityStageHistoryQueryRestController( OpportunityStageHistoryService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a OpportunityStageHistory using a UUID
      * @param		UUID opportunityStageHistoryId
@@ -95,7 +99,7 @@ public class OpportunityStageHistoryQueryRestController extends BaseSpringRestCo
     	OpportunityStageHistory entity = null;
 
     	try {  
-    		entity = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().getOpportunityStageHistory( new OpportunityStageHistoryFetchOneSummary( opportunityStageHistoryId ) );
+    		entity = service.getOpportunityStageHistory( new OpportunityStageHistoryFetchOneSummary( opportunityStageHistoryId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load OpportunityStageHistory using Id " + opportunityStageHistoryId );
@@ -115,7 +119,7 @@ public class OpportunityStageHistoryQueryRestController extends BaseSpringRestCo
         
     	try {
             // load the OpportunityStageHistory
-            opportunityStageHistoryList = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().getAllOpportunityStageHistory();
+            opportunityStageHistoryList = service.getAllOpportunityStageHistory();
             
             if ( opportunityStageHistoryList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all OpportunityStageHistorys" );
@@ -135,6 +139,7 @@ public class OpportunityStageHistoryQueryRestController extends BaseSpringRestCo
 // Attributes
 //************************************************************************
     protected OpportunityStageHistory opportunityStageHistory = null;
+    protected OpportunityStageHistoryService service = null;
     private static final Logger LOGGER = Logger.getLogger(OpportunityStageHistoryQueryRestController.class.getName());
     
 }

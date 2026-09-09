@@ -79,21 +79,21 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateActivityEvent</li>
  *      <li>DeleteActivityEvent</li>
    *       <li>AssignOrganizationToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromActivityEvent</li>
   *       <li>AssignOwnerToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromActivityEvent</li>
   *       <li>AssignAccountToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromActivityEvent</li>
   *       <li>AssignContactToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContactFromActivityEvent</li>
   *       <li>AssignLeadToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignLeadFromActivityEvent</li>
   *       <li>AssignOpportunityToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromActivityEvent</li>
   *       <li>AssignCaseToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCaseFromActivityEvent</li>
   *       <li>AssignCampaignToActivityEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCampaignFromActivityEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -439,9 +439,9 @@ public class ActivityAggregate {
     private UUID activityId;
     
     private String subject;
-    private Date dueDate;
-    private DateTime startAt;
-    private DateTime endAt;
+    private  Date dueDate;
+    private  Date startAt;
+    private  Date endAt;
     private String location;
     private ActivityType activityType;
     private ActivityStatus status;

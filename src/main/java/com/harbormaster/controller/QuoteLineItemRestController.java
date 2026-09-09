@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/QuoteLineItem")
 public class QuoteLineItemRestController extends BaseSpringRestController {
 
+	public QuoteLineItemRestController( QuoteLineItemService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a QuoteLineItem.  if not key provided, calls create, otherwise calls save
      * @param		QuoteLineItem	quoteLineItem
@@ -94,7 +98,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = QuoteLineItemService.getQuoteLineItemInstance().createQuoteLineItem( command );
+			completableFuture = service.createQuoteLineItem( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateQuoteLineItemCommand
 			// -----------------------------------------------
-			completableFuture = QuoteLineItemService.getQuoteLineItemInstance().updateQuoteLineItem(command);;
+			completableFuture = service.updateQuoteLineItem(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "QuoteLineItemController:update() - successfully update QuoteLineItem - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteQuoteLineItemCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	QuoteLineItemService delegate = QuoteLineItemService.getQuoteLineItemInstance();
+        	QuoteLineItemService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted QuoteLineItem with key " + command.getQuoteLineItemId() );
@@ -155,7 +159,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
     	QuoteLineItem entity = null;
 
     	try {  
-    		entity = QuoteLineItemService.getQuoteLineItemInstance().getQuoteLineItem( new QuoteLineItemFetchOneSummary( uuid ) );   
+    		entity = service.getQuoteLineItem( new QuoteLineItemFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load QuoteLineItem using Id " + uuid );
@@ -175,7 +179,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
         
     	try {
             // load the QuoteLineItem
-            quoteLineItemList = QuoteLineItemService.getQuoteLineItemInstance().getAllQuoteLineItem();
+            quoteLineItemList = service.getAllQuoteLineItem();
             
             if ( quoteLineItemList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all QuoteLineItems" );
@@ -196,7 +200,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignQuote")
 	public void assignQuote( @RequestBody AssignQuoteToQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().assignQuote( command );   
+			service.assignQuote( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Quote", exc );
@@ -210,7 +214,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignQuote")
 	public void unAssignQuote( @RequestBody(required=true)  UnAssignQuoteFromQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().unAssignQuote( command );   
+			service.unAssignQuote( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Quote", exc );
@@ -224,7 +228,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignProduct")
 	public void assignProduct( @RequestBody AssignProductToQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().assignProduct( command );   
+			service.assignProduct( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Product", exc );
@@ -238,7 +242,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignProduct")
 	public void unAssignProduct( @RequestBody(required=true)  UnAssignProductFromQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().unAssignProduct( command );   
+			service.unAssignProduct( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Product", exc );
@@ -252,7 +256,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignPriceBookEntry")
 	public void assignPriceBookEntry( @RequestBody AssignPriceBookEntryToQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().assignPriceBookEntry( command );   
+			service.assignPriceBookEntry( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign PriceBookEntry", exc );
@@ -266,7 +270,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignPriceBookEntry")
 	public void unAssignPriceBookEntry( @RequestBody(required=true)  UnAssignPriceBookEntryFromQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().unAssignPriceBookEntry( command );   
+			service.unAssignPriceBookEntry( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign PriceBookEntry", exc );
@@ -280,7 +284,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/assignOpportunityLineItem")
 	public void assignOpportunityLineItem( @RequestBody AssignOpportunityLineItemToQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().assignOpportunityLineItem( command );   
+			service.assignOpportunityLineItem( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign OpportunityLineItem", exc );
@@ -294,7 +298,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOpportunityLineItem")
 	public void unAssignOpportunityLineItem( @RequestBody(required=true)  UnAssignOpportunityLineItemFromQuoteLineItemCommand command ) {
 		try {
-			QuoteLineItemService.getQuoteLineItemInstance().unAssignOpportunityLineItem( command );   
+			service.unAssignOpportunityLineItem( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign OpportunityLineItem", exc );
@@ -309,6 +313,7 @@ public class QuoteLineItemRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected QuoteLineItem quoteLineItem = null;
-    private static final Logger LOGGER = Logger.getLogger(QuoteLineItemRestController.class.getName());
+	protected QuoteLineItemService service = null;
+	private static final Logger LOGGER = Logger.getLogger(QuoteLineItemRestController.class.getName());
     
 }

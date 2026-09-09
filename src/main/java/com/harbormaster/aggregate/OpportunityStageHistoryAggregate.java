@@ -67,9 +67,9 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateOpportunityStageHistoryEvent</li>
  *      <li>DeleteOpportunityStageHistoryEvent</li>
    *       <li>AssignOpportunityToOpportunityStageHistoryEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromOpportunityStageHistoryEvent</li>
   *       <li>AssignChangedByToOpportunityStageHistoryEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignChangedByFromOpportunityStageHistoryEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -214,7 +214,7 @@ public class OpportunityStageHistoryAggregate {
     @AggregateIdentifier
     private UUID opportunityStageHistoryId;
     
-    private DateTime changedAt;
+    private  Date changedAt;
     private String comment;
     private OpportunityStage fromStage;
     private OpportunityStage toStage;

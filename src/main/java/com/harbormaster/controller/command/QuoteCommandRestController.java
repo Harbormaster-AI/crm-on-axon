@@ -100,7 +100,6 @@ public class QuoteCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateQuoteCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createQuote( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class QuoteCommandRestController extends BaseSpringRestController {
 		DeleteQuoteCommand command = new DeleteQuoteCommand( quoteId );
 
     	try {
-        	QuoteService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Quote with key " + command.getQuoteId() );
         }
         catch( Throwable exc ) {

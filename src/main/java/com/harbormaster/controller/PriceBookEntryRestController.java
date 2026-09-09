@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/PriceBookEntry")
 public class PriceBookEntryRestController extends BaseSpringRestController {
 
+	public PriceBookEntryRestController( PriceBookEntryService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a PriceBookEntry.  if not key provided, calls create, otherwise calls save
      * @param		PriceBookEntry	priceBookEntry
@@ -94,7 +98,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = PriceBookEntryService.getPriceBookEntryInstance().createPriceBookEntry( command );
+			completableFuture = service.createPriceBookEntry( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdatePriceBookEntryCommand
 			// -----------------------------------------------
-			completableFuture = PriceBookEntryService.getPriceBookEntryInstance().updatePriceBookEntry(command);;
+			completableFuture = service.updatePriceBookEntry(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "PriceBookEntryController:update() - successfully update PriceBookEntry - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeletePriceBookEntryCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	PriceBookEntryService delegate = PriceBookEntryService.getPriceBookEntryInstance();
+        	PriceBookEntryService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted PriceBookEntry with key " + command.getPriceBookEntryId() );
@@ -155,7 +159,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
     	PriceBookEntry entity = null;
 
     	try {  
-    		entity = PriceBookEntryService.getPriceBookEntryInstance().getPriceBookEntry( new PriceBookEntryFetchOneSummary( uuid ) );   
+    		entity = service.getPriceBookEntry( new PriceBookEntryFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load PriceBookEntry using Id " + uuid );
@@ -175,7 +179,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
         
     	try {
             // load the PriceBookEntry
-            priceBookEntryList = PriceBookEntryService.getPriceBookEntryInstance().getAllPriceBookEntry();
+            priceBookEntryList = service.getAllPriceBookEntry();
             
             if ( priceBookEntryList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all PriceBookEntrys" );
@@ -196,7 +200,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 	@PutMapping("/assignPriceBook")
 	public void assignPriceBook( @RequestBody AssignPriceBookToPriceBookEntryCommand command ) {
 		try {
-			PriceBookEntryService.getPriceBookEntryInstance().assignPriceBook( command );   
+			service.assignPriceBook( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign PriceBook", exc );
@@ -210,7 +214,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignPriceBook")
 	public void unAssignPriceBook( @RequestBody(required=true)  UnAssignPriceBookFromPriceBookEntryCommand command ) {
 		try {
-			PriceBookEntryService.getPriceBookEntryInstance().unAssignPriceBook( command );   
+			service.unAssignPriceBook( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign PriceBook", exc );
@@ -224,7 +228,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 	@PutMapping("/assignProduct")
 	public void assignProduct( @RequestBody AssignProductToPriceBookEntryCommand command ) {
 		try {
-			PriceBookEntryService.getPriceBookEntryInstance().assignProduct( command );   
+			service.assignProduct( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Product", exc );
@@ -238,7 +242,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignProduct")
 	public void unAssignProduct( @RequestBody(required=true)  UnAssignProductFromPriceBookEntryCommand command ) {
 		try {
-			PriceBookEntryService.getPriceBookEntryInstance().unAssignProduct( command );   
+			service.unAssignProduct( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Product", exc );
@@ -253,6 +257,7 @@ public class PriceBookEntryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected PriceBookEntry priceBookEntry = null;
-    private static final Logger LOGGER = Logger.getLogger(PriceBookEntryRestController.class.getName());
+	protected PriceBookEntryService service = null;
+	private static final Logger LOGGER = Logger.getLogger(PriceBookEntryRestController.class.getName());
     
 }

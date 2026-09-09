@@ -100,7 +100,6 @@ public class CampaignCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateCampaignCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createCampaign( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class CampaignCommandRestController extends BaseSpringRestController {
 		DeleteCampaignCommand command = new DeleteCampaignCommand( campaignId );
 
     	try {
-        	CampaignService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Campaign with key " + command.getCampaignId() );
         }
         catch( Throwable exc ) {

@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Note")
 public class NoteRestController extends BaseSpringRestController {
 
+	public NoteRestController( NoteService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Note.  if not key provided, calls create, otherwise calls save
      * @param		Note	note
@@ -94,7 +98,7 @@ public class NoteRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = NoteService.getNoteInstance().createNote( command );
+			completableFuture = service.createNote( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class NoteRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateNoteCommand
 			// -----------------------------------------------
-			completableFuture = NoteService.getNoteInstance().updateNote(command);;
+			completableFuture = service.updateNote(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "NoteController:update() - successfully update Note - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class NoteRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteNoteCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	NoteService delegate = NoteService.getNoteInstance();
+        	NoteService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Note with key " + command.getNoteId() );
@@ -155,7 +159,7 @@ public class NoteRestController extends BaseSpringRestController {
     	Note entity = null;
 
     	try {  
-    		entity = NoteService.getNoteInstance().getNote( new NoteFetchOneSummary( uuid ) );   
+    		entity = service.getNote( new NoteFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Note using Id " + uuid );
@@ -175,7 +179,7 @@ public class NoteRestController extends BaseSpringRestController {
         
     	try {
             // load the Note
-            noteList = NoteService.getNoteInstance().getAllNote();
+            noteList = service.getAllNote();
             
             if ( noteList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Notes" );
@@ -196,7 +200,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -238,7 +242,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -252,7 +256,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -266,7 +270,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -280,7 +284,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignContact")
 	public void assignContact( @RequestBody AssignContactToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignContact( command );   
+			service.assignContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Contact", exc );
@@ -294,7 +298,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignContact")
 	public void unAssignContact( @RequestBody(required=true)  UnAssignContactFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignContact( command );   
+			service.unAssignContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Contact", exc );
@@ -308,7 +312,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -322,7 +326,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -336,7 +340,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignCase")
 	public void assignCase( @RequestBody AssignCaseToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignCase( command );   
+			service.assignCase( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
@@ -350,7 +354,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCase")
 	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignCase( command );   
+			service.unAssignCase( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
@@ -364,7 +368,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignLead")
 	public void assignLead( @RequestBody AssignLeadToNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().assignLead( command );   
+			service.assignLead( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Lead", exc );
@@ -378,7 +382,7 @@ public class NoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignLead")
 	public void unAssignLead( @RequestBody(required=true)  UnAssignLeadFromNoteCommand command ) {
 		try {
-			NoteService.getNoteInstance().unAssignLead( command );   
+			service.unAssignLead( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Lead", exc );
@@ -393,6 +397,7 @@ public class NoteRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Note note = null;
-    private static final Logger LOGGER = Logger.getLogger(NoteRestController.class.getName());
+	protected NoteService service = null;
+	private static final Logger LOGGER = Logger.getLogger(NoteRestController.class.getName());
     
 }

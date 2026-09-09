@@ -100,7 +100,6 @@ public class OpportunityCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateOpportunityCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createOpportunity( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class OpportunityCommandRestController extends BaseSpringRestController {
 		DeleteOpportunityCommand command = new DeleteOpportunityCommand( opportunityId );
 
     	try {
-        	OpportunityService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Opportunity with key " + command.getOpportunityId() );
         }
         catch( Throwable exc ) {

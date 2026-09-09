@@ -69,11 +69,11 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateOrderItemEvent</li>
  *      <li>DeleteOrderItemEvent</li>
    *       <li>AssignOrderToOrderItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrderFromOrderItemEvent</li>
   *       <li>AssignProductToOrderItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignProductFromOrderItemEvent</li>
   *       <li>AssignPriceBookEntryToOrderItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignPriceBookEntryFromOrderItemEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>

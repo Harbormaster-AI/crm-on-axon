@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Activity")
 public class ActivityRestController extends BaseSpringRestController {
 
+	public ActivityRestController( ActivityService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Activity.  if not key provided, calls create, otherwise calls save
      * @param		Activity	activity
@@ -94,7 +98,7 @@ public class ActivityRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = ActivityService.getActivityInstance().createActivity( command );
+			completableFuture = service.createActivity( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class ActivityRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateActivityCommand
 			// -----------------------------------------------
-			completableFuture = ActivityService.getActivityInstance().updateActivity(command);;
+			completableFuture = service.updateActivity(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "ActivityController:update() - successfully update Activity - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class ActivityRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteActivityCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	ActivityService delegate = ActivityService.getActivityInstance();
+        	ActivityService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Activity with key " + command.getActivityId() );
@@ -155,7 +159,7 @@ public class ActivityRestController extends BaseSpringRestController {
     	Activity entity = null;
 
     	try {  
-    		entity = ActivityService.getActivityInstance().getActivity( new ActivityFetchOneSummary( uuid ) );   
+    		entity = service.getActivity( new ActivityFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Activity using Id " + uuid );
@@ -175,7 +179,7 @@ public class ActivityRestController extends BaseSpringRestController {
         
     	try {
             // load the Activity
-            activityList = ActivityService.getActivityInstance().getAllActivity();
+            activityList = service.getAllActivity();
             
             if ( activityList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Activitys" );
@@ -196,7 +200,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -238,7 +242,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -252,7 +256,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -266,7 +270,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -280,7 +284,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignContact")
 	public void assignContact( @RequestBody AssignContactToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignContact( command );   
+			service.assignContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Contact", exc );
@@ -294,7 +298,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignContact")
 	public void unAssignContact( @RequestBody(required=true)  UnAssignContactFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignContact( command );   
+			service.unAssignContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Contact", exc );
@@ -308,7 +312,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignLead")
 	public void assignLead( @RequestBody AssignLeadToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignLead( command );   
+			service.assignLead( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Lead", exc );
@@ -322,7 +326,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignLead")
 	public void unAssignLead( @RequestBody(required=true)  UnAssignLeadFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignLead( command );   
+			service.unAssignLead( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Lead", exc );
@@ -336,7 +340,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -350,7 +354,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -364,7 +368,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignCase")
 	public void assignCase( @RequestBody AssignCaseToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignCase( command );   
+			service.assignCase( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
@@ -378,7 +382,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCase")
 	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignCase( command );   
+			service.unAssignCase( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
@@ -392,7 +396,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/assignCampaign")
 	public void assignCampaign( @RequestBody AssignCampaignToActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().assignCampaign( command );   
+			service.assignCampaign( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Campaign", exc );
@@ -406,7 +410,7 @@ public class ActivityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCampaign")
 	public void unAssignCampaign( @RequestBody(required=true)  UnAssignCampaignFromActivityCommand command ) {
 		try {
-			ActivityService.getActivityInstance().unAssignCampaign( command );   
+			service.unAssignCampaign( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Campaign", exc );
@@ -421,6 +425,7 @@ public class ActivityRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Activity activity = null;
-    private static final Logger LOGGER = Logger.getLogger(ActivityRestController.class.getName());
+	protected ActivityService service = null;
+	private static final Logger LOGGER = Logger.getLogger(ActivityRestController.class.getName());
     
 }

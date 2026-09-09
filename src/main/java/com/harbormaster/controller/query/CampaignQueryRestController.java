@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/CampaignQuery")
 public class CampaignQueryRestController extends BaseSpringRestController {
 	
+	public CampaignQueryRestController( CampaignService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Campaign using a UUID
      * @param		UUID campaignId
@@ -95,7 +99,7 @@ public class CampaignQueryRestController extends BaseSpringRestController {
     	Campaign entity = null;
 
     	try {  
-    		entity = CampaignService.getCampaignInstance().getCampaign( new CampaignFetchOneSummary( campaignId ) );
+    		entity = service.getCampaign( new CampaignFetchOneSummary( campaignId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Campaign using Id " + campaignId );
@@ -115,7 +119,7 @@ public class CampaignQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Campaign
-            campaignList = CampaignService.getCampaignInstance().getAllCampaign();
+            campaignList = service.getAllCampaign();
             
             if ( campaignList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Campaigns" );
@@ -135,6 +139,7 @@ public class CampaignQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Campaign campaign = null;
+    protected CampaignService service = null;
     private static final Logger LOGGER = Logger.getLogger(CampaignQueryRestController.class.getName());
     
 }

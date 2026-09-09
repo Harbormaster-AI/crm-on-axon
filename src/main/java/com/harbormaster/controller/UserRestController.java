@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/User")
 public class UserRestController extends BaseSpringRestController {
 
+	public UserRestController( UserService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a User.  if not key provided, calls create, otherwise calls save
      * @param		User	user
@@ -94,7 +98,7 @@ public class UserRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = UserService.getUserInstance().createUser( command );
+			completableFuture = service.createUser( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class UserRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateUserCommand
 			// -----------------------------------------------
-			completableFuture = UserService.getUserInstance().updateUser(command);;
+			completableFuture = service.updateUser(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "UserController:update() - successfully update User - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class UserRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteUserCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	UserService delegate = UserService.getUserInstance();
+        	UserService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted User with key " + command.getUserId() );
@@ -155,7 +159,7 @@ public class UserRestController extends BaseSpringRestController {
     	User entity = null;
 
     	try {  
-    		entity = UserService.getUserInstance().getUser( new UserFetchOneSummary( uuid ) );   
+    		entity = service.getUser( new UserFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load User using Id " + uuid );
@@ -175,7 +179,7 @@ public class UserRestController extends BaseSpringRestController {
         
     	try {
             // load the User
-            userList = UserService.getUserInstance().getAllUser();
+            userList = service.getAllUser();
             
             if ( userList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Users" );
@@ -196,7 +200,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToUserCommand command ) {
 		try {
-			UserService.getUserInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromUserCommand command ) {
 		try {
-			UserService.getUserInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -225,7 +229,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToTeams")
 	public void addToTeams( @RequestBody(required=true) AssignTeamsToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToTeams( command );   
+			service.addToTeams( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Teams", exc );
@@ -240,7 +244,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromTeams( 	@RequestBody(required=true) RemoveTeamsFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromTeams( command );
+			service.removeFromTeams( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Teams", exc );
@@ -254,7 +258,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToActivities")
 	public void addToActivities( @RequestBody(required=true) AssignActivitiesToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToActivities( command );   
+			service.addToActivities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Activities", exc );
@@ -269,7 +273,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromActivities( 	@RequestBody(required=true) RemoveActivitiesFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromActivities( command );
+			service.removeFromActivities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Activities", exc );
@@ -283,7 +287,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToOwnedAccounts")
 	public void addToOwnedAccounts( @RequestBody(required=true) AssignOwnedAccountsToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToOwnedAccounts( command );   
+			service.addToOwnedAccounts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OwnedAccounts", exc );
@@ -298,7 +302,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromOwnedAccounts( 	@RequestBody(required=true) RemoveOwnedAccountsFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromOwnedAccounts( command );
+			service.removeFromOwnedAccounts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OwnedAccounts", exc );
@@ -312,7 +316,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToOwnedLeads")
 	public void addToOwnedLeads( @RequestBody(required=true) AssignOwnedLeadsToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToOwnedLeads( command );   
+			service.addToOwnedLeads( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OwnedLeads", exc );
@@ -327,7 +331,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromOwnedLeads( 	@RequestBody(required=true) RemoveOwnedLeadsFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromOwnedLeads( command );
+			service.removeFromOwnedLeads( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OwnedLeads", exc );
@@ -341,7 +345,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToOwnedOpportunities")
 	public void addToOwnedOpportunities( @RequestBody(required=true) AssignOwnedOpportunitiesToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToOwnedOpportunities( command );   
+			service.addToOwnedOpportunities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OwnedOpportunities", exc );
@@ -356,7 +360,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromOwnedOpportunities( 	@RequestBody(required=true) RemoveOwnedOpportunitiesFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromOwnedOpportunities( command );
+			service.removeFromOwnedOpportunities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OwnedOpportunities", exc );
@@ -370,7 +374,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToOwnedCases")
 	public void addToOwnedCases( @RequestBody(required=true) AssignOwnedCasesToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToOwnedCases( command );   
+			service.addToOwnedCases( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OwnedCases", exc );
@@ -385,7 +389,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromOwnedCases( 	@RequestBody(required=true) RemoveOwnedCasesFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromOwnedCases( command );
+			service.removeFromOwnedCases( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OwnedCases", exc );
@@ -399,7 +403,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToQuotes")
 	public void addToQuotes( @RequestBody(required=true) AssignQuotesToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToQuotes( command );   
+			service.addToQuotes( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Quotes", exc );
@@ -414,7 +418,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromQuotes( 	@RequestBody(required=true) RemoveQuotesFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromQuotes( command );
+			service.removeFromQuotes( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Quotes", exc );
@@ -428,7 +432,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToOrders")
 	public void addToOrders( @RequestBody(required=true) AssignOrdersToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToOrders( command );   
+			service.addToOrders( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Orders", exc );
@@ -443,7 +447,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromOrders( 	@RequestBody(required=true) RemoveOrdersFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromOrders( command );
+			service.removeFromOrders( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Orders", exc );
@@ -457,7 +461,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToContracts")
 	public void addToContracts( @RequestBody(required=true) AssignContractsToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToContracts( command );   
+			service.addToContracts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Contracts", exc );
@@ -472,7 +476,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromContracts( 	@RequestBody(required=true) RemoveContractsFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromContracts( command );
+			service.removeFromContracts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Contracts", exc );
@@ -486,7 +490,7 @@ public class UserRestController extends BaseSpringRestController {
 	@PutMapping("/addToEmailMessages")
 	public void addToEmailMessages( @RequestBody(required=true) AssignEmailMessagesToUserCommand command ) {
 		try {
-			UserService.getUserInstance().addToEmailMessages( command );   
+			service.addToEmailMessages( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set EmailMessages", exc );
@@ -501,7 +505,7 @@ public class UserRestController extends BaseSpringRestController {
 	public void removeFromEmailMessages( 	@RequestBody(required=true) RemoveEmailMessagesFromUserCommand command )
 	{		
 		try {
-			UserService.getUserInstance().removeFromEmailMessages( command );
+			service.removeFromEmailMessages( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set EmailMessages", exc );
@@ -515,6 +519,7 @@ public class UserRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected User user = null;
-    private static final Logger LOGGER = Logger.getLogger(UserRestController.class.getName());
+	protected UserService service = null;
+	private static final Logger LOGGER = Logger.getLogger(UserRestController.class.getName());
     
 }

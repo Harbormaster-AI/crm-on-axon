@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/EmailMessage")
 public class EmailMessageRestController extends BaseSpringRestController {
 
+	public EmailMessageRestController( EmailMessageService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a EmailMessage.  if not key provided, calls create, otherwise calls save
      * @param		EmailMessage	emailMessage
@@ -94,7 +98,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = EmailMessageService.getEmailMessageInstance().createEmailMessage( command );
+			completableFuture = service.createEmailMessage( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateEmailMessageCommand
 			// -----------------------------------------------
-			completableFuture = EmailMessageService.getEmailMessageInstance().updateEmailMessage(command);;
+			completableFuture = service.updateEmailMessage(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "EmailMessageController:update() - successfully update EmailMessage - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteEmailMessageCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	EmailMessageService delegate = EmailMessageService.getEmailMessageInstance();
+        	EmailMessageService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted EmailMessage with key " + command.getEmailMessageId() );
@@ -155,7 +159,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
     	EmailMessage entity = null;
 
     	try {  
-    		entity = EmailMessageService.getEmailMessageInstance().getEmailMessage( new EmailMessageFetchOneSummary( uuid ) );   
+    		entity = service.getEmailMessage( new EmailMessageFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load EmailMessage using Id " + uuid );
@@ -175,7 +179,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
         
     	try {
             // load the EmailMessage
-            emailMessageList = EmailMessageService.getEmailMessageInstance().getAllEmailMessage();
+            emailMessageList = service.getAllEmailMessage();
             
             if ( emailMessageList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all EmailMessages" );
@@ -196,7 +200,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -238,7 +242,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -252,7 +256,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -266,7 +270,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -280,7 +284,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignContact")
 	public void assignContact( @RequestBody AssignContactToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignContact( command );   
+			service.assignContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Contact", exc );
@@ -294,7 +298,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignContact")
 	public void unAssignContact( @RequestBody(required=true)  UnAssignContactFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignContact( command );   
+			service.unAssignContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Contact", exc );
@@ -308,7 +312,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignLead")
 	public void assignLead( @RequestBody AssignLeadToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignLead( command );   
+			service.assignLead( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Lead", exc );
@@ -322,7 +326,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignLead")
 	public void unAssignLead( @RequestBody(required=true)  UnAssignLeadFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignLead( command );   
+			service.unAssignLead( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Lead", exc );
@@ -336,7 +340,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignCase")
 	public void assignCase( @RequestBody AssignCaseToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignCase( command );   
+			service.assignCase( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Case", exc );
@@ -350,7 +354,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCase")
 	public void unAssignCase( @RequestBody(required=true)  UnAssignCaseFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignCase( command );   
+			service.unAssignCase( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Case", exc );
@@ -364,7 +368,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -378,7 +382,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -392,7 +396,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/assignCampaign")
 	public void assignCampaign( @RequestBody AssignCampaignToEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().assignCampaign( command );   
+			service.assignCampaign( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Campaign", exc );
@@ -406,7 +410,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCampaign")
 	public void unAssignCampaign( @RequestBody(required=true)  UnAssignCampaignFromEmailMessageCommand command ) {
 		try {
-			EmailMessageService.getEmailMessageInstance().unAssignCampaign( command );   
+			service.unAssignCampaign( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Campaign", exc );
@@ -421,6 +425,7 @@ public class EmailMessageRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected EmailMessage emailMessage = null;
-    private static final Logger LOGGER = Logger.getLogger(EmailMessageRestController.class.getName());
+	protected EmailMessageService service = null;
+	private static final Logger LOGGER = Logger.getLogger(EmailMessageRestController.class.getName());
     
 }

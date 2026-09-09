@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/CampaignMemberQuery")
 public class CampaignMemberQueryRestController extends BaseSpringRestController {
 	
+	public CampaignMemberQueryRestController( CampaignMemberService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a CampaignMember using a UUID
      * @param		UUID campaignMemberId
@@ -95,7 +99,7 @@ public class CampaignMemberQueryRestController extends BaseSpringRestController 
     	CampaignMember entity = null;
 
     	try {  
-    		entity = CampaignMemberService.getCampaignMemberInstance().getCampaignMember( new CampaignMemberFetchOneSummary( campaignMemberId ) );
+    		entity = service.getCampaignMember( new CampaignMemberFetchOneSummary( campaignMemberId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load CampaignMember using Id " + campaignMemberId );
@@ -115,7 +119,7 @@ public class CampaignMemberQueryRestController extends BaseSpringRestController 
         
     	try {
             // load the CampaignMember
-            campaignMemberList = CampaignMemberService.getCampaignMemberInstance().getAllCampaignMember();
+            campaignMemberList = service.getAllCampaignMember();
             
             if ( campaignMemberList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all CampaignMembers" );
@@ -135,6 +139,7 @@ public class CampaignMemberQueryRestController extends BaseSpringRestController 
 // Attributes
 //************************************************************************
     protected CampaignMember campaignMember = null;
+    protected CampaignMemberService service = null;
     private static final Logger LOGGER = Logger.getLogger(CampaignMemberQueryRestController.class.getName());
     
 }

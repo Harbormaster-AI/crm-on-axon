@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/ActivityQuery")
 public class ActivityQueryRestController extends BaseSpringRestController {
 	
+	public ActivityQueryRestController( ActivityService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Activity using a UUID
      * @param		UUID activityId
@@ -95,7 +99,7 @@ public class ActivityQueryRestController extends BaseSpringRestController {
     	Activity entity = null;
 
     	try {  
-    		entity = ActivityService.getActivityInstance().getActivity( new ActivityFetchOneSummary( activityId ) );
+    		entity = service.getActivity( new ActivityFetchOneSummary( activityId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Activity using Id " + activityId );
@@ -115,7 +119,7 @@ public class ActivityQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Activity
-            activityList = ActivityService.getActivityInstance().getAllActivity();
+            activityList = service.getAllActivity();
             
             if ( activityList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Activitys" );
@@ -135,6 +139,7 @@ public class ActivityQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Activity activity = null;
+    protected ActivityService service = null;
     private static final Logger LOGGER = Logger.getLogger(ActivityQueryRestController.class.getName());
     
 }

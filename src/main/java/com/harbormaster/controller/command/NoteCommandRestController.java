@@ -100,7 +100,6 @@ public class NoteCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateNoteCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createNote( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class NoteCommandRestController extends BaseSpringRestController {
 		DeleteNoteCommand command = new DeleteNoteCommand( noteId );
 
     	try {
-        	NoteService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Note with key " + command.getNoteId() );
         }
         catch( Throwable exc ) {

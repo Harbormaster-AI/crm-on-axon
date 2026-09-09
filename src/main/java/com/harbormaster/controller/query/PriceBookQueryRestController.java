@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/PriceBookQuery")
 public class PriceBookQueryRestController extends BaseSpringRestController {
 	
+	public PriceBookQueryRestController( PriceBookService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a PriceBook using a UUID
      * @param		UUID priceBookId
@@ -95,7 +99,7 @@ public class PriceBookQueryRestController extends BaseSpringRestController {
     	PriceBook entity = null;
 
     	try {  
-    		entity = PriceBookService.getPriceBookInstance().getPriceBook( new PriceBookFetchOneSummary( priceBookId ) );
+    		entity = service.getPriceBook( new PriceBookFetchOneSummary( priceBookId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load PriceBook using Id " + priceBookId );
@@ -115,7 +119,7 @@ public class PriceBookQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the PriceBook
-            priceBookList = PriceBookService.getPriceBookInstance().getAllPriceBook();
+            priceBookList = service.getAllPriceBook();
             
             if ( priceBookList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all PriceBooks" );
@@ -135,6 +139,7 @@ public class PriceBookQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected PriceBook priceBook = null;
+    protected PriceBookService service = null;
     private static final Logger LOGGER = Logger.getLogger(PriceBookQueryRestController.class.getName());
     
 }

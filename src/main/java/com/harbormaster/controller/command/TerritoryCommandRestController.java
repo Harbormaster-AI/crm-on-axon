@@ -100,7 +100,6 @@ public class TerritoryCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateTerritoryCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createTerritory( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class TerritoryCommandRestController extends BaseSpringRestController {
 		DeleteTerritoryCommand command = new DeleteTerritoryCommand( territoryId );
 
     	try {
-        	TerritoryService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Territory with key " + command.getTerritoryId() );
         }
         catch( Throwable exc ) {

@@ -123,9 +123,9 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateCampaignEvent</li>
  *      <li>DeleteCampaignEvent</li>
    *       <li>AssignOrganizationToCampaignEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromCampaignEvent</li>
   *       <li>AssignParentCampaignToCampaignEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignParentCampaignFromCampaignEvent</li>
    *       <li>AssignChildCampaignsToCampaignEvent</li>
  *       <li>RemoveChildCampaignsFromCampaignEvent</li>
   *       <li>AssignMembersToCampaignEvent</li>
@@ -559,8 +559,8 @@ public class CampaignAggregate {
     private UUID campaignId;
     
     private String name;
-    private Date startDate;
-    private Date endDate;
+    private  Date startDate;
+    private  Date endDate;
     private Money budget;
     private Money actualCost;
     private Money expectedRevenue;

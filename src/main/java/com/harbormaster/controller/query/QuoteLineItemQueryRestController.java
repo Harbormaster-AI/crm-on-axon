@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/QuoteLineItemQuery")
 public class QuoteLineItemQueryRestController extends BaseSpringRestController {
 	
+	public QuoteLineItemQueryRestController( QuoteLineItemService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a QuoteLineItem using a UUID
      * @param		UUID quoteLineItemId
@@ -95,7 +99,7 @@ public class QuoteLineItemQueryRestController extends BaseSpringRestController {
     	QuoteLineItem entity = null;
 
     	try {  
-    		entity = QuoteLineItemService.getQuoteLineItemInstance().getQuoteLineItem( new QuoteLineItemFetchOneSummary( quoteLineItemId ) );
+    		entity = service.getQuoteLineItem( new QuoteLineItemFetchOneSummary( quoteLineItemId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load QuoteLineItem using Id " + quoteLineItemId );
@@ -115,7 +119,7 @@ public class QuoteLineItemQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the QuoteLineItem
-            quoteLineItemList = QuoteLineItemService.getQuoteLineItemInstance().getAllQuoteLineItem();
+            quoteLineItemList = service.getAllQuoteLineItem();
             
             if ( quoteLineItemList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all QuoteLineItems" );
@@ -135,6 +139,7 @@ public class QuoteLineItemQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected QuoteLineItem quoteLineItem = null;
+    protected QuoteLineItemService service = null;
     private static final Logger LOGGER = Logger.getLogger(QuoteLineItemQueryRestController.class.getName());
     
 }

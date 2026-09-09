@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/OpportunityStageHistory")
 public class OpportunityStageHistoryRestController extends BaseSpringRestController {
 
+	public OpportunityStageHistoryRestController( OpportunityStageHistoryService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a OpportunityStageHistory.  if not key provided, calls create, otherwise calls save
      * @param		OpportunityStageHistory	opportunityStageHistory
@@ -94,7 +98,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().createOpportunityStageHistory( command );
+			completableFuture = service.createOpportunityStageHistory( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 			// -----------------------------------------------
 			// delegate the UpdateOpportunityStageHistoryCommand
 			// -----------------------------------------------
-			completableFuture = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().updateOpportunityStageHistory(command);;
+			completableFuture = service.updateOpportunityStageHistory(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "OpportunityStageHistoryController:update() - successfully update OpportunityStageHistory - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteOpportunityStageHistoryCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	OpportunityStageHistoryService delegate = OpportunityStageHistoryService.getOpportunityStageHistoryInstance();
+        	OpportunityStageHistoryService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted OpportunityStageHistory with key " + command.getOpportunityStageHistoryId() );
@@ -155,7 +159,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
     	OpportunityStageHistory entity = null;
 
     	try {  
-    		entity = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().getOpportunityStageHistory( new OpportunityStageHistoryFetchOneSummary( uuid ) );   
+    		entity = service.getOpportunityStageHistory( new OpportunityStageHistoryFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load OpportunityStageHistory using Id " + uuid );
@@ -175,7 +179,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
         
     	try {
             // load the OpportunityStageHistory
-            opportunityStageHistoryList = OpportunityStageHistoryService.getOpportunityStageHistoryInstance().getAllOpportunityStageHistory();
+            opportunityStageHistoryList = service.getAllOpportunityStageHistory();
             
             if ( opportunityStageHistoryList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all OpportunityStageHistorys" );
@@ -196,7 +200,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToOpportunityStageHistoryCommand command ) {
 		try {
-			OpportunityStageHistoryService.getOpportunityStageHistoryInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -210,7 +214,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromOpportunityStageHistoryCommand command ) {
 		try {
-			OpportunityStageHistoryService.getOpportunityStageHistoryInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -224,7 +228,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 	@PutMapping("/assignChangedBy")
 	public void assignChangedBy( @RequestBody AssignChangedByToOpportunityStageHistoryCommand command ) {
 		try {
-			OpportunityStageHistoryService.getOpportunityStageHistoryInstance().assignChangedBy( command );   
+			service.assignChangedBy( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign ChangedBy", exc );
@@ -238,7 +242,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 	@PutMapping("/unAssignChangedBy")
 	public void unAssignChangedBy( @RequestBody(required=true)  UnAssignChangedByFromOpportunityStageHistoryCommand command ) {
 		try {
-			OpportunityStageHistoryService.getOpportunityStageHistoryInstance().unAssignChangedBy( command );   
+			service.unAssignChangedBy( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign ChangedBy", exc );
@@ -253,6 +257,7 @@ public class OpportunityStageHistoryRestController extends BaseSpringRestControl
 // Attributes
 //************************************************************************
     protected OpportunityStageHistory opportunityStageHistory = null;
-    private static final Logger LOGGER = Logger.getLogger(OpportunityStageHistoryRestController.class.getName());
+	protected OpportunityStageHistoryService service = null;
+	private static final Logger LOGGER = Logger.getLogger(OpportunityStageHistoryRestController.class.getName());
     
 }

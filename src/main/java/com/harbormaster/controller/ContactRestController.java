@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Contact")
 public class ContactRestController extends BaseSpringRestController {
 
+	public ContactRestController( ContactService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Contact.  if not key provided, calls create, otherwise calls save
      * @param		Contact	contact
@@ -94,7 +98,7 @@ public class ContactRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = ContactService.getContactInstance().createContact( command );
+			completableFuture = service.createContact( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class ContactRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateContactCommand
 			// -----------------------------------------------
-			completableFuture = ContactService.getContactInstance().updateContact(command);;
+			completableFuture = service.updateContact(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "ContactController:update() - successfully update Contact - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class ContactRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteContactCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	ContactService delegate = ContactService.getContactInstance();
+        	ContactService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Contact with key " + command.getContactId() );
@@ -155,7 +159,7 @@ public class ContactRestController extends BaseSpringRestController {
     	Contact entity = null;
 
     	try {  
-    		entity = ContactService.getContactInstance().getContact( new ContactFetchOneSummary( uuid ) );   
+    		entity = service.getContact( new ContactFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Contact using Id " + uuid );
@@ -175,7 +179,7 @@ public class ContactRestController extends BaseSpringRestController {
         
     	try {
             // load the Contact
-            contactList = ContactService.getContactInstance().getAllContact();
+            contactList = service.getAllContact();
             
             if ( contactList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Contacts" );
@@ -196,7 +200,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromContactCommand command ) {
 		try {
-			ContactService.getContactInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -238,7 +242,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromContactCommand command ) {
 		try {
-			ContactService.getContactInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -252,7 +256,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -266,7 +270,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromContactCommand command ) {
 		try {
-			ContactService.getContactInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -281,7 +285,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToActivities")
 	public void addToActivities( @RequestBody(required=true) AssignActivitiesToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToActivities( command );   
+			service.addToActivities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Activities", exc );
@@ -296,7 +300,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromActivities( 	@RequestBody(required=true) RemoveActivitiesFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromActivities( command );
+			service.removeFromActivities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Activities", exc );
@@ -310,7 +314,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToOpportunities")
 	public void addToOpportunities( @RequestBody(required=true) AssignOpportunitiesToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToOpportunities( command );   
+			service.addToOpportunities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Opportunities", exc );
@@ -325,7 +329,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromOpportunities( 	@RequestBody(required=true) RemoveOpportunitiesFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromOpportunities( command );
+			service.removeFromOpportunities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Opportunities", exc );
@@ -339,7 +343,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToCases")
 	public void addToCases( @RequestBody(required=true) AssignCasesToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToCases( command );   
+			service.addToCases( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Cases", exc );
@@ -354,7 +358,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromCases( 	@RequestBody(required=true) RemoveCasesFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromCases( command );
+			service.removeFromCases( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Cases", exc );
@@ -368,7 +372,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToCampaigns")
 	public void addToCampaigns( @RequestBody(required=true) AssignCampaignsToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToCampaigns( command );   
+			service.addToCampaigns( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Campaigns", exc );
@@ -383,7 +387,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromCampaigns( 	@RequestBody(required=true) RemoveCampaignsFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromCampaigns( command );
+			service.removeFromCampaigns( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Campaigns", exc );
@@ -397,7 +401,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToNotes")
 	public void addToNotes( @RequestBody(required=true) AssignNotesToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToNotes( command );   
+			service.addToNotes( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Notes", exc );
@@ -412,7 +416,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromNotes( 	@RequestBody(required=true) RemoveNotesFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromNotes( command );
+			service.removeFromNotes( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Notes", exc );
@@ -426,7 +430,7 @@ public class ContactRestController extends BaseSpringRestController {
 	@PutMapping("/addToEmailMessages")
 	public void addToEmailMessages( @RequestBody(required=true) AssignEmailMessagesToContactCommand command ) {
 		try {
-			ContactService.getContactInstance().addToEmailMessages( command );   
+			service.addToEmailMessages( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set EmailMessages", exc );
@@ -441,7 +445,7 @@ public class ContactRestController extends BaseSpringRestController {
 	public void removeFromEmailMessages( 	@RequestBody(required=true) RemoveEmailMessagesFromContactCommand command )
 	{		
 		try {
-			ContactService.getContactInstance().removeFromEmailMessages( command );
+			service.removeFromEmailMessages( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set EmailMessages", exc );
@@ -455,6 +459,7 @@ public class ContactRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Contact contact = null;
-    private static final Logger LOGGER = Logger.getLogger(ContactRestController.class.getName());
+	protected ContactService service = null;
+	private static final Logger LOGGER = Logger.getLogger(ContactRestController.class.getName());
     
 }

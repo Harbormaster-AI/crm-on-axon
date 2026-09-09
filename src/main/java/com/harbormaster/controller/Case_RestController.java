@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Case_")
 public class Case_RestController extends BaseSpringRestController {
 
+	public Case_RestController( Case_Service service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Case_.  if not key provided, calls create, otherwise calls save
      * @param		Case_	case_
@@ -94,7 +98,7 @@ public class Case_RestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = Case_Service.getCase_Instance().createCase_( command );
+			completableFuture = service.createCase_( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class Case_RestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateCase_Command
 			// -----------------------------------------------
-			completableFuture = Case_Service.getCase_Instance().updateCase_(command);;
+			completableFuture = service.updateCase_(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "Case_Controller:update() - successfully update Case_ - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class Case_RestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteCase_Command command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	Case_Service delegate = Case_Service.getCase_Instance();
+        	Case_Service delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Case_ with key " + command.getCase_Id() );
@@ -155,7 +159,7 @@ public class Case_RestController extends BaseSpringRestController {
     	Case_ entity = null;
 
     	try {  
-    		entity = Case_Service.getCase_Instance().getCase_( new Case_FetchOneSummary( uuid ) );   
+    		entity = service.getCase_( new Case_FetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Case_ using Id " + uuid );
@@ -175,7 +179,7 @@ public class Case_RestController extends BaseSpringRestController {
         
     	try {
             // load the Case_
-            case_List = Case_Service.getCase_Instance().getAllCase_();
+            case_List = service.getAllCase_();
             
             if ( case_List != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Case_s" );
@@ -196,7 +200,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -238,7 +242,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -252,7 +256,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/assignContact")
 	public void assignContact( @RequestBody AssignContactToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().assignContact( command );   
+			service.assignContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Contact", exc );
@@ -266,7 +270,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/unAssignContact")
 	public void unAssignContact( @RequestBody(required=true)  UnAssignContactFromCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().unAssignContact( command );   
+			service.unAssignContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Contact", exc );
@@ -280,7 +284,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -294,7 +298,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -308,7 +312,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/assignTeam")
 	public void assignTeam( @RequestBody AssignTeamToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().assignTeam( command );   
+			service.assignTeam( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Team", exc );
@@ -322,7 +326,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/unAssignTeam")
 	public void unAssignTeam( @RequestBody(required=true)  UnAssignTeamFromCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().unAssignTeam( command );   
+			service.unAssignTeam( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Team", exc );
@@ -337,7 +341,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/addToActivities")
 	public void addToActivities( @RequestBody(required=true) AssignActivitiesToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().addToActivities( command );   
+			service.addToActivities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Activities", exc );
@@ -352,7 +356,7 @@ public class Case_RestController extends BaseSpringRestController {
 	public void removeFromActivities( 	@RequestBody(required=true) RemoveActivitiesFromCase_Command command )
 	{		
 		try {
-			Case_Service.getCase_Instance().removeFromActivities( command );
+			service.removeFromActivities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Activities", exc );
@@ -366,7 +370,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/addToCaseComments")
 	public void addToCaseComments( @RequestBody(required=true) AssignCaseCommentsToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().addToCaseComments( command );   
+			service.addToCaseComments( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set CaseComments", exc );
@@ -381,7 +385,7 @@ public class Case_RestController extends BaseSpringRestController {
 	public void removeFromCaseComments( 	@RequestBody(required=true) RemoveCaseCommentsFromCase_Command command )
 	{		
 		try {
-			Case_Service.getCase_Instance().removeFromCaseComments( command );
+			service.removeFromCaseComments( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set CaseComments", exc );
@@ -395,7 +399,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/addToEmails")
 	public void addToEmails( @RequestBody(required=true) AssignEmailsToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().addToEmails( command );   
+			service.addToEmails( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Emails", exc );
@@ -410,7 +414,7 @@ public class Case_RestController extends BaseSpringRestController {
 	public void removeFromEmails( 	@RequestBody(required=true) RemoveEmailsFromCase_Command command )
 	{		
 		try {
-			Case_Service.getCase_Instance().removeFromEmails( command );
+			service.removeFromEmails( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Emails", exc );
@@ -424,7 +428,7 @@ public class Case_RestController extends BaseSpringRestController {
 	@PutMapping("/addToRelatedOpportunities")
 	public void addToRelatedOpportunities( @RequestBody(required=true) AssignRelatedOpportunitiesToCase_Command command ) {
 		try {
-			Case_Service.getCase_Instance().addToRelatedOpportunities( command );   
+			service.addToRelatedOpportunities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set RelatedOpportunities", exc );
@@ -439,7 +443,7 @@ public class Case_RestController extends BaseSpringRestController {
 	public void removeFromRelatedOpportunities( 	@RequestBody(required=true) RemoveRelatedOpportunitiesFromCase_Command command )
 	{		
 		try {
-			Case_Service.getCase_Instance().removeFromRelatedOpportunities( command );
+			service.removeFromRelatedOpportunities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set RelatedOpportunities", exc );
@@ -453,6 +457,7 @@ public class Case_RestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Case_ case_ = null;
-    private static final Logger LOGGER = Logger.getLogger(Case_RestController.class.getName());
+	protected Case_Service service = null;
+	private static final Logger LOGGER = Logger.getLogger(Case_RestController.class.getName());
     
 }

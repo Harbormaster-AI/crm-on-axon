@@ -101,15 +101,15 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateCase_Event</li>
  *      <li>DeleteCase_Event</li>
    *       <li>AssignOrganizationToCase_Event</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromCase_Event</li>
   *       <li>AssignAccountToCase_Event</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromCase_Event</li>
   *       <li>AssignContactToCase_Event</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContactFromCase_Event</li>
   *       <li>AssignOwnerToCase_Event</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromCase_Event</li>
   *       <li>AssignTeamToCase_Event</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignTeamFromCase_Event</li>
    *       <li>AssignActivitiesToCase_Event</li>
  *       <li>RemoveActivitiesFromCase_Event</li>
   *       <li>AssignCaseCommentsToCase_Event</li>
@@ -501,7 +501,7 @@ public class Case_Aggregate {
     private String caseNumber;
     private String subject;
     private String description;
-    private DateTime slaDue;
+    private  Date slaDue;
     private CaseStatus status;
     private CasePriority priority;
     private CaseOrigin origin;

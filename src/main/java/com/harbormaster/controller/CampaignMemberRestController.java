@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/CampaignMember")
 public class CampaignMemberRestController extends BaseSpringRestController {
 
+	public CampaignMemberRestController( CampaignMemberService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a CampaignMember.  if not key provided, calls create, otherwise calls save
      * @param		CampaignMember	campaignMember
@@ -94,7 +98,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = CampaignMemberService.getCampaignMemberInstance().createCampaignMember( command );
+			completableFuture = service.createCampaignMember( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateCampaignMemberCommand
 			// -----------------------------------------------
-			completableFuture = CampaignMemberService.getCampaignMemberInstance().updateCampaignMember(command);;
+			completableFuture = service.updateCampaignMember(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "CampaignMemberController:update() - successfully update CampaignMember - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteCampaignMemberCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	CampaignMemberService delegate = CampaignMemberService.getCampaignMemberInstance();
+        	CampaignMemberService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted CampaignMember with key " + command.getCampaignMemberId() );
@@ -155,7 +159,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
     	CampaignMember entity = null;
 
     	try {  
-    		entity = CampaignMemberService.getCampaignMemberInstance().getCampaignMember( new CampaignMemberFetchOneSummary( uuid ) );   
+    		entity = service.getCampaignMember( new CampaignMemberFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load CampaignMember using Id " + uuid );
@@ -175,7 +179,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
         
     	try {
             // load the CampaignMember
-            campaignMemberList = CampaignMemberService.getCampaignMemberInstance().getAllCampaignMember();
+            campaignMemberList = service.getAllCampaignMember();
             
             if ( campaignMemberList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all CampaignMembers" );
@@ -196,7 +200,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/assignCampaign")
 	public void assignCampaign( @RequestBody AssignCampaignToCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().assignCampaign( command );   
+			service.assignCampaign( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Campaign", exc );
@@ -210,7 +214,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignCampaign")
 	public void unAssignCampaign( @RequestBody(required=true)  UnAssignCampaignFromCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().unAssignCampaign( command );   
+			service.unAssignCampaign( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Campaign", exc );
@@ -224,7 +228,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/assignLead")
 	public void assignLead( @RequestBody AssignLeadToCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().assignLead( command );   
+			service.assignLead( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Lead", exc );
@@ -238,7 +242,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignLead")
 	public void unAssignLead( @RequestBody(required=true)  UnAssignLeadFromCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().unAssignLead( command );   
+			service.unAssignLead( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Lead", exc );
@@ -252,7 +256,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/assignContact")
 	public void assignContact( @RequestBody AssignContactToCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().assignContact( command );   
+			service.assignContact( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Contact", exc );
@@ -266,7 +270,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignContact")
 	public void unAssignContact( @RequestBody(required=true)  UnAssignContactFromCampaignMemberCommand command ) {
 		try {
-			CampaignMemberService.getCampaignMemberInstance().unAssignContact( command );   
+			service.unAssignContact( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Contact", exc );
@@ -281,6 +285,7 @@ public class CampaignMemberRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected CampaignMember campaignMember = null;
-    private static final Logger LOGGER = Logger.getLogger(CampaignMemberRestController.class.getName());
+	protected CampaignMemberService service = null;
+	private static final Logger LOGGER = Logger.getLogger(CampaignMemberRestController.class.getName());
     
 }

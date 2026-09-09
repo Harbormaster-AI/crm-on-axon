@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Product")
 public class ProductRestController extends BaseSpringRestController {
 
+	public ProductRestController( ProductService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Product.  if not key provided, calls create, otherwise calls save
      * @param		Product	product
@@ -94,7 +98,7 @@ public class ProductRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = ProductService.getProductInstance().createProduct( command );
+			completableFuture = service.createProduct( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class ProductRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateProductCommand
 			// -----------------------------------------------
-			completableFuture = ProductService.getProductInstance().updateProduct(command);;
+			completableFuture = service.updateProduct(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "ProductController:update() - successfully update Product - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class ProductRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteProductCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	ProductService delegate = ProductService.getProductInstance();
+        	ProductService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Product with key " + command.getProductId() );
@@ -155,7 +159,7 @@ public class ProductRestController extends BaseSpringRestController {
     	Product entity = null;
 
     	try {  
-    		entity = ProductService.getProductInstance().getProduct( new ProductFetchOneSummary( uuid ) );   
+    		entity = service.getProduct( new ProductFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Product using Id " + uuid );
@@ -175,7 +179,7 @@ public class ProductRestController extends BaseSpringRestController {
         
     	try {
             // load the Product
-            productList = ProductService.getProductInstance().getAllProduct();
+            productList = service.getAllProduct();
             
             if ( productList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Products" );
@@ -196,7 +200,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToProductCommand command ) {
 		try {
-			ProductService.getProductInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromProductCommand command ) {
 		try {
-			ProductService.getProductInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -225,7 +229,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/addToPriceBookEntries")
 	public void addToPriceBookEntries( @RequestBody(required=true) AssignPriceBookEntriesToProductCommand command ) {
 		try {
-			ProductService.getProductInstance().addToPriceBookEntries( command );   
+			service.addToPriceBookEntries( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set PriceBookEntries", exc );
@@ -240,7 +244,7 @@ public class ProductRestController extends BaseSpringRestController {
 	public void removeFromPriceBookEntries( 	@RequestBody(required=true) RemovePriceBookEntriesFromProductCommand command )
 	{		
 		try {
-			ProductService.getProductInstance().removeFromPriceBookEntries( command );
+			service.removeFromPriceBookEntries( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set PriceBookEntries", exc );
@@ -254,7 +258,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/addToOpportunityLineItems")
 	public void addToOpportunityLineItems( @RequestBody(required=true) AssignOpportunityLineItemsToProductCommand command ) {
 		try {
-			ProductService.getProductInstance().addToOpportunityLineItems( command );   
+			service.addToOpportunityLineItems( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OpportunityLineItems", exc );
@@ -269,7 +273,7 @@ public class ProductRestController extends BaseSpringRestController {
 	public void removeFromOpportunityLineItems( 	@RequestBody(required=true) RemoveOpportunityLineItemsFromProductCommand command )
 	{		
 		try {
-			ProductService.getProductInstance().removeFromOpportunityLineItems( command );
+			service.removeFromOpportunityLineItems( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OpportunityLineItems", exc );
@@ -283,7 +287,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/addToQuoteLineItems")
 	public void addToQuoteLineItems( @RequestBody(required=true) AssignQuoteLineItemsToProductCommand command ) {
 		try {
-			ProductService.getProductInstance().addToQuoteLineItems( command );   
+			service.addToQuoteLineItems( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set QuoteLineItems", exc );
@@ -298,7 +302,7 @@ public class ProductRestController extends BaseSpringRestController {
 	public void removeFromQuoteLineItems( 	@RequestBody(required=true) RemoveQuoteLineItemsFromProductCommand command )
 	{		
 		try {
-			ProductService.getProductInstance().removeFromQuoteLineItems( command );
+			service.removeFromQuoteLineItems( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set QuoteLineItems", exc );
@@ -312,7 +316,7 @@ public class ProductRestController extends BaseSpringRestController {
 	@PutMapping("/addToOrderItems")
 	public void addToOrderItems( @RequestBody(required=true) AssignOrderItemsToProductCommand command ) {
 		try {
-			ProductService.getProductInstance().addToOrderItems( command );   
+			service.addToOrderItems( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set OrderItems", exc );
@@ -327,7 +331,7 @@ public class ProductRestController extends BaseSpringRestController {
 	public void removeFromOrderItems( 	@RequestBody(required=true) RemoveOrderItemsFromProductCommand command )
 	{		
 		try {
-			ProductService.getProductInstance().removeFromOrderItems( command );
+			service.removeFromOrderItems( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set OrderItems", exc );
@@ -341,6 +345,7 @@ public class ProductRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Product product = null;
-    private static final Logger LOGGER = Logger.getLogger(ProductRestController.class.getName());
+	protected ProductService service = null;
+	private static final Logger LOGGER = Logger.getLogger(ProductRestController.class.getName());
     
 }

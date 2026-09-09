@@ -71,13 +71,13 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateQuoteLineItemEvent</li>
  *      <li>DeleteQuoteLineItemEvent</li>
    *       <li>AssignQuoteToQuoteLineItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignQuoteFromQuoteLineItemEvent</li>
   *       <li>AssignProductToQuoteLineItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignProductFromQuoteLineItemEvent</li>
   *       <li>AssignPriceBookEntryToQuoteLineItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignPriceBookEntryFromQuoteLineItemEvent</li>
   *       <li>AssignOpportunityLineItemToQuoteLineItemEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityLineItemFromQuoteLineItemEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>

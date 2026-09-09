@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/OrganizationQuery")
 public class OrganizationQueryRestController extends BaseSpringRestController {
 	
+	public OrganizationQueryRestController( OrganizationService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Organization using a UUID
      * @param		UUID organizationId
@@ -95,7 +99,7 @@ public class OrganizationQueryRestController extends BaseSpringRestController {
     	Organization entity = null;
 
     	try {  
-    		entity = OrganizationService.getOrganizationInstance().getOrganization( new OrganizationFetchOneSummary( organizationId ) );
+    		entity = service.getOrganization( new OrganizationFetchOneSummary( organizationId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Organization using Id " + organizationId );
@@ -115,7 +119,7 @@ public class OrganizationQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Organization
-            organizationList = OrganizationService.getOrganizationInstance().getAllOrganization();
+            organizationList = service.getAllOrganization();
             
             if ( organizationList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Organizations" );
@@ -135,6 +139,7 @@ public class OrganizationQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Organization organization = null;
+    protected OrganizationService service = null;
     private static final Logger LOGGER = Logger.getLogger(OrganizationQueryRestController.class.getName());
     
 }

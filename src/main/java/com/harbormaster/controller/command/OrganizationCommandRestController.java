@@ -100,7 +100,6 @@ public class OrganizationCommandRestController extends BaseSpringRestController 
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateOrganizationCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createOrganization( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class OrganizationCommandRestController extends BaseSpringRestController 
 		DeleteOrganizationCommand command = new DeleteOrganizationCommand( organizationId );
 
     	try {
-        	OrganizationService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Organization with key " + command.getOrganizationId() );
         }
         catch( Throwable exc ) {

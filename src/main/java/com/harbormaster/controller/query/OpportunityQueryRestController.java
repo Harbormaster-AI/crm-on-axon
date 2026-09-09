@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/OpportunityQuery")
 public class OpportunityQueryRestController extends BaseSpringRestController {
 	
+	public OpportunityQueryRestController( OpportunityService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a Opportunity using a UUID
      * @param		UUID opportunityId
@@ -95,7 +99,7 @@ public class OpportunityQueryRestController extends BaseSpringRestController {
     	Opportunity entity = null;
 
     	try {  
-    		entity = OpportunityService.getOpportunityInstance().getOpportunity( new OpportunityFetchOneSummary( opportunityId ) );
+    		entity = service.getOpportunity( new OpportunityFetchOneSummary( opportunityId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Opportunity using Id " + opportunityId );
@@ -115,7 +119,7 @@ public class OpportunityQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the Opportunity
-            opportunityList = OpportunityService.getOpportunityInstance().getAllOpportunity();
+            opportunityList = service.getAllOpportunity();
             
             if ( opportunityList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Opportunitys" );
@@ -135,6 +139,7 @@ public class OpportunityQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Opportunity opportunity = null;
+    protected OpportunityService service = null;
     private static final Logger LOGGER = Logger.getLogger(OpportunityQueryRestController.class.getName());
     
 }

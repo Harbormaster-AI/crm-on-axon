@@ -77,19 +77,19 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateNoteEvent</li>
  *      <li>DeleteNoteEvent</li>
    *       <li>AssignOrganizationToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromNoteEvent</li>
   *       <li>AssignOwnerToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromNoteEvent</li>
   *       <li>AssignAccountToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromNoteEvent</li>
   *       <li>AssignContactToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignContactFromNoteEvent</li>
   *       <li>AssignOpportunityToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOpportunityFromNoteEvent</li>
   *       <li>AssignCaseToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignCaseFromNoteEvent</li>
   *       <li>AssignLeadToNoteEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignLeadFromNoteEvent</li>
    *        </ul>
  *
  * <p>@author Harbormaster Dev Team</p>
@@ -396,8 +396,8 @@ public class NoteAggregate {
     
     private String title;
     private String content;
-    private DateTime createdAt;
-    private DateTime updatedAt;
+    private  Date createdAt;
+    private  Date updatedAt;
     private Organization organization = null;
     private User owner = null;
     private Account account = null;

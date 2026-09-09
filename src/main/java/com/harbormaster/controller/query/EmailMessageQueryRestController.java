@@ -85,6 +85,10 @@ import com.harbormaster.controller.*;
 @RequestMapping("/EmailMessageQuery")
 public class EmailMessageQueryRestController extends BaseSpringRestController {
 	
+	public EmailMessageQueryRestController( EmailMessageService service ) {
+        this.service = service;
+    }
+    
     /**
      * Handles loading a EmailMessage using a UUID
      * @param		UUID emailMessageId
@@ -95,7 +99,7 @@ public class EmailMessageQueryRestController extends BaseSpringRestController {
     	EmailMessage entity = null;
 
     	try {  
-    		entity = EmailMessageService.getEmailMessageInstance().getEmailMessage( new EmailMessageFetchOneSummary( emailMessageId ) );
+    		entity = service.getEmailMessage( new EmailMessageFetchOneSummary( emailMessageId ) );
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load EmailMessage using Id " + emailMessageId );
@@ -115,7 +119,7 @@ public class EmailMessageQueryRestController extends BaseSpringRestController {
         
     	try {
             // load the EmailMessage
-            emailMessageList = EmailMessageService.getEmailMessageInstance().getAllEmailMessage();
+            emailMessageList = service.getAllEmailMessage();
             
             if ( emailMessageList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all EmailMessages" );
@@ -135,6 +139,7 @@ public class EmailMessageQueryRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected EmailMessage emailMessage = null;
+    protected EmailMessageService service = null;
     private static final Logger LOGGER = Logger.getLogger(EmailMessageQueryRestController.class.getName());
     
 }

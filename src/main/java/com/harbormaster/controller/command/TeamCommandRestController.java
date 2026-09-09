@@ -100,7 +100,6 @@ public class TeamCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateTeamCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createTeam( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class TeamCommandRestController extends BaseSpringRestController {
 		DeleteTeamCommand command = new DeleteTeamCommand( teamId );
 
     	try {
-        	TeamService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Team with key " + command.getTeamId() );
         }
         catch( Throwable exc ) {

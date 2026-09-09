@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Opportunity")
 public class OpportunityRestController extends BaseSpringRestController {
 
+	public OpportunityRestController( OpportunityService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Opportunity.  if not key provided, calls create, otherwise calls save
      * @param		Opportunity	opportunity
@@ -94,7 +98,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = OpportunityService.getOpportunityInstance().createOpportunity( command );
+			completableFuture = service.createOpportunity( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateOpportunityCommand
 			// -----------------------------------------------
-			completableFuture = OpportunityService.getOpportunityInstance().updateOpportunity(command);;
+			completableFuture = service.updateOpportunity(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "OpportunityController:update() - successfully update Opportunity - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class OpportunityRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteOpportunityCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	OpportunityService delegate = OpportunityService.getOpportunityInstance();
+        	OpportunityService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Opportunity with key " + command.getOpportunityId() );
@@ -155,7 +159,7 @@ public class OpportunityRestController extends BaseSpringRestController {
     	Opportunity entity = null;
 
     	try {  
-    		entity = OpportunityService.getOpportunityInstance().getOpportunity( new OpportunityFetchOneSummary( uuid ) );   
+    		entity = service.getOpportunity( new OpportunityFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Opportunity using Id " + uuid );
@@ -175,7 +179,7 @@ public class OpportunityRestController extends BaseSpringRestController {
         
     	try {
             // load the Opportunity
-            opportunityList = OpportunityService.getOpportunityInstance().getAllOpportunity();
+            opportunityList = service.getAllOpportunity();
             
             if ( opportunityList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Opportunitys" );
@@ -196,7 +200,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -238,7 +242,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -252,7 +256,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -266,7 +270,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -281,7 +285,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToContacts")
 	public void addToContacts( @RequestBody(required=true) AssignContactsToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToContacts( command );   
+			service.addToContacts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Contacts", exc );
@@ -296,7 +300,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromContacts( 	@RequestBody(required=true) RemoveContactsFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromContacts( command );
+			service.removeFromContacts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Contacts", exc );
@@ -310,7 +314,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToLineItems")
 	public void addToLineItems( @RequestBody(required=true) AssignLineItemsToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToLineItems( command );   
+			service.addToLineItems( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set LineItems", exc );
@@ -325,7 +329,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromLineItems( 	@RequestBody(required=true) RemoveLineItemsFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromLineItems( command );
+			service.removeFromLineItems( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set LineItems", exc );
@@ -339,7 +343,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToStageHistory")
 	public void addToStageHistory( @RequestBody(required=true) AssignStageHistoryToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToStageHistory( command );   
+			service.addToStageHistory( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set StageHistory", exc );
@@ -354,7 +358,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromStageHistory( 	@RequestBody(required=true) RemoveStageHistoryFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromStageHistory( command );
+			service.removeFromStageHistory( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set StageHistory", exc );
@@ -368,7 +372,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToQuotes")
 	public void addToQuotes( @RequestBody(required=true) AssignQuotesToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToQuotes( command );   
+			service.addToQuotes( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Quotes", exc );
@@ -383,7 +387,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromQuotes( 	@RequestBody(required=true) RemoveQuotesFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromQuotes( command );
+			service.removeFromQuotes( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Quotes", exc );
@@ -397,7 +401,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToOrders")
 	public void addToOrders( @RequestBody(required=true) AssignOrdersToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToOrders( command );   
+			service.addToOrders( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Orders", exc );
@@ -412,7 +416,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromOrders( 	@RequestBody(required=true) RemoveOrdersFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromOrders( command );
+			service.removeFromOrders( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Orders", exc );
@@ -426,7 +430,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToCampaigns")
 	public void addToCampaigns( @RequestBody(required=true) AssignCampaignsToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToCampaigns( command );   
+			service.addToCampaigns( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Campaigns", exc );
@@ -441,7 +445,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromCampaigns( 	@RequestBody(required=true) RemoveCampaignsFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromCampaigns( command );
+			service.removeFromCampaigns( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Campaigns", exc );
@@ -455,7 +459,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToActivities")
 	public void addToActivities( @RequestBody(required=true) AssignActivitiesToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToActivities( command );   
+			service.addToActivities( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Activities", exc );
@@ -470,7 +474,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromActivities( 	@RequestBody(required=true) RemoveActivitiesFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromActivities( command );
+			service.removeFromActivities( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Activities", exc );
@@ -484,7 +488,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	@PutMapping("/addToTeams")
 	public void addToTeams( @RequestBody(required=true) AssignTeamsToOpportunityCommand command ) {
 		try {
-			OpportunityService.getOpportunityInstance().addToTeams( command );   
+			service.addToTeams( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Teams", exc );
@@ -499,7 +503,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 	public void removeFromTeams( 	@RequestBody(required=true) RemoveTeamsFromOpportunityCommand command )
 	{		
 		try {
-			OpportunityService.getOpportunityInstance().removeFromTeams( command );
+			service.removeFromTeams( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Teams", exc );
@@ -513,6 +517,7 @@ public class OpportunityRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Opportunity opportunity = null;
-    private static final Logger LOGGER = Logger.getLogger(OpportunityRestController.class.getName());
+	protected OpportunityService service = null;
+	private static final Logger LOGGER = Logger.getLogger(OpportunityRestController.class.getName());
     
 }

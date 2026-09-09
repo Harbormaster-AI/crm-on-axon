@@ -100,7 +100,6 @@ public class EmailMessageCommandRestController extends BaseSpringRestController 
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateEmailMessageCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createEmailMessage( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class EmailMessageCommandRestController extends BaseSpringRestController 
 		DeleteEmailMessageCommand command = new DeleteEmailMessageCommand( emailMessageId );
 
     	try {
-        	EmailMessageService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted EmailMessage with key " + command.getEmailMessageId() );
         }
         catch( Throwable exc ) {

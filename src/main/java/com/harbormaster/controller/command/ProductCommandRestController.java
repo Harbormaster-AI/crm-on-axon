@@ -100,7 +100,6 @@ public class ProductCommandRestController extends BaseSpringRestController {
     public CompletableFuture<UUID> create( @RequestBody(required=true) CreateProductCommand command ) {
 		CompletableFuture<UUID> completableFuture = null;
 		try {
-
 			completableFuture = service.createProduct( command );
         }
         catch( Throwable exc ) {
@@ -142,9 +141,7 @@ public class ProductCommandRestController extends BaseSpringRestController {
 		DeleteProductCommand command = new DeleteProductCommand( productId );
 
     	try {
-        	ProductService delegate = service;
-
-        	completableFuture = delegate.delete( command );
+        	completableFuture = service.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Product with key " + command.getProductId() );
         }
         catch( Throwable exc ) {

@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Quote")
 public class QuoteRestController extends BaseSpringRestController {
 
+	public QuoteRestController( QuoteService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Quote.  if not key provided, calls create, otherwise calls save
      * @param		Quote	quote
@@ -94,7 +98,7 @@ public class QuoteRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = QuoteService.getQuoteInstance().createQuote( command );
+			completableFuture = service.createQuote( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class QuoteRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateQuoteCommand
 			// -----------------------------------------------
-			completableFuture = QuoteService.getQuoteInstance().updateQuote(command);;
+			completableFuture = service.updateQuote(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "QuoteController:update() - successfully update Quote - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class QuoteRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteQuoteCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	QuoteService delegate = QuoteService.getQuoteInstance();
+        	QuoteService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Quote with key " + command.getQuoteId() );
@@ -155,7 +159,7 @@ public class QuoteRestController extends BaseSpringRestController {
     	Quote entity = null;
 
     	try {  
-    		entity = QuoteService.getQuoteInstance().getQuote( new QuoteFetchOneSummary( uuid ) );   
+    		entity = service.getQuote( new QuoteFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Quote using Id " + uuid );
@@ -175,7 +179,7 @@ public class QuoteRestController extends BaseSpringRestController {
         
     	try {
             // load the Quote
-            quoteList = QuoteService.getQuoteInstance().getAllQuote();
+            quoteList = service.getAllQuote();
             
             if ( quoteList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Quotes" );
@@ -196,7 +200,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrganization")
 	public void assignOrganization( @RequestBody AssignOrganizationToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignOrganization( command );   
+			service.assignOrganization( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Organization", exc );
@@ -210,7 +214,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrganization")
 	public void unAssignOrganization( @RequestBody(required=true)  UnAssignOrganizationFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignOrganization( command );   
+			service.unAssignOrganization( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Organization", exc );
@@ -224,7 +228,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignAccount")
 	public void assignAccount( @RequestBody AssignAccountToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignAccount( command );   
+			service.assignAccount( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
@@ -238,7 +242,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignAccount")
 	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignAccount( command );   
+			service.unAssignAccount( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
@@ -252,7 +256,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOpportunity")
 	public void assignOpportunity( @RequestBody AssignOpportunityToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignOpportunity( command );   
+			service.assignOpportunity( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Opportunity", exc );
@@ -266,7 +270,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOpportunity")
 	public void unAssignOpportunity( @RequestBody(required=true)  UnAssignOpportunityFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignOpportunity( command );   
+			service.unAssignOpportunity( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Opportunity", exc );
@@ -280,7 +284,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOwner")
 	public void assignOwner( @RequestBody AssignOwnerToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignOwner( command );   
+			service.assignOwner( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Owner", exc );
@@ -294,7 +298,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOwner")
 	public void unAssignOwner( @RequestBody(required=true)  UnAssignOwnerFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignOwner( command );   
+			service.unAssignOwner( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Owner", exc );
@@ -308,7 +312,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignPriceBook")
 	public void assignPriceBook( @RequestBody AssignPriceBookToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignPriceBook( command );   
+			service.assignPriceBook( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign PriceBook", exc );
@@ -322,7 +326,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignPriceBook")
 	public void unAssignPriceBook( @RequestBody(required=true)  UnAssignPriceBookFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignPriceBook( command );   
+			service.unAssignPriceBook( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign PriceBook", exc );
@@ -336,7 +340,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/assignOrder")
 	public void assignOrder( @RequestBody AssignOrderToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().assignOrder( command );   
+			service.assignOrder( command );   
 		}
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, "Failed to assign Order", exc );
@@ -350,7 +354,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/unAssignOrder")
 	public void unAssignOrder( @RequestBody(required=true)  UnAssignOrderFromQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().unAssignOrder( command );   
+			service.unAssignOrder( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to unassign Order", exc );
@@ -365,7 +369,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	@PutMapping("/addToLineItems")
 	public void addToLineItems( @RequestBody(required=true) AssignLineItemsToQuoteCommand command ) {
 		try {
-			QuoteService.getQuoteInstance().addToLineItems( command );   
+			service.addToLineItems( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set LineItems", exc );
@@ -380,7 +384,7 @@ public class QuoteRestController extends BaseSpringRestController {
 	public void removeFromLineItems( 	@RequestBody(required=true) RemoveLineItemsFromQuoteCommand command )
 	{		
 		try {
-			QuoteService.getQuoteInstance().removeFromLineItems( command );
+			service.removeFromLineItems( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set LineItems", exc );
@@ -394,6 +398,7 @@ public class QuoteRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Quote quote = null;
-    private static final Logger LOGGER = Logger.getLogger(QuoteRestController.class.getName());
+	protected QuoteService service = null;
+	private static final Logger LOGGER = Logger.getLogger(QuoteRestController.class.getName());
     
 }

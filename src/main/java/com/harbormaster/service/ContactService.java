@@ -34,7 +34,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -101,10 +101,16 @@ extends BaseService {
      * Default Constructor 
      */
     public ContactService()  {
-    	queryGateway 		= applicationContext.getBean(QueryGateway.class);
-    	commandGateway 		= applicationContext.getBean(CommandGateway.class);
-    	queryUpdateEmitter  = applicationContext.getBean(QueryUpdateEmitter.class);
-		validator			= applicationContext.getBean(ContactValidator.class);
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+		super.setApplicationContext(ctx);
+
+		queryGateway 		= ctx.getBean(QueryGateway.class);
+		commandGateway 		= ctx.getBean(CommandGateway.class);
+		queryUpdateEmitter  = ctx.getBean(QueryUpdateEmitter.class);
+		validator			= ctx.getBean(ContactValidator.class);
 	}
 
 
@@ -892,10 +898,10 @@ extends BaseService {
 //************************************************************************
 // Attributes
 //************************************************************************
-	private final QueryGateway queryGateway;
-	private final CommandGateway commandGateway;
-	private final QueryUpdateEmitter queryUpdateEmitter;
-	private final ContactValidator validator;
+	private QueryGateway queryGateway;
+	private CommandGateway commandGateway;
+	private QueryUpdateEmitter queryUpdateEmitter;
+	private ContactValidator validator;
 	private Contact contact 	= null;
     private static final Logger LOGGER 			= Logger.getLogger(ContactService.class.getName());
     

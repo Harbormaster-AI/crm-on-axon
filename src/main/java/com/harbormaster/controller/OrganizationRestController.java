@@ -84,6 +84,10 @@ import com.harbormaster.exception.*;
 @RequestMapping("/Organization")
 public class OrganizationRestController extends BaseSpringRestController {
 
+	public OrganizationRestController( OrganizationService service ) {
+		this.service = service;
+	}
+	
     /**
      * Handles create a Organization.  if not key provided, calls create, otherwise calls save
      * @param		Organization	organization
@@ -94,7 +98,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 		CompletableFuture<UUID> completableFuture = null;
 		try {       
         	
-			completableFuture = OrganizationService.getOrganizationInstance().createOrganization( command );
+			completableFuture = service.createOrganization( command );
         }
         catch( Throwable exc ) {
         	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
@@ -115,7 +119,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 			// -----------------------------------------------
 			// delegate the UpdateOrganizationCommand
 			// -----------------------------------------------
-			completableFuture = OrganizationService.getOrganizationInstance().updateOrganization(command);;
+			completableFuture = service.updateOrganization(command);;
 	    }
 	    catch( Throwable exc ) {
 	    	LOGGER.log( Level.WARNING, "OrganizationController:update() - successfully update Organization - " + exc.getMessage());        	
@@ -133,7 +137,7 @@ public class OrganizationRestController extends BaseSpringRestController {
     public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteOrganizationCommand command ) {                
     	CompletableFuture<Void> completableFuture = null;
     	try {
-        	OrganizationService delegate = OrganizationService.getOrganizationInstance();
+        	OrganizationService delegate = service;
 
         	completableFuture = delegate.delete( command );
     		LOGGER.log( Level.WARNING, "Successfully deleted Organization with key " + command.getOrganizationId() );
@@ -155,7 +159,7 @@ public class OrganizationRestController extends BaseSpringRestController {
     	Organization entity = null;
 
     	try {  
-    		entity = OrganizationService.getOrganizationInstance().getOrganization( new OrganizationFetchOneSummary( uuid ) );   
+    		entity = service.getOrganization( new OrganizationFetchOneSummary( uuid ) );   
         }
         catch( Throwable exc ) {
             LOGGER.log( Level.WARNING, "failed to load Organization using Id " + uuid );
@@ -175,7 +179,7 @@ public class OrganizationRestController extends BaseSpringRestController {
         
     	try {
             // load the Organization
-            organizationList = OrganizationService.getOrganizationInstance().getAllOrganization();
+            organizationList = service.getAllOrganization();
             
             if ( organizationList != null )
                 LOGGER.log( Level.INFO,  "successfully loaded all Organizations" );
@@ -197,7 +201,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToUsers")
 	public void addToUsers( @RequestBody(required=true) AssignUsersToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToUsers( command );   
+			service.addToUsers( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Users", exc );
@@ -212,7 +216,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromUsers( 	@RequestBody(required=true) RemoveUsersFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromUsers( command );
+			service.removeFromUsers( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Users", exc );
@@ -226,7 +230,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToAccounts")
 	public void addToAccounts( @RequestBody(required=true) AssignAccountsToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToAccounts( command );   
+			service.addToAccounts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Accounts", exc );
@@ -241,7 +245,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromAccounts( 	@RequestBody(required=true) RemoveAccountsFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromAccounts( command );
+			service.removeFromAccounts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Accounts", exc );
@@ -255,7 +259,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToTeams")
 	public void addToTeams( @RequestBody(required=true) AssignTeamsToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToTeams( command );   
+			service.addToTeams( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Teams", exc );
@@ -270,7 +274,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromTeams( 	@RequestBody(required=true) RemoveTeamsFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromTeams( command );
+			service.removeFromTeams( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Teams", exc );
@@ -284,7 +288,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToTerritories")
 	public void addToTerritories( @RequestBody(required=true) AssignTerritoriesToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToTerritories( command );   
+			service.addToTerritories( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Territories", exc );
@@ -299,7 +303,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromTerritories( 	@RequestBody(required=true) RemoveTerritoriesFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromTerritories( command );
+			service.removeFromTerritories( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Territories", exc );
@@ -313,7 +317,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToProducts")
 	public void addToProducts( @RequestBody(required=true) AssignProductsToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToProducts( command );   
+			service.addToProducts( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Products", exc );
@@ -328,7 +332,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromProducts( 	@RequestBody(required=true) RemoveProductsFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromProducts( command );
+			service.removeFromProducts( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Products", exc );
@@ -342,7 +346,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToPriceBooks")
 	public void addToPriceBooks( @RequestBody(required=true) AssignPriceBooksToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToPriceBooks( command );   
+			service.addToPriceBooks( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set PriceBooks", exc );
@@ -357,7 +361,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromPriceBooks( 	@RequestBody(required=true) RemovePriceBooksFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromPriceBooks( command );
+			service.removeFromPriceBooks( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set PriceBooks", exc );
@@ -371,7 +375,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	@PutMapping("/addToCampaigns")
 	public void addToCampaigns( @RequestBody(required=true) AssignCampaignsToOrganizationCommand command ) {
 		try {
-			OrganizationService.getOrganizationInstance().addToCampaigns( command );   
+			service.addToCampaigns( command );   
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to add to Set Campaigns", exc );
@@ -386,7 +390,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 	public void removeFromCampaigns( 	@RequestBody(required=true) RemoveCampaignsFromOrganizationCommand command )
 	{		
 		try {
-			OrganizationService.getOrganizationInstance().removeFromCampaigns( command );
+			service.removeFromCampaigns( command );
 		}
 		catch( Exception exc ) {
 			LOGGER.log( Level.WARNING, "Failed to remove from Set Campaigns", exc );
@@ -400,6 +404,7 @@ public class OrganizationRestController extends BaseSpringRestController {
 // Attributes
 //************************************************************************
     protected Organization organization = null;
-    private static final Logger LOGGER = Logger.getLogger(OrganizationRestController.class.getName());
+	protected OrganizationService service = null;
+	private static final Logger LOGGER = Logger.getLogger(OrganizationRestController.class.getName());
     
 }

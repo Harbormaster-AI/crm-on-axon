@@ -111,11 +111,11 @@ import org.springframework.context.annotation.Profile;
  *      <li>UpdateContactEvent</li>
  *      <li>DeleteContactEvent</li>
    *       <li>AssignOrganizationToContactEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOrganizationFromContactEvent</li>
   *       <li>AssignAccountToContactEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignAccountFromContactEvent</li>
   *       <li>AssignOwnerToContactEvent</li>
- *       $<li>{singleAssociation.getUnAssignFromEventAlias()}</li>
+ *       <li>UnAssignOwnerFromContactEvent</li>
    *       <li>AssignActivitiesToContactEvent</li>
  *       <li>RemoveActivitiesFromContactEvent</li>
   *       <li>AssignOpportunitiesToContactEvent</li>
