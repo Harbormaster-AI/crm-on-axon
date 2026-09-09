@@ -89,7 +89,7 @@ public class PriceBookEntryAggregate {
     @CommandHandler
     public PriceBookEntryAggregate(CreatePriceBookEntryCommand command) throws Exception {
     	LOGGER.info( "Handling command CreatePriceBookEntryCommand" );
-    	CreatePriceBookEntryEvent event = new CreatePriceBookEntryEvent(command.getPriceBookEntryId(), command.getUnitPrice(), command.getEffectiveDate(), command.getExpirationDate(), command.asActive());
+    	CreatePriceBookEntryEvent event = new CreatePriceBookEntryEvent(command.getPriceBookEntryId(), command.getUnitPrice(), command.getEffectiveDate(), command.getExpirationDate(), command.getasActive());
     	
         apply(event);
     }
@@ -97,7 +97,7 @@ public class PriceBookEntryAggregate {
     @CommandHandler
     public void handle(UpdatePriceBookEntryCommand command) throws Exception {
     	LOGGER.info( "handling command UpdatePriceBookEntryCommand" );
-    	UpdatePriceBookEntryEvent event = new UpdatePriceBookEntryEvent(command.getPriceBookEntryId(), command.getUnitPrice(), command.getEffectiveDate(), command.getExpirationDate(), command.asActive(), command.getPriceBook(), command.getProduct());        
+    	UpdatePriceBookEntryEvent event = new UpdatePriceBookEntryEvent(command.getPriceBookEntryId(), command.getUnitPrice(), command.getEffectiveDate(), command.getExpirationDate(), command.getasActive(), command.getPriceBook(), command.getProduct());        
     	
         apply(event);
     }

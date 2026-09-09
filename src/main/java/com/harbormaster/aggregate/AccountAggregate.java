@@ -196,7 +196,7 @@ public class AccountAggregate {
     @CommandHandler
     public AccountAggregate(CreateAccountCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateAccountCommand" );
-    	CreateAccountEvent event = new CreateAccountEvent(command.getAccountId(), command.getName(), command.getAccountNumber(), command.getIndustry(), command.getBillingAddress(), command.getShippingAddress(), command.getWebsite(), command.getPhone(), command.asActive(), command.getAccountType(), command.getLifecycleStage());
+    	CreateAccountEvent event = new CreateAccountEvent(command.getAccountId(), command.getName(), command.getAccountNumber(), command.getIndustry(), command.getBillingAddress(), command.getShippingAddress(), command.getWebsite(), command.getPhone(), command.getasActive(), command.getAccountType(), command.getLifecycleStage());
     	
         apply(event);
     }
@@ -204,7 +204,7 @@ public class AccountAggregate {
     @CommandHandler
     public void handle(UpdateAccountCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateAccountCommand" );
-    	UpdateAccountEvent event = new UpdateAccountEvent(command.getAccountId(), command.getName(), command.getAccountNumber(), command.getIndustry(), command.getBillingAddress(), command.getShippingAddress(), command.getWebsite(), command.getPhone(), command.asActive(), command.getOrganization(), command.getParentAccount(), command.getChildAccounts(), command.getContacts(), command.getOpportunities(), command.getCases(), command.getOwner(), command.getTerritory(), command.getActivities(), command.getCampaigns(), command.getQuotes(), command.getOrders(), command.getContracts(), command.getNotes(), command.getEmailMessages(), command.getAccountType(), command.getLifecycleStage());        
+    	UpdateAccountEvent event = new UpdateAccountEvent(command.getAccountId(), command.getName(), command.getAccountNumber(), command.getIndustry(), command.getBillingAddress(), command.getShippingAddress(), command.getWebsite(), command.getPhone(), command.getasActive(), command.getOrganization(), command.getParentAccount(), command.getChildAccounts(), command.getContacts(), command.getOpportunities(), command.getCases(), command.getOwner(), command.getTerritory(), command.getActivities(), command.getCampaigns(), command.getQuotes(), command.getOrders(), command.getContracts(), command.getNotes(), command.getEmailMessages(), command.getAccountType(), command.getLifecycleStage());        
     	
         apply(event);
     }
