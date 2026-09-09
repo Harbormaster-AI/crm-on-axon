@@ -111,7 +111,7 @@ public class ContractAggregate {
     @CommandHandler
     public ContractAggregate(CreateContractCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateContractCommand" );
-    	CreateContractEvent event = new CreateContractEvent(command.getContractId(), command.getContractNumber(), command.getStartDate(), command.getEndDate(), command.getRenewalTermMonths(), command.getautoRenew(), command.getStatus());
+    	CreateContractEvent event = new CreateContractEvent(command.getContractId(), command.getContractNumber(), command.getStartDate(), command.getEndDate(), command.getRenewalTermMonths(), command.getAutoRenew(), command.getStatus());
     	
         apply(event);
     }
@@ -119,7 +119,7 @@ public class ContractAggregate {
     @CommandHandler
     public void handle(UpdateContractCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateContractCommand" );
-    	UpdateContractEvent event = new UpdateContractEvent(command.getContractId(), command.getContractNumber(), command.getStartDate(), command.getEndDate(), command.getRenewalTermMonths(), command.getautoRenew(), command.getOrganization(), command.getAccount(), command.getOwner(), command.getOrders(), command.getCases(), command.getStatus());        
+    	UpdateContractEvent event = new UpdateContractEvent(command.getContractId(), command.getContractNumber(), command.getStartDate(), command.getEndDate(), command.getRenewalTermMonths(), command.getAutoRenew(), command.getOrganization(), command.getAccount(), command.getOwner(), command.getOrders(), command.getCases(), command.getStatus());        
     	
         apply(event);
     }

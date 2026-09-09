@@ -112,7 +112,7 @@ public class PriceBookAggregate {
     @CommandHandler
     public PriceBookAggregate(CreatePriceBookCommand command) throws Exception {
     	LOGGER.info( "Handling command CreatePriceBookCommand" );
-    	CreatePriceBookEvent event = new CreatePriceBookEvent(command.getPriceBookId(), command.getName(), command.getasActive(), command.getDescription());
+    	CreatePriceBookEvent event = new CreatePriceBookEvent(command.getPriceBookId(), command.getName(), command.getAsActive(), command.getDescription());
     	
         apply(event);
     }
@@ -120,7 +120,7 @@ public class PriceBookAggregate {
     @CommandHandler
     public void handle(UpdatePriceBookCommand command) throws Exception {
     	LOGGER.info( "handling command UpdatePriceBookCommand" );
-    	UpdatePriceBookEvent event = new UpdatePriceBookEvent(command.getPriceBookId(), command.getName(), command.getasActive(), command.getDescription(), command.getOrganization(), command.getEntries(), command.getQuotes(), command.getOrders());        
+    	UpdatePriceBookEvent event = new UpdatePriceBookEvent(command.getPriceBookId(), command.getName(), command.getAsActive(), command.getDescription(), command.getOrganization(), command.getEntries(), command.getQuotes(), command.getOrders());        
     	
         apply(event);
     }

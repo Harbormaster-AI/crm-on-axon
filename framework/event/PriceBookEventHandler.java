@@ -90,7 +90,7 @@ public class PriceBookEventHandler {
      */
     @EventHandler
     public void handle( CreatePriceBookEvent event) {
-        entityManager.persist(new PriceBook(event.getPriceBookId(), event.getName(), event.getasActive(), event.getDescription(), event.getOrganization(), event.getEntries(), event.getQuotes(), event.getOrders()));
+        entityManager.persist(new PriceBook(event.getPriceBookId(), event.getName(), event.getAsActive(), event.getDescription(), event.getOrganization(), event.getEntries(), event.getQuotes(), event.getOrders()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class PriceBookEventHandler {
      */
     @EventHandler
     public PriceBook handle( UpdatePriceBookEvent event) {
-    	entityManager.merge(new PriceBook(event.getPriceBookId(), event.getName(), event.getasActive(), event.getDescription(), event.getOrganization(), event.getEntries(), event.getQuotes(), event.getOrders()));
+    	entityManager.merge(new PriceBook(event.getPriceBookId(), event.getName(), event.getAsActive(), event.getDescription(), event.getOrganization(), event.getEntries(), event.getQuotes(), event.getOrders()));
     }
     
     /*

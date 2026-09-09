@@ -90,7 +90,7 @@ public class CampaignMemberEventHandler {
      */
     @EventHandler
     public void handle( CreateCampaignMemberEvent event) {
-        entityManager.persist(new CampaignMember(event.getCampaignMemberId(), event.getresponded(), event.getCampaign(), event.getLead(), event.getContact(), event.getStatus(), event.getMemberType()));
+        entityManager.persist(new CampaignMember(event.getCampaignMemberId(), event.getResponded(), event.getCampaign(), event.getLead(), event.getContact(), event.getStatus(), event.getMemberType()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class CampaignMemberEventHandler {
      */
     @EventHandler
     public CampaignMember handle( UpdateCampaignMemberEvent event) {
-    	entityManager.merge(new CampaignMember(event.getCampaignMemberId(), event.getresponded(), event.getCampaign(), event.getLead(), event.getContact(), event.getStatus(), event.getMemberType()));
+    	entityManager.merge(new CampaignMember(event.getCampaignMemberId(), event.getResponded(), event.getCampaign(), event.getLead(), event.getContact(), event.getStatus(), event.getMemberType()));
     }
     
     /*

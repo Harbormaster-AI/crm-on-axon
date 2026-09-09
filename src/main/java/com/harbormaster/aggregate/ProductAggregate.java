@@ -121,7 +121,7 @@ public class ProductAggregate {
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateProductCommand" );
-    	CreateProductEvent event = new CreateProductEvent(command.getProductId(), command.getSku(), command.getName(), command.getasActive(), command.getStandardPrice(), command.getDescription(), command.getProductType(), command.getUom());
+    	CreateProductEvent event = new CreateProductEvent(command.getProductId(), command.getSku(), command.getName(), command.getAsActive(), command.getStandardPrice(), command.getDescription(), command.getProductType(), command.getUom());
     	
         apply(event);
     }
@@ -129,7 +129,7 @@ public class ProductAggregate {
     @CommandHandler
     public void handle(UpdateProductCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateProductCommand" );
-    	UpdateProductEvent event = new UpdateProductEvent(command.getProductId(), command.getSku(), command.getName(), command.getasActive(), command.getStandardPrice(), command.getDescription(), command.getOrganization(), command.getPriceBookEntries(), command.getOpportunityLineItems(), command.getQuoteLineItems(), command.getOrderItems(), command.getProductType(), command.getUom());        
+    	UpdateProductEvent event = new UpdateProductEvent(command.getProductId(), command.getSku(), command.getName(), command.getAsActive(), command.getStandardPrice(), command.getDescription(), command.getOrganization(), command.getPriceBookEntries(), command.getOpportunityLineItems(), command.getQuoteLineItems(), command.getOrderItems(), command.getProductType(), command.getUom());        
     	
         apply(event);
     }
