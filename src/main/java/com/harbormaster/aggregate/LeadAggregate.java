@@ -137,7 +137,7 @@ public class LeadAggregate {
     @CommandHandler
     public LeadAggregate(CreateLeadCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateLeadCommand" );
-    	CreateLeadEvent event = new CreateLeadEvent(command.getLeadId(), command.getFirstName(), command.getLastName(), command.getCompany(), command.getEmail(), command.getPhone(), command.getConverted(), command.getStatus(), command.getSource(), command.getRating());
+    	CreateLeadEvent event = new CreateLeadEvent(command.getLeadId(), command.getFirstName(), command.getLastName(), command.getCompany(), command.getEmail(), command.getPhone(), command.converted(), command.getStatus(), command.getSource(), command.getRating());
     	
         apply(event);
     }
@@ -145,7 +145,7 @@ public class LeadAggregate {
     @CommandHandler
     public void handle(UpdateLeadCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateLeadCommand" );
-    	UpdateLeadEvent event = new UpdateLeadEvent(command.getLeadId(), command.getFirstName(), command.getLastName(), command.getCompany(), command.getEmail(), command.getPhone(), command.getConverted(), command.getOrganization(), command.getOwner(), command.getActivities(), command.getCampaigns(), command.getConvertedAccount(), command.getConvertedContact(), command.getConvertedOpportunity(), command.getNotes(), command.getEmailMessages(), command.getStatus(), command.getSource(), command.getRating());        
+    	UpdateLeadEvent event = new UpdateLeadEvent(command.getLeadId(), command.getFirstName(), command.getLastName(), command.getCompany(), command.getEmail(), command.getPhone(), command.converted(), command.getOrganization(), command.getOwner(), command.getActivities(), command.getCampaigns(), command.getConvertedAccount(), command.getConvertedContact(), command.getConvertedOpportunity(), command.getNotes(), command.getEmailMessages(), command.getStatus(), command.getSource(), command.getRating());        
     	
         apply(event);
     }

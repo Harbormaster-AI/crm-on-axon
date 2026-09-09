@@ -90,7 +90,7 @@ public class ProductEventHandler {
      */
     @EventHandler
     public void handle( CreateProductEvent event) {
-        entityManager.persist(new Product(event.getProductId(), event.getSku(), event.getName(), event.getAsActive(), event.getStandardPrice(), event.getDescription(), event.getOrganization(), event.getPriceBookEntries(), event.getOpportunityLineItems(), event.getQuoteLineItems(), event.getOrderItems(), event.getProductType(), event.getUom()));
+        entityManager.persist(new Product(event.getProductId(), event.getSku(), event.getName(), event.asActive(), event.getStandardPrice(), event.getDescription(), event.getOrganization(), event.getPriceBookEntries(), event.getOpportunityLineItems(), event.getQuoteLineItems(), event.getOrderItems(), event.getProductType(), event.getUom()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class ProductEventHandler {
      */
     @EventHandler
     public Product handle( UpdateProductEvent event) {
-    	entityManager.merge(new Product(event.getProductId(), event.getSku(), event.getName(), event.getAsActive(), event.getStandardPrice(), event.getDescription(), event.getOrganization(), event.getPriceBookEntries(), event.getOpportunityLineItems(), event.getQuoteLineItems(), event.getOrderItems(), event.getProductType(), event.getUom()));
+    	entityManager.merge(new Product(event.getProductId(), event.getSku(), event.getName(), event.asActive(), event.getStandardPrice(), event.getDescription(), event.getOrganization(), event.getPriceBookEntries(), event.getOpportunityLineItems(), event.getQuoteLineItems(), event.getOrderItems(), event.getProductType(), event.getUom()));
     }
     
     /*

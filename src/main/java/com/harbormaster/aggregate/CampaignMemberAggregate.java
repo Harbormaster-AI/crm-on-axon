@@ -93,7 +93,7 @@ public class CampaignMemberAggregate {
     @CommandHandler
     public CampaignMemberAggregate(CreateCampaignMemberCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateCampaignMemberCommand" );
-    	CreateCampaignMemberEvent event = new CreateCampaignMemberEvent(command.getCampaignMemberId(), command.getResponded(), command.getStatus(), command.getMemberType());
+    	CreateCampaignMemberEvent event = new CreateCampaignMemberEvent(command.getCampaignMemberId(), command.responded(), command.getStatus(), command.getMemberType());
     	
         apply(event);
     }
@@ -101,7 +101,7 @@ public class CampaignMemberAggregate {
     @CommandHandler
     public void handle(UpdateCampaignMemberCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateCampaignMemberCommand" );
-    	UpdateCampaignMemberEvent event = new UpdateCampaignMemberEvent(command.getCampaignMemberId(), command.getResponded(), command.getCampaign(), command.getLead(), command.getContact(), command.getStatus(), command.getMemberType());        
+    	UpdateCampaignMemberEvent event = new UpdateCampaignMemberEvent(command.getCampaignMemberId(), command.responded(), command.getCampaign(), command.getLead(), command.getContact(), command.getStatus(), command.getMemberType());        
     	
         apply(event);
     }

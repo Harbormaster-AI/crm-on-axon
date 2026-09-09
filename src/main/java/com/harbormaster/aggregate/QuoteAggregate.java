@@ -114,7 +114,7 @@ public class QuoteAggregate {
     @CommandHandler
     public QuoteAggregate(CreateQuoteCommand command) throws Exception {
     	LOGGER.info( "Handling command CreateQuoteCommand" );
-    	CreateQuoteEvent event = new CreateQuoteEvent(command.getQuoteId(), command.quoteNumber(), command.validityStart(), command.validityEnd(), command.totalAmount(), command.discountPercent(), command.taxAmount(), command.shippingAmount(), command.Status());
+    	CreateQuoteEvent event = new CreateQuoteEvent(command.getQuoteId(), command.getQuoteNumber(), command.getValidityStart(), command.getValidityEnd(), command.getTotalAmount(), command.getDiscountPercent(), command.getTaxAmount(), command.getShippingAmount(), command.getStatus());
     	
         apply(event);
     }
@@ -122,7 +122,7 @@ public class QuoteAggregate {
     @CommandHandler
     public void handle(UpdateQuoteCommand command) throws Exception {
     	LOGGER.info( "handling command UpdateQuoteCommand" );
-    	UpdateQuoteEvent event = new UpdateQuoteEvent(command.getQuoteId(), command.quoteNumber(), command.validityStart(), command.validityEnd(), command.totalAmount(), command.discountPercent(), command.taxAmount(), command.shippingAmount(), command.Organization(), command.Account(), command.Opportunity(), command.Owner(), command.LineItems(), command.PriceBook(), command.Order(), command.Status());        
+    	UpdateQuoteEvent event = new UpdateQuoteEvent(command.getQuoteId(), command.getQuoteNumber(), command.getValidityStart(), command.getValidityEnd(), command.getTotalAmount(), command.getDiscountPercent(), command.getTaxAmount(), command.getShippingAmount(), command.getOrganization(), command.getAccount(), command.getOpportunity(), command.getOwner(), command.getLineItems(), command.getPriceBook(), command.getOrder(), command.getStatus());        
     	
         apply(event);
     }

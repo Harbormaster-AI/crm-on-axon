@@ -90,7 +90,7 @@ public class ContractEventHandler {
      */
     @EventHandler
     public void handle( CreateContractEvent event) {
-        entityManager.persist(new Contract(event.getContractId(), event.getContractNumber(), event.getStartDate(), event.getEndDate(), event.getRenewalTermMonths(), event.getAutoRenew(), event.getOrganization(), event.getAccount(), event.getOwner(), event.getOrders(), event.getCases(), event.getStatus()));
+        entityManager.persist(new Contract(event.getContractId(), event.getContractNumber(), event.getStartDate(), event.getEndDate(), event.getRenewalTermMonths(), event.autoRenew(), event.getOrganization(), event.getAccount(), event.getOwner(), event.getOrders(), event.getCases(), event.getStatus()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class ContractEventHandler {
      */
     @EventHandler
     public Contract handle( UpdateContractEvent event) {
-    	entityManager.merge(new Contract(event.getContractId(), event.getContractNumber(), event.getStartDate(), event.getEndDate(), event.getRenewalTermMonths(), event.getAutoRenew(), event.getOrganization(), event.getAccount(), event.getOwner(), event.getOrders(), event.getCases(), event.getStatus()));
+    	entityManager.merge(new Contract(event.getContractId(), event.getContractNumber(), event.getStartDate(), event.getEndDate(), event.getRenewalTermMonths(), event.autoRenew(), event.getOrganization(), event.getAccount(), event.getOwner(), event.getOrders(), event.getCases(), event.getStatus()));
     }
     
     /*

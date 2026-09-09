@@ -90,7 +90,7 @@ public class AccountEventHandler {
      */
     @EventHandler
     public void handle( CreateAccountEvent event) {
-        entityManager.persist(new Account(event.getAccountId(), event.getName(), event.getAccountNumber(), event.getIndustry(), event.getBillingAddress(), event.getShippingAddress(), event.getWebsite(), event.getPhone(), event.getAsActive(), event.getOrganization(), event.getParentAccount(), event.getChildAccounts(), event.getContacts(), event.getOpportunities(), event.getCases(), event.getOwner(), event.getTerritory(), event.getActivities(), event.getCampaigns(), event.getQuotes(), event.getOrders(), event.getContracts(), event.getNotes(), event.getEmailMessages(), event.getAccountType(), event.getLifecycleStage()));
+        entityManager.persist(new Account(event.getAccountId(), event.getName(), event.getAccountNumber(), event.getIndustry(), event.getBillingAddress(), event.getShippingAddress(), event.getWebsite(), event.getPhone(), event.asActive(), event.getOrganization(), event.getParentAccount(), event.getChildAccounts(), event.getContacts(), event.getOpportunities(), event.getCases(), event.getOwner(), event.getTerritory(), event.getActivities(), event.getCampaigns(), event.getQuotes(), event.getOrders(), event.getContracts(), event.getNotes(), event.getEmailMessages(), event.getAccountType(), event.getLifecycleStage()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class AccountEventHandler {
      */
     @EventHandler
     public Account handle( UpdateAccountEvent event) {
-    	entityManager.merge(new Account(event.getAccountId(), event.getName(), event.getAccountNumber(), event.getIndustry(), event.getBillingAddress(), event.getShippingAddress(), event.getWebsite(), event.getPhone(), event.getAsActive(), event.getOrganization(), event.getParentAccount(), event.getChildAccounts(), event.getContacts(), event.getOpportunities(), event.getCases(), event.getOwner(), event.getTerritory(), event.getActivities(), event.getCampaigns(), event.getQuotes(), event.getOrders(), event.getContracts(), event.getNotes(), event.getEmailMessages(), event.getAccountType(), event.getLifecycleStage()));
+    	entityManager.merge(new Account(event.getAccountId(), event.getName(), event.getAccountNumber(), event.getIndustry(), event.getBillingAddress(), event.getShippingAddress(), event.getWebsite(), event.getPhone(), event.asActive(), event.getOrganization(), event.getParentAccount(), event.getChildAccounts(), event.getContacts(), event.getOpportunities(), event.getCases(), event.getOwner(), event.getTerritory(), event.getActivities(), event.getCampaigns(), event.getQuotes(), event.getOrders(), event.getContracts(), event.getNotes(), event.getEmailMessages(), event.getAccountType(), event.getLifecycleStage()));
     }
     
     /*

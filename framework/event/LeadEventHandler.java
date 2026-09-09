@@ -90,7 +90,7 @@ public class LeadEventHandler {
      */
     @EventHandler
     public void handle( CreateLeadEvent event) {
-        entityManager.persist(new Lead(event.getLeadId(), event.getFirstName(), event.getLastName(), event.getCompany(), event.getEmail(), event.getPhone(), event.getConverted(), event.getOrganization(), event.getOwner(), event.getActivities(), event.getCampaigns(), event.getConvertedAccount(), event.getConvertedContact(), event.getConvertedOpportunity(), event.getNotes(), event.getEmailMessages(), event.getStatus(), event.getSource(), event.getRating()));
+        entityManager.persist(new Lead(event.getLeadId(), event.getFirstName(), event.getLastName(), event.getCompany(), event.getEmail(), event.getPhone(), event.converted(), event.getOrganization(), event.getOwner(), event.getActivities(), event.getCampaigns(), event.getConvertedAccount(), event.getConvertedContact(), event.getConvertedOpportunity(), event.getNotes(), event.getEmailMessages(), event.getStatus(), event.getSource(), event.getRating()));
     }
 
     /*
@@ -98,7 +98,7 @@ public class LeadEventHandler {
      */
     @EventHandler
     public Lead handle( UpdateLeadEvent event) {
-    	entityManager.merge(new Lead(event.getLeadId(), event.getFirstName(), event.getLastName(), event.getCompany(), event.getEmail(), event.getPhone(), event.getConverted(), event.getOrganization(), event.getOwner(), event.getActivities(), event.getCampaigns(), event.getConvertedAccount(), event.getConvertedContact(), event.getConvertedOpportunity(), event.getNotes(), event.getEmailMessages(), event.getStatus(), event.getSource(), event.getRating()));
+    	entityManager.merge(new Lead(event.getLeadId(), event.getFirstName(), event.getLastName(), event.getCompany(), event.getEmail(), event.getPhone(), event.converted(), event.getOrganization(), event.getOwner(), event.getActivities(), event.getCampaigns(), event.getConvertedAccount(), event.getConvertedContact(), event.getConvertedOpportunity(), event.getNotes(), event.getEmailMessages(), event.getStatus(), event.getSource(), event.getRating()));
     }
     
     /*
